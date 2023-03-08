@@ -4,7 +4,7 @@ from api.views import productViews
 
 urlpatterns = [
     # All user related views
-    path('users/', userViews.index),
+    path('users/', userViews.index.as_view()),
     path('users/signin', userViews.signin),
     path('users/signup', userViews.signup),
 
