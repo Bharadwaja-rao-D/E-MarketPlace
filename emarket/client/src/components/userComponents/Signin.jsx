@@ -1,11 +1,10 @@
-import settings from '../../settings.json'
 import "./userStyle.css"
 import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { Navigate } from "react-router-dom";
+import useAxios from "../../utils/useAxios.js"
 
-const api_base_url = settings.api_url
 
 export function Signin(){
 
@@ -19,7 +18,7 @@ export function Signin(){
 
     useEffect(
         () => {
-            
+
             if (user) {
                 axios
                     .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -30,7 +29,7 @@ export function Signin(){
                     })
                     .then((res) => {
                         setProfile(res.data);
-                        
+
                     })
                     .catch((err) => console.log(err));
             }
@@ -49,8 +48,13 @@ export function Signin(){
     {
         return <Navigate to="/home"/>
     }
+    const url = '/users/signin/';
+    const data = {"username":"shashank", "email":"man@gmail.com", "contact":"9999990909"};
+
+    const {apidata, loading, error } = useAxios(url, "POST", data);
+    console.log(apidata);
     return (
-        
+
         <div className='signin'>
             <div className='signin-header'>
                 <h2>Welcome to</h2>
