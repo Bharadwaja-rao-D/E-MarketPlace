@@ -6,6 +6,41 @@ import { Navigate } from "react-router-dom";
 import useAxios from "../../utils/useAxios.js"
 
 
+function SignupBackend({profile}){
+    const url = 'http://localhost:8000/api/users/signup/';
+    const data = {"username":profile.name, "email":profile.email, "contact": "1111111111"};
+
+    axios
+        .post(url, data)
+        .then((res) => {
+            localStorage.setItem('authTokens', JSON.stringify(res.data['token']))
+        })
+        .catch((_err) => {});
+    return (
+        <div>
+        </div>
+    );
+}
+
+function SigninBackend({profile}){
+    const url = 'http://localhost:8000/api/users/signin/';
+    const data = {"username":profile.name, "email":profile.email};
+
+    axios
+        .post(url, data)
+        .then((res) => {
+            localStorage.setItem('authTokens', JSON.stringify(res.data['token']))
+        })
+        .catch((_err) => {});
+
+
+    return (
+        <div>
+        </div>
+    );
+}
+
+
 export function Signin(){
 
     const [ user, setUser ] = useState([]);
@@ -31,28 +66,13 @@ export function Signin(){
                         setProfile(res.data);
 
                     })
-                    .catch((err) => console.log(err));
+                    .catch((_err) => {});
             }
 
         },
         [ user ]
     );
 
-    // // log out function to log the user out of google and set the profile array to null
-    // const logOut = () => {
-    //     googleLogout();
-    //     setProfile(null);
-    // };
-
-    if(profile)
-    {
-        return <Navigate to="/home"/>
-    }
-    const url = '/users/signin/';
-    const data = {"username":"shashank", "email":"man@gmail.com", "contact":"9999990909"};
-
-    const {apidata, loading, error } = useAxios(url, "POST", data);
-    console.log(apidata);
     return (
 
         <div className='signin'>
@@ -61,8 +81,8 @@ export function Signin(){
                 <h2>IITH E-MarketPlace</h2>
             </div>
             <div className='signin-button'>
-            {/*TODO: Place your login with google button here */}
             <button onClick={() => login()}>Sign in with Google  </button>
+            {profile && <SigninBackend profile={profile} />}
             </div>
         </div>
     );

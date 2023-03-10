@@ -41,9 +41,11 @@ def signin(request):
     user = Customer.objects.get(email = serializer.data['email'])
     refresh = RefreshToken.for_user(user)
     return Response({
+        'token':{
             'refresh': str(refresh),
             'access': str(refresh.access_token)
-            } ,status=status.HTTP_200_OK)
+            }
+        } ,status=status.HTTP_200_OK)
 
 # Takes email, username and contact, adds the new user to database and returns the token
 @api_view(['POST'])
@@ -55,8 +57,10 @@ def signup(request):
         user = Customer.objects.get(email = serializer.data['email'])
         refresh = RefreshToken.for_user(user)
         return Response({
-            'refresh': str(refresh),
-            'access': str(refresh.access_token)
+            'token':{
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)
+                }
             } ,status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

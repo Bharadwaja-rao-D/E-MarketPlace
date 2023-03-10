@@ -12,10 +12,7 @@ function useAxiosInstance() {
 
     //Defining manually for now
     //TODO: See about context and add them ..
-    const [authTokens, setAuthTokens]  =  useState({
-        refresh: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY3OTIyNDI5OCwiaWF0IjoxNjc4MzYwMjk4LCJqdGkiOiIxYWEzMGExODBiNmM0NzM5YWJiMWM1NDk1YTRkZjMxMCIsInVzZXJfaWQiOjN9.pzraG3MC6pwePexf-mPB0Jfudg-bRkbXpzpsZ2G52lw",
-        access: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4MzYwMzAwLCJpYXQiOjE2NzgzNjAyOTgsImp0aSI6Ijg3ZmNjYTkwMDhkMjRiMWZhNGE5NGVmNjFlMjFkM2M1IiwidXNlcl9pZCI6M30.jFlloZ96sYyZbNlwAak8CVHC9suUifJSsVdTfe8-vzY"
-    });
+    const [authTokens, setAuthTokens]  =  useState( localStorage.getItem('authTokens'));
 
     const axiosInstance = axios.create({
         baseURL: base_url,
