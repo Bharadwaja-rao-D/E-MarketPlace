@@ -1,5 +1,6 @@
-import {Login} from './components/userComponents/Login.jsx'
-import {Home} from './components/userComponents/Home.jsx'
+import {Signin, Signup} from './components/userComponents/Signin'
+import {Home} from './components/userComponents/Home'
+import {Error} from './components/commonComponents/Error'
 import { BrowserRouter as Router,Routes, Route, a } from 'react-router-dom';
 
 
@@ -11,10 +12,10 @@ function App() {
 
     <Router>
       <Routes>
-
-        <Route exact path='/' element={< Login />}></Route>
+        <Route exact path='/signin' element={< Signin />}></Route>
+        <Route exact path='/signup' element={< Signup />}></Route>
         <Route exact path='/home' element={< Home />}></Route>
-
+        <Route exact path='/error' element={< Error />}></Route>
       </Routes>
     </Router>
 

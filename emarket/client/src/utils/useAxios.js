@@ -11,7 +11,6 @@ const base_url = settings.api_url
 function useAxiosInstance() {
 
     //Defining manually for now
-    //TODO: See about context and add them ..
     const [authTokens, setAuthTokens]  =  useState( localStorage.getItem('authTokens'));
 
     const axiosInstance = axios.create({
