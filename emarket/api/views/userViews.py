@@ -28,6 +28,11 @@ class index(APIView):
         u_id = get_user_id_from_token(auth_header.split(' ')[1])
         return Response({'user_id': u_id}, status=status.HTTP_200_OK)
 
+    def post(self, request):
+        auth_header = request.headers.get('Authorization')
+        u_id = get_user_id_from_token(auth_header.split(' ')[1])
+        return Response({'user_id': u_id}, status=status.HTTP_200_OK)
+
 
 # Takes email and username, returns token if the user is found, else returns error
 @api_view(['POST'])
@@ -53,7 +58,10 @@ def signup(request):
     data = JSONParser().parse(request)
     serializer = CustomerSerializer(data=data)
     if serializer.is_valid():
-        serializer.save()
+        try:
+            serializer.save()
+        except Customer.IntegrityError:
+            return Response({}, status=status.HTTP_400_BAD_REQUEST)
         user = Customer.objects.get(email = serializer.data['email'])
         refresh = RefreshToken.for_user(user)
         return Response({

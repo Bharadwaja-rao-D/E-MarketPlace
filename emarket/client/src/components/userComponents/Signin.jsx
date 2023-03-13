@@ -3,32 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import useAxios from "../../utils/useAxios.js"
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import  credentials from '../../credentials.json';
 
 
-function SignupBackend({profile, setPresent}){
-    const url = 'http://localhost:8000/api/users/signup/';
-    const data = {"username":profile.name, "email":profile.email, "contact": profile.contact};
-
-    const navigate = useNavigate();
-
-    axios
-        .post(url, data)
-        .then((res) => {
-            localStorage.setItem('authTokens', JSON.stringify(res.data['token']))
-            console.log("Added new user");
-            setPresent(true);
-            navigate("/home");
-        })
-        .catch((_err) => {
-            console.log(_err.response.status);
-            navigate("/error");
-        });
-}
-
-function SigninBackend({profile, setPresent}){
+function SigninBackend({profile}){
     //console.log("in signin backend");
     const url = 'http://localhost:8000/api/users/signin/';
     const data = {"username":profile.name, "email":profile.email};
@@ -37,18 +16,13 @@ function SigninBackend({profile, setPresent}){
     axios
         .post(url, data)
         .then((res) => {
-            localStorage.setItem('authTokens', JSON.stringify(res.data['token']))
+            sessionStorage.setItem('authTokens', JSON.stringify(res.data['token']))
             console.log("go to home ");
-            setPresent(true);
             navigate("/home") //redirect to home page
         })
         .catch((_err) => {
-            //TODO: Redirect to the signup page only if the error is unauthorized..
-            // for other errors print it to the console
             navigate("/signup") //redirect to signup page
         });
-
-
 }
 
 
@@ -57,7 +31,6 @@ function SigninGoogle(){
 
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState("");
-    const [present, setPresent ] = useState(false);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -77,6 +50,7 @@ function SigninGoogle(){
                     })
                     .then((res) => {
                         setProfile(res.data);
+                        sessionStorage.setItem('profile', JSON.stringify(res.data));
 
                     })
                     .catch((_err) => {});
@@ -86,7 +60,6 @@ function SigninGoogle(){
         [ user ]
     );
 
-    console.log(present);
 
     return (
         <div className='signin'>
@@ -96,14 +69,13 @@ function SigninGoogle(){
             </div>
             <div className='signin-button'>
             <button onClick={() => login()}>Sign in with Google  </button>
-            {profile && <SigninBackend profile={profile} setPresent = {setPresent}/>}
-            {profile && !present && <Signup profile={profile} setPresent = {setPresent}/>}
+            {profile && <SigninBackend profile={profile}/> }
             </div>
         </div>
     );
 }
 
-export function Signin(){
+export default function Signin(){
     return (
         <GoogleOAuthProvider clientId={credentials.clientId}>
          <SigninGoogle />
@@ -111,16 +83,3 @@ export function Signin(){
     );
 }
 
-export function Signup({profile, setPresent}) {
-    //TODO: Find a way to get profile from the SigninGoogle component...
-    const data = {
-        name: profile.name,
-        email: profile.email,
-        contact: "3456789809"
-    }
-    return (
-        <div className='singup'>
-           < SignupBackend profile={data} setPresent={setPresent}/>
-        </div>
-    );
-}
