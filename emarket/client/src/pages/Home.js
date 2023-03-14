@@ -5,7 +5,9 @@ import ProductList from "../components/productComponents/ProductList";
 function Home() {
   return (
     <div>
-      <h1>This is Home</h1>
+      <h1>
+        This is Home <i class="fa-solid fa-home"></i>
+      </h1>
       <ProductList data={Product_data}></ProductList>
     </div>
   );
