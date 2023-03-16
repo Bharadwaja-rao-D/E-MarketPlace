@@ -1,54 +1,52 @@
-import React, { useState } from "react";
-import "../../styles/NavBar.css";
+import React from "react";
+import { useState } from "react";
+import "../../styles/navbar.css";
 
-import { NavLink } from "react-router-dom";
+function NavBar() {
+  const [showall, setshowall] = useState(true);
 
-const NavBar = () => {
-  const [showMediaIcons, setShowMediaIcons] = useState(false);
   return (
-    <>
-      <nav className="main-nav">
-        {/* 1st logo part  */}
-        <div className="logo">
-          <h2>
-            <span>IITH EMP</span>
-          </h2>
+    <div className="navbar">
+      <div className="logo">
+        <a href="\">
+          <img
+            src="https://seeklogo.com/images/A/apple-logo-E3DBF3AE34-seeklogo.com.png"
+            alt=""
+          />
+          <p className="name">IITH EMP</p>
+        </a>
+      </div>
+      <ul className={showall ? "navitems" : " navitems mobile-navitems"}>
+        <li className="item">
+          <a href="/">Home</a>
+        </li>
+        <li className="item">
+          <a href="/myproducts">My Products</a>
+        </li>
+        <li className="item">
+          <a href="/soldproducts">Sold Products</a>
+        </li>
+      </ul>
+      <div className="hamburger">
+        <a href="#" onClick={() => setshowall(!showall)}>
+          <i class="fa-solid fa-bars"></i>
+        </a>
+      </div>
+      <div className="right">
+        <div className="cart">
+          <a href="\cart">
+            <i class="fa-solid fa-shopping-cart"></i>
+          </a>
         </div>
-
-        {/* 2nd menu part  */}
-        <div
-          className={
-            showMediaIcons ? "menu-link mobile-menu-link" : "menu-link"
-          }
-        >
-          <ul>
-            <li>
-              <NavLink to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink to="/myproducts">My Products</NavLink>
-            </li>
-            <li>
-              <NavLink to="/soldproducts">Sold Products</NavLink>
-            </li>
-            <li>
-              <NavLink to="/cart">Cart</NavLink>
-            </li>
-          </ul>
-        </div>
-
-        {/* 3rd social media links */}
-        <div className="hamburger">
-          {/* hamburget menu start  */}
-          <div className="hamburger-menu">
-            <a href="#" onClick={() => setShowMediaIcons(!showMediaIcons)}>
-              bar
-            </a>
-          </div>
-        </div>
-      </nav>
-    </>
+        <a className="profileimg" href="\profile">
+          <img
+            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            alt="profile-img"
+          />
+        </a>
+      </div>
+    </div>
   );
-};
+}
 
 export default NavBar;
