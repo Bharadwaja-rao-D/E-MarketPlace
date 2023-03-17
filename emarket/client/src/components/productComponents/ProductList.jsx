@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../styles/ProductList.css";
+import "../../styles/productList.css";
 
 import ProductCard from "./ProductCard";
 

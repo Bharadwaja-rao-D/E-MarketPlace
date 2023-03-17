@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import ProductImages from "../components/productComponents/ProductImages";
+import "../styles/productPage.css";
 
 // A detailed product display page
 function ProductPage() {
@@ -13,39 +15,32 @@ function ProductPage() {
   // TODO style the page
   return (
     <div className="productpage">
-      <h3> This is product page of id={id}</h3>
-      <div className="product-imgs">
-        Product images slides show will go here
+      <div className="productdata">
+        <div className="product-imgs">
+          {/* Product images slides show will go here */}
+          <ProductImages />
+        </div>
+        <div className="productinfo">
+          <h2>Product name</h2>
+          <p>Date of purchase: Date</p>
+          <p>Cost: &#8377; 100</p>
+        </div>
+        <div className="sellerinfo">
+          <h2>Seller Name: Name</h2>
+          <h3>Email ID: Sller Email ID</h3>
+          <p>{bl ? "ok" : "not ok"}</p>
+        </div>
+        <div className="description">
+          <h2>Description:</h2>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident
+            sint quo odio aspernatur a ullam accusamus cupiditate natus corrupti
+            totam, perferendis quis in excepturi vitae. Soluta error non aliquid
+            veniam!
+          </p>
+        </div>
       </div>
-      <h2>Product name</h2>
-      <p>Date of purchase: Date</p>
-      <p>Cost: &#8377; 100</p>
-      <p className="description">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident sint
-        quo odio aspernatur a ullam accusamus cupiditate natus corrupti totam,
-        perferendis quis in excepturi vitae. Soluta error non aliquid veniam!
-      </p>
-      <div className="seller-info">
-        <h2>Seller Name: Name</h2>
-        <h3>Email ID: Sller Email ID</h3>
-        {/* If there is access to the personal contact info will be displayed*/}
-        {/* else a button to display INTRESTED will be shown */}
-        {/* Dont Know why the below thong is not working */}
-        {/* {() => {
-          if (bl)
-            return (
-              <React.Fragment>
-                <p>You have access</p>
-              </React.Fragment>
-            );
-          else
-            return (
-              <React.Fragment>
-                <p>You Do NOT have access</p>
-              </React.Fragment>
-            );
-        }} */}
-      </div>
+      <div>A component to display comments here</div>
     </div>
   );
 }
