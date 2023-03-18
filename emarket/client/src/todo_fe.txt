@@ -1,0 +1,4 @@
+1. Add the feature for notification dot.
+2. Forms part of the FE.
+3. Edit product card based on products, sold products. 
+4. Remove Items from cart.
