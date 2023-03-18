@@ -16,7 +16,15 @@ import AddProduct from "./pages/AddProduct";
 import AllLinks from "./components/userComponents/AllLinks";
 import Cart from "./pages/Cart";
 
+import ImageStack from "./components/productComponents/ImageStack";
+
 function App() {
+
+    const images = [
+     "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
+     "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
+    ];
+
   return (
     <Router>
       {/* Any global displays */}
@@ -37,6 +45,8 @@ function App() {
         <Route exact path="/myproducts/edit/:id" element={<Edit />}></Route>
         <Route path="product/:id" element={<ProductPage />} />
         <Route path="mark-as-sold/:id" element={<MarkAsSold />} />
+
+        <Route path="image-stack" element={<ImageStack images={images}/>} />
       </Routes>
     </Router>
   );

@@ -5,18 +5,13 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.serializers.userSerializers import CustomerSerializer
 from api.models.customerModels import Customer
+from api.utils import get_user_id_from_token
 
-
-def get_user_id_from_token(token):
-    decoded = AccessToken(token)
-    user_id = decoded['user_id']
-    return user_id
 
 # A protected resource
 class index(APIView):
@@ -24,13 +19,11 @@ class index(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        auth_header = request.headers.get('Authorization')
-        u_id = get_user_id_from_token(auth_header.split(' ')[1])
+        u_id = get_user_id_from_token(request)
         return Response({'user_id': u_id}, status=status.HTTP_200_OK)
 
     def post(self, request):
-        auth_header = request.headers.get('Authorization')
-        u_id = get_user_id_from_token(auth_header.split(' ')[1])
+        u_id = get_user_id_from_token(request)
         return Response({'user_id': u_id}, status=status.HTTP_200_OK)
 
 
@@ -42,9 +35,7 @@ def signin(request):
         customer = Customer.objects.get(email=data['email'])
     except Customer.DoesNotExist:
         return HttpResponse(status=status.HTTP_404_NOT_FOUND)
-    serializer = CustomerSerializer(customer)
-    user = Customer.objects.get(email = serializer.data['email'])
-    refresh = RefreshToken.for_user(user)
+    refresh = RefreshToken.for_user(customer)
     return Response({
         'token':{
             'refresh': str(refresh),

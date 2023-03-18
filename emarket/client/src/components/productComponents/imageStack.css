@@ -1,0 +1,7 @@
+.image-stack{
+    background-color: var(--grey);
+    width: 100px;
+}
+
+.image-single img{
+}
