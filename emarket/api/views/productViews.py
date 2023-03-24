@@ -1,20 +1,16 @@
-from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from api.models.productModels import Product
-from api.serializers.productSerializers import ProductSerializer
+from api.serializers.productSerializers import ProductSerializer, ProductAddSerializer
 
 class Products(APIView):
 
-    parser_classes = [JSONParser, MultiPartParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
 
-    def get(self, request):
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
 
     def post(self, request):
-        serializer = ProductSerializer(data=request.data)
+        serializer = ProductAddSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
