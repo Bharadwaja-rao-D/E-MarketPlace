@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from api.models import Customer
+from api.models import Customer, Product, Image
 
 
 
@@ -16,5 +16,7 @@ class CustomerAdmin(UserAdmin):
 
 
 admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Product)
+admin.site.register(Image)
 
 # Register your models here.

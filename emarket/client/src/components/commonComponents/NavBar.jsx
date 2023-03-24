@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import "../../styles/navbar.css";
 
+
+
 function NavBar() {
   const [showall, setshowall] = useState(true);
 
@@ -21,7 +23,7 @@ function NavBar() {
           <a href="/">Home</a>
         </li>
         <li className="item">
-          <a href="/myproducts">My Products</a>
+          <a href="/myproducts" >My Products</a>
         </li>
         <li className="item">
           <a href="/soldproducts">Sold Products</a>

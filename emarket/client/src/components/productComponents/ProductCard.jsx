@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/productCard.css";
 import { useNavigate } from "react-router-dom";
+import Notification from "../commonComponents/Notifications";
 
 const ProductCard = ({ id, img, name, cost }) => {
   const navigate = useNavigate();
+    const [notify, setNotify] = useState(true);
+
   const handleClick = (id) => {
     navigate("/product/" + id);
   };
@@ -20,6 +23,7 @@ const ProductCard = ({ id, img, name, cost }) => {
 
       <h1>{name}</h1>
       <h4>Cost: &#8377;{cost}</h4>
+      {notify && <Notification />}
     </div>
   );
 };

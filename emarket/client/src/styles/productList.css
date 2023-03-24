@@ -1,5 +1,6 @@
 .productlist {
   /* width: 90%; */
+    position: relative;
   margin: 2rem auto;
   gap: 2rem;
   display: grid;

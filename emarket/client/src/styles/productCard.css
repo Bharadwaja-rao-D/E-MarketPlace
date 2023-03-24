@@ -1,4 +1,6 @@
 .productcard {
+    /*position: relative;*/
+    /*TODO: Here if we keep z-index negative then onClick is not working...*/
   background: var(--blue);
   border-radius: 1rem;
   padding: 1rem;

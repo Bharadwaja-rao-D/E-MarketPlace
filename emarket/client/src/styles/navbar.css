@@ -136,3 +136,25 @@ a {
     font-size: 1.2rem;
   }
 }
+
+.myproducts{
+    position: relative;
+    width: 50px;
+    margin: 1rem;
+}
+
+.notification{
+    position: absolute;
+    top: -0.5rem;
+    right: 0;
+}
+
+.notification::after{
+    content: '';
+    padding: 6px;
+    border-radius: 6px;
+    position: absolute;
+    background-color: red;
+    top: 0;
+    right: 0;
+}
