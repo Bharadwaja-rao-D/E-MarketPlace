@@ -2,8 +2,12 @@ import React from "react";
 import { Product_data } from "../data";
 import ProductList from "../components/productComponents/ProductList";
 import "../styles/homePage.css";
+import useAxios from "../utils/useAxios";
+
 
 function Home() {
+    const id = useAxios('users/', 'GET')
+    console.log(id);
   return (
     <div>
       <h1>

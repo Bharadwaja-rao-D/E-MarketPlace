@@ -20,4 +20,5 @@ urlpatterns = [
     # All product related views
 
     path('products/', productViews.Products.as_view()),
+    path('products/<int:pk>/', productViews.ProductsDetailed.as_view()),
 ]
