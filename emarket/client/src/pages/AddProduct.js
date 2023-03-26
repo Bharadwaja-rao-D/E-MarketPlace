@@ -1,6 +1,7 @@
 import "../styles/addProduct.css";
 import React, { useState } from "react";
 import axios from "axios";
+import settings from "../settings.json";
 
 function AddProduct() {
   const [images, setImages] = useState([]);
@@ -19,6 +20,7 @@ function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const url = settings.base_url+"upload-images/";
     console.log(formData.values);
     // images.forEach((image) => {
     //   formData.append("images", image);
@@ -26,7 +28,7 @@ function AddProduct() {
     // console.log(formData);
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/upload-images/",
+        url,
         formData
       );
       setImageUrls(response.data.image_urls);
