@@ -2,9 +2,10 @@ import "../styles/signin.css";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import settings from "../settings.json";
 
 function SignupBackend({ profile, contact }) {
-  const url = "http://localhost:8000/api/users/signup/";
+  const url = settings.base_url+"users/signup/";
   console.log(profile);
   const data = {
     username: profile.name,

@@ -5,10 +5,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import credentials from "../credentials.json";
+import settings from "../settings.json";
 
 function SigninBackend({ profile }) {
   //console.log("in signin backend");
-  const url = "http://localhost:8000/api/users/signin/";
+  const base_url = settings.base_url
+  const url = base_url+"users/signin/";
   const data = { username: profile.name, email: profile.email };
 
   const navigate = useNavigate();
