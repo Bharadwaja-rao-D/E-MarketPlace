@@ -1,3 +1,4 @@
 swe.sh
 images/
 Pipfile*
+.gitignore
