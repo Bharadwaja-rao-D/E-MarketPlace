@@ -1,4 +1,5 @@
 swe.sh
 images/
-Pipfile*
+Pipfile
+Pipfile.lock
 .gitignore
