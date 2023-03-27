@@ -1,15 +1,18 @@
 import "../styles/addProduct.css";
 import React, { useState } from "react";
 import axios from "axios";
+import useAxiosInstance from "../utils/useAxios";
 import settings from "../settings.json";
 
 function AddProduct() {
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
+  const url = "products/";
+  const api = useAxiosInstance();
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setImages(files);
+    setImages([...images, ...files]);
   };
   const removeImage = (idx) => {
     images.splice(idx, 1);
@@ -20,18 +23,14 @@ function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const url = settings.base_url+"upload-images/";
-    console.log(formData.values);
-    // images.forEach((image) => {
-    //   formData.append("images", image);
-    // });
-    // console.log(formData);
+    formData.delete("uploaded_images");
+    images.forEach((image) => {
+      formData.append("uploaded_images", image);
+    });
     try {
-      const response = await axios.post(
-        url,
-        formData
-      );
-      setImageUrls(response.data.image_urls);
+      const response = await api.post(url, formData);
+      // setImageUrls(response.data.image_urls);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -41,14 +40,14 @@ function AddProduct() {
     <div className="detail-form">
       {/* need clarity on how to send the data */}
       <form onSubmit={handleSubmit}>
-        <label htmlFor="product-name">Product Name:</label>
-        <input type="text" id="product-name" name="product-name" required />
+        <label htmlFor="name">Product Name:</label>
+        <input type="text" id="name" name="name" required />
 
-        <label htmlFor="date-of-purchase">Date of Purchase:</label>
+        <label htmlFor="date_of_purchase">Date of Purchase:</label>
         <input
           type="date"
-          id="date-of-purchase"
-          name="date-of-purchase"
+          id="date_of_purchase"
+          name="date_of_purchase"
           required
         />
 
@@ -63,100 +62,41 @@ function AddProduct() {
           cols="50"
         ></textarea>
 
-        <label htmlFor="product-images">Product Images:</label>
+        <label htmlFor="uploaded_images">Product Images:</label>
         <input
           type="file"
-          id="product-images"
-          name="product-images"
+          id="uploaded_images"
+          name="uploaded_images"
           accept="image/*"
           multiple
           onChange={handleImageChange}
         />
-        {/* <div className="newproduct-images">
+        <div className="images_list">
           {images.length != 0 ? (
             images.map((image, index) => (
-              <div className="newproduct-image" key={index}>
+              <div className="uploaded_image" key={index}>
                 <img
                   key={index}
                   src={URL.createObjectURL(image)}
                   alt="Uploaded Image"
                 />
-                <button onClick={() => removeImage(index)}>Remove</button>
+                {/* <button onClick={() => removeImage(index)}>Remove</button> */}
+                <input
+                  type="button"
+                  value="remove"
+                  onClick={() => removeImage(index)}
+                ></input>
               </div>
             ))
           ) : (
             <div>None</div>
           )}
-        </div> */}
-        {images.length != 0 ? (
-          images.map((image, index) => (
-            <img
-              key={index}
-              src={URL.createObjectURL(image)}
-              alt="Uploaded Image"
-            />
-          ))
-        ) : (
-          <div>None</div>
-        )}
+        </div>
 
         <input type="submit" value="Add Product" />
       </form>
     </div>
   );
 }
-
-// import React, { useState } from "react";
-// import axios from "axios";
-
-// function AddProduct() {
-//   const [images, setImages] = useState([]);
-//   const [imageUrls, setImageUrls] = useState([]);
-
-//   const handleImageChange = (e) => {
-//     const files = Array.from(e.target.files);
-//     setImages(files);
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const formData = new FormData();
-//     images.forEach((image) => {
-//       formData.append("images", image);
-//     });
-//     try {
-//       const response = await axios.post(
-//         "http://localhost:8000/api/upload-images/",
-//         formData
-//       );
-//       setImageUrls(response.data.image_urls);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <input type="file" multiple onChange={handleImageChange} />
-//         {images.length != 0 ? (
-//           images.map((image, index) => (
-//             <img
-//               key={index}
-//               src={URL.createObjectURL(image)}
-//               alt="Uploaded Image"
-//             />
-//           ))
-//         ) : (
-//           <div>None</div>
-//         )}
-//         <button type="submit">Upload Images</button>
-//       </form>
-//       {imageUrls.map((imageUrl, index) => (
-//         <img key={index} src={imageUrl} alt="Uploaded Image" />
-//       ))}
-//     </div>
-//   );
-// }
 
 export default AddProduct;

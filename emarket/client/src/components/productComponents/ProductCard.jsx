@@ -3,9 +3,9 @@ import "../../styles/productCard.css";
 import { useNavigate } from "react-router-dom";
 import Notification from "../commonComponents/Notifications";
 
-const ProductCard = ({ id, img, name, cost }) => {
+const ProductCard = ({ id, name, cost, date_of_purchase, image }) => {
   const navigate = useNavigate();
-    const [notify, setNotify] = useState(true);
+  const [notify, setNotify] = useState(true);
 
   const handleClick = (id) => {
     navigate("/product/" + id);
@@ -18,7 +18,7 @@ const ProductCard = ({ id, img, name, cost }) => {
       }}
     >
       <div className="product-img">
-        <img src={img} alt="" />
+        <img src={"http://localhost:8000/" + image.image} alt="" />
       </div>
 
       <h1>{name}</h1>

@@ -44,3 +44,24 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #3e8e41;
 }
+
+.images_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.uploaded_image {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--grey);
+  border-radius: 1rem;
+}
+
+.uploaded_image img {
+  object-fit: contain;
+  max-width: 90%;
+  margin: auto;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}

@@ -5,9 +5,9 @@ import dayjs from "dayjs";
 import settings from "../settings.json";
 import { useEffect, useState } from "react";
 
-const base_url = settings.api_url;
+const base_url = settings.base_url;
 
-function useAxiosInstance() {
+export default function useAxiosInstance() {
   //Defining manually for now
   const [authTokens, setAuthTokens] = useState(
     JSON.parse(sessionStorage.getItem("authTokens"))
@@ -44,43 +44,43 @@ function useAxiosInstance() {
 }
 
 //Url after api/...
-export default function useAxios(rel_url, method, data = {}) {
-  const [apidata, setApiData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// export default function useAxios(rel_url, method, data = {}) {
+//   const [apidata, setApiData] = useState(null);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
 
-  console.log("Called api " + rel_url);
+//   console.log("Called api " + rel_url);
 
-  let api = useAxiosInstance();
+//   let api = useAxiosInstance();
 
-  const fetchData = async () => {
-    if (method === "GET") {
-      console.log("get method");
-      try {
-        let res = await api.get(rel_url);
-        setApiData(res.data);
-      } catch (error) {
-        console.log(error);
-        setError(error.status);
-      }
-    } else if (method === "POST") {
-      console.log("post method");
-      try {
-        let res = await api.post(rel_url, data);
-        setApiData(res.data);
-      } catch (error) {
-        setError(error.status);
-      }
-    }
+//   const fetchData = async () => {
+//     if (method === "GET") {
+//       console.log("get method");
+//       try {
+//         let res = await api.get(rel_url);
+//         setApiData(res.data);
+//       } catch (error) {
+//         console.log(error);
+//         setError(error.status);
+//       }
+//     } else if (method === "POST") {
+//       console.log("post method");
+//       try {
+//         let res = await api.post(rel_url, data);
+//         setApiData(res.data);
+//       } catch (error) {
+//         setError(error.status);
+//       }
+//     }
 
-    setLoading(false);
-  };
+//     setLoading(false);
+//   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      fetchData();
-    }, 0);
-  }, []);
+//   useEffect(() => {
+//     setTimeout(() => {
+//       fetchData();
+//     }, 0);
+//   }, []);
 
-  return { apidata, loading, error };
-}
+//   return { apidata, loading, error };
+// }
