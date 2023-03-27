@@ -41,6 +41,7 @@ function Profile() {
           </p>
         </div>
       </div>
+      <button>Logout</button>
       <div className="edit-info">
         <EditContact />
       </div>

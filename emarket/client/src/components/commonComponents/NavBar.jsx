@@ -1,9 +1,17 @@
 import React from "react";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import "../../styles/navbar.css";
 
 function NavBar() {
+  // This is not a good way for rendering
+  // Hiding the nav bar in signin and signup pages
+  const location = useLocation().pathname;
   const [showall, setshowall] = useState(true);
+  if (location == "/signin" || location == "/signup") {
+    return <div></div>;
+  }
+  // better to chnage this
   const img_url = JSON.parse(localStorage.getItem("profile")).picture;
   return (
     <div className="navbar">

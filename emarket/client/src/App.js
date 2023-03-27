@@ -19,11 +19,10 @@ import Cart from "./pages/Cart";
 import ImageStack from "./components/productComponents/ImageStack";
 
 function App() {
-
-    const images = [
-     "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
-     "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
-    ];
+  const images = [
+    "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
+    "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
+  ];
 
   return (
     <Router>
@@ -32,6 +31,7 @@ function App() {
       <NavBar />
       <Routes>
         {/* A Page to login and contact */}
+
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/cart" element={<Cart />}></Route>
         <Route exact path="/signin" element={<Signin />}></Route>
@@ -46,7 +46,7 @@ function App() {
         <Route path="product/:id" element={<ProductPage />} />
         <Route path="mark-as-sold/:id" element={<MarkAsSold />} />
 
-        <Route path="image-stack" element={<ImageStack images={images}/>} />
+        <Route path="image-stack" element={<ImageStack images={images} />} />
       </Routes>
     </Router>
   );
