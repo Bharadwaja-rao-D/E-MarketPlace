@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import settings from "../settings.json";
 
 function SignupBackend({ profile, contact }) {
-  const url = settings.base_url+"users/signup/";
+  const url = settings.base_url + "users/signup/";
   console.log(profile);
   const data = {
     username: profile.name,
@@ -18,7 +18,7 @@ function SignupBackend({ profile, contact }) {
   axios
     .post(url, data)
     .then((res) => {
-      sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
+      localStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
       console.log("Added new user");
       navigate("/");
     })
@@ -31,7 +31,7 @@ function SignupBackend({ profile, contact }) {
 export default function Signup() {
   //TODO: phone number verification
 
-  const profile = JSON.parse(sessionStorage.getItem("profile"));
+  const profile = JSON.parse(localStorage.getItem("profile"));
   const [mobile, setMobile] = useState("");
   const [otprecv, setOtprecv] = useState("");
   const [otpsent, setOtpsent] = useState("");

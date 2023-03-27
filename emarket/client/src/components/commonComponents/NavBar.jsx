@@ -2,11 +2,9 @@ import React from "react";
 import { useState } from "react";
 import "../../styles/navbar.css";
 
-
-
 function NavBar() {
   const [showall, setshowall] = useState(true);
-
+  const img_url = JSON.parse(localStorage.getItem("profile")).picture;
   return (
     <div className="navbar">
       <div className="logo">
@@ -23,7 +21,7 @@ function NavBar() {
           <a href="/">Home</a>
         </li>
         <li className="item">
-          <a href="/myproducts" >My Products</a>
+          <a href="/myproducts">My Products</a>
         </li>
         <li className="item">
           <a href="/soldproducts">Sold Products</a>
@@ -42,7 +40,8 @@ function NavBar() {
         </div>
         <a className="profileimg" href="\profile">
           <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            // src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+            src={img_url}
             alt="profile-img"
           />
         </a>

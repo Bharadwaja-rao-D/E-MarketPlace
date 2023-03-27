@@ -9,15 +9,15 @@ import settings from "../settings.json";
 
 function SigninBackend({ profile }) {
   //console.log("in signin backend");
-  const base_url = settings.base_url
-  const url = base_url+"users/signin/";
+  const base_url = settings.base_url;
+  const url = base_url + "users/signin/";
   const data = { username: profile.name, email: profile.email };
 
   const navigate = useNavigate();
   axios
     .post(url, data)
     .then((res) => {
-      sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
+      localStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
       console.log("go to home ");
       navigate("/"); //redirect to home page
     })
@@ -52,7 +52,7 @@ function SigninGoogle() {
         )
         .then((res) => {
           setProfile(res.data);
-          sessionStorage.setItem("profile", JSON.stringify(res.data));
+          localStorage.setItem("profile", JSON.stringify(res.data));
         })
         .catch((_err) => {});
     }

@@ -10,7 +10,7 @@ function ProductList(props) {
     <>
       <div className="productlist">
         {products.map((product, index) => {
-          return <ProductCard key={index} {...product}></ProductCard>;
+          return <ProductCard key={product.id} {...product}></ProductCard>;
         })}
       </div>
     </>

@@ -10,7 +10,7 @@ const base_url = settings.base_url;
 export default function useAxiosInstance() {
   //Defining manually for now
   const [authTokens, setAuthTokens] = useState(
-    JSON.parse(sessionStorage.getItem("authTokens"))
+    JSON.parse(localStorage.getItem("authTokens"))
   );
 
   //console.log(authTokens);
@@ -34,7 +34,7 @@ export default function useAxiosInstance() {
       refresh: authTokens.refresh,
     });
 
-    sessionStorage.setItem("authTokens", JSON.stringify(res.data));
+    localStorage.setItem("authTokens", JSON.stringify(res.data));
     setAuthTokens(res.data);
     req.headers.Authorization = `Bearer ${res.data.access}`;
     return req;

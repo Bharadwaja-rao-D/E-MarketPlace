@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import useAxiosInstance from "../utils/useAxios";
 import settings from "../settings.json";
+import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
+  const navigte = useNavigate();
   const url = "products/";
   const api = useAxiosInstance();
 
@@ -34,6 +36,8 @@ function AddProduct() {
     } catch (error) {
       console.log(error);
     }
+    // display a successfully uploaded banner and then navigate in 2 to 5 secs
+    navigte("/myproducts");
   };
 
   return (
