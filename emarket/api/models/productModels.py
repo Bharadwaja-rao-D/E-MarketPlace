@@ -1,9 +1,9 @@
 from django.db import models
 from api.models.customerModels import Customer
 
+
 def user_images_path(instance, filename):
     return 'images/{0}/{1}'.format(instance.product.seller.id, filename)
-
 
 
 class Product(models.Model):
@@ -11,8 +11,10 @@ class Product(models.Model):
     cost = models.PositiveIntegerField()
     description = models.CharField(max_length=100)
     date_of_purchase = models.DateField()
-    seller = models.ForeignKey( Customer, on_delete=models.CASCADE, related_name='seller_id')
-    buyer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True, related_name='buyer_id')
+    seller = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, related_name='seller_id')
+    buyer = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, null=True, blank=True, related_name='buyer_id')
 
     def __str__(self):
         return self.name
@@ -20,10 +22,12 @@ class Product(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to=user_images_path)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         return self.image.name
+
 
 class Comments(models.Model):
     comment = models.CharField(max_length=100)
@@ -33,6 +37,7 @@ class Comments(models.Model):
     def __str__(self):
         return "product: %s, commentor: %s and comment: %s" % (self.product_id, self.commentor_id, self.comment)
 
+
 class Interested(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     buyer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -40,5 +45,3 @@ class Interested(models.Model):
 
     class Meta:
         unique_together = (('product', 'buyer'),)
-
-

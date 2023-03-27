@@ -1,6 +1,6 @@
+from datetime import timedelta
 from pathlib import Path
 import os
-
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -16,8 +16,8 @@ SECRET_KEY = 'django-insecure-jj_e%(_n+svyr3fxva(6kr4m9wgcex8sx25%tq-25x=v&0o72t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost:8000','192.168.0.100']
-
+# ALLOWED_HOSTS = ['localhost:8000','192.168.0.100']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -72,14 +72,14 @@ WSGI_APPLICATION = 'emarket.wsgi.application'
 
 
 DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'swe_local',
-       'USER': 'postgres',
-       'PASSWORD': 'admin',
-       'HOST': 'localhost',
-       'PORT': '5432',
-   }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'swe_local',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
 }
 
 
@@ -125,9 +125,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-## Custom things
+# Custom things
 
-CORS_ALLOW_ALL_ORIGINS  = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = 'api.Customer'
 
@@ -137,7 +137,6 @@ REST_FRAMEWORK = {
     )
 }
 
-from datetime import timedelta
 ...
 
 SIMPLE_JWT = {
@@ -175,4 +174,8 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'emarket')
 
-
+# TWILIO credentials for 2FA
+TWILIO_ACCOUNT_SID = 'ACd1c5f0182d76555d9969caf247d1e851'
+TWILIO_AUTH_TOKEN = '76f02ea1a48cf44e013e6c6732c640c7'
+VERIFIED_SID = "VA60f27d71aada09f337c2e009b9cf104b"
+TWILIO_PHONE_NUMBER = '+916300266072'
