@@ -10,7 +10,7 @@ class Product(models.Model):
     name = models.CharField(max_length=30)
     cost = models.PositiveIntegerField()
     description = models.CharField(max_length=100)
-    age = models.CharField(max_length=10)
+    date_of_purchase = models.DateField()
     seller = models.ForeignKey( Customer, on_delete=models.CASCADE, related_name='seller_id')
     buyer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True, related_name='buyer_id')
 

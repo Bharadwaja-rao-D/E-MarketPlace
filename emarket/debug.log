@@ -1,0 +1,17 @@
+Watching for file changes with StatReloader
+Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Bad Request: /api/users/signin/
+"POST /api/users/signin/ HTTP/1.1" 400 69592
+/home/brad/iith/E-marketplace/emarket/emarket/settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Invalid HTTP_HOST header: 'localhost:8000'. You may need to add 'localhost' to ALLOWED_HOSTS.
+Bad Request: /api/users/signin/
+"POST /api/users/signin/ HTTP/1.1" 400 69648
+Watching for file changes with StatReloader
+"POST /api/users/signin/ HTTP/1.1" 200 493
+"GET /api/products/ HTTP/1.1" 200 1074
+"GET /api/products/ HTTP/1.1" 200 1074
+"POST /api/products/ HTTP/1.1" 200 226
+/home/brad/iith/E-marketplace/emarket/api/models/productModels.py changed, reloading.
+Watching for file changes with StatReloader
