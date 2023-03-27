@@ -54,3 +54,4 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             Image.objects.create(product=product, image=img)
 
         return product
+

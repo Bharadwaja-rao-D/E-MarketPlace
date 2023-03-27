@@ -34,7 +34,11 @@ class Comments(models.Model):
         return "product: %s, commentor: %s and comment: %s" % (self.product_id, self.commentor_id, self.comment)
 
 class Interested(models.Model):
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    buyer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    buyer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     accept = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('product', 'buyer'),)
+
 
