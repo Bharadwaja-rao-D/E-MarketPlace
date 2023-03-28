@@ -16,7 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'cost', 'date_of_purchase', 'image')
+        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'date_of_purchase', 'image')
 
     def to_representation(self, instance):
         representation =  super().to_representation(instance)
@@ -40,7 +40,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'cost', 'description', 'date_of_purchase', 'images', 'uploaded_images')
+        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'description', 'date_of_purchase', 'images', 'uploaded_images')
 
     def create(self, validated_data):
         # Get the seller id from the view and add it to the serialzer

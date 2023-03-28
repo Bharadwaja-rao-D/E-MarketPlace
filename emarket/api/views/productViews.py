@@ -47,18 +47,29 @@ class Products(APIView):
 # Get to get detailed view of product
 # cart query param in get to add/remove from the cart
 # POST to edit the info of the product
+# TODO: Small refactoring
 class ProductsDetailed(APIView):
 
-    parser_classes = [JSONParser]
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
 
+
+    def get_product(self, pk):
+        try:
+            return Product.objects.get(pk=pk)
+        except Product.DoesNotExist:
+            return None
 
     def get(self, request, pk):
         buyer_id = get_user_id_from_token(request)
         buyer = Customer.objects.get(pk=buyer_id)
         interested = request.query_params.get('interested')
-        product = Product.objects.get(pk=pk)
+
+        product = self.get_product(pk)
+        if product is None:
+            return Response(data={"message": "product not found"},status=status.HTTP_400_BAD_REQUEST)
+
 
         if interested == "true":
             # Add product into the callers cart
@@ -82,3 +93,38 @@ class ProductsDetailed(APIView):
 
         serializer = ProductDetailSerializer(product)
         return Response(serializer.data)
+
+    # To post the product
+    # Should be accessible only to the seller of the product
+    def put(self, request, pk):
+        user_id = get_user_id_from_token(request)
+
+        product = self.get_product(pk)
+        if product is None:
+            return Response(data={"message": "product not found"},status=status.HTTP_400_BAD_REQUEST)
+
+        if user_id != product.seller_id:
+            return Response(data={"message": "Accessible only to seller"},status=status.HTTP_403_FORBIDDEN)
+
+        serializer = ProductDetailSerializer(product, data = request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # To delete the product
+    # Should be accessible only to the seller of the product
+    def delete(self, request, pk):
+        user_id = get_user_id_from_token(request)
+
+        product = self.get_product(pk)
+        if product is None:
+            return Response(data={"message": "product not found"},status=status.HTTP_400_BAD_REQUEST)
+
+        if user_id != product.seller_id:
+            return Response(data={"message": "Accessible only to seller"},status=status.HTTP_403_FORBIDDEN)
+
+        product.delete() # Deletes images in the Image model and deletes the images from the file system
+
+        return Response(status=status.HTTP_200_OK)

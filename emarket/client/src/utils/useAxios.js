@@ -30,7 +30,7 @@ export default function useAxiosInstance() {
     //Token has expired
 
     console.log("experied: " + authTokens.refresh);
-    const res = await axios.post(`${api_url}/token/refresh/`, {
+    const res = await axios.post(`${api_url}token/refresh/`, {
       refresh: authTokens.refresh,
     });
 

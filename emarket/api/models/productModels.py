@@ -1,4 +1,6 @@
+import os
 from django.db import models
+from django.dispatch import receiver
 from api.models.customerModels import Customer
 
 
@@ -8,7 +10,8 @@ def user_images_path(instance, filename):
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
-    cost = models.PositiveIntegerField()
+    actual_cost = models.PositiveIntegerField()
+    selling_cost = models.PositiveIntegerField()
     description = models.CharField(max_length=100)
     date_of_purchase = models.DateField()
     seller = models.ForeignKey(
@@ -45,3 +48,14 @@ class Interested(models.Model):
 
     class Meta:
         unique_together = (('product', 'buyer'),)
+
+@receiver(models.signals.post_delete, sender=Image)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `Product` object is deleted.
+    """
+    if instance.image:
+        if os.path.isfile(instance.image.path):
+            os.remove(instance.image.path)
+

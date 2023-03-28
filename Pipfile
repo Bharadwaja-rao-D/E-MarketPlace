@@ -10,7 +10,6 @@ djangorestframework-simplejwt = "*"
 psycopg2 = "*"
 pillow = "*"
 django-cors-headers = "*"
-twilio = "*"
 
 [dev-packages]
 
