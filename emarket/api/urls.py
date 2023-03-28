@@ -1,6 +1,7 @@
 from django.urls import path
 from api.views import userViews
 from api.views import productViews
+from api.views import otpViews
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -21,4 +22,8 @@ urlpatterns = [
 
     path('products/', productViews.Products.as_view()),
     path('products/<int:pk>/', productViews.ProductsDetailed.as_view()),
+
+    # OTP / 2FA related views
+    path('generate_otp/', otpViews.generate_otp),
+    path('verify_otp/', otpViews.verify_otp),
 ]
