@@ -8,11 +8,12 @@ function NavBar() {
   // Hiding the nav bar in signin and signup pages
   const location = useLocation().pathname;
   const [showall, setshowall] = useState(true);
-  if (location == "/signin" || location == "/signup") {
+  if (location === "/signin" || location === "/signup") {
     return <div></div>;
   }
   // better to chnage this
-  const img_url = JSON.parse(localStorage.getItem("profile")).picture;
+  const profile = localStorage.getItem("profile");
+  const img_url = profile ? JSON.parse(profile).picture : "";
   return (
     <div className="navbar">
       <div className="logo">

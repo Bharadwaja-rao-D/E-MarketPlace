@@ -12,12 +12,13 @@ const ProductCard = ({
   selling_cost,
   date_of_purchase,
   image,
+  nav_to,
 }) => {
   const navigate = useNavigate();
   const [notify, setNotify] = useState(true);
 
   const handleClick = (id) => {
-    navigate("/product/" + id);
+    navigate(nav_to + id);
   };
   return (
     <div

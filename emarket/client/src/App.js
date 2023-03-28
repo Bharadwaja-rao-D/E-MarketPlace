@@ -17,6 +17,7 @@ import AllLinks from "./components/userComponents/AllLinks";
 import Cart from "./pages/Cart";
 
 import ImageStack from "./components/productComponents/ImageStack";
+import Authentication from "./components/commonComponents/Authentication";
 
 function App() {
   const images = [
@@ -28,6 +29,7 @@ function App() {
     <Router>
       {/* Any global displays */}
       {/* <AllLinks /> */}
+      <Authentication />
       <NavBar />
       <Routes>
         {/* A Page to login and contact */}
