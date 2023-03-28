@@ -10,7 +10,8 @@ def user_images_path(instance, filename):
 
 class Product(models.Model):
     name = models.CharField(max_length=30)
-    cost = models.PositiveIntegerField()
+    actual_cost = models.PositiveIntegerField()
+    selling_cost = models.PositiveIntegerField()
     description = models.CharField(max_length=100)
     date_of_purchase = models.DateField()
     seller = models.ForeignKey(
