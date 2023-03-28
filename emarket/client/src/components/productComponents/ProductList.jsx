@@ -6,11 +6,18 @@ import ProductCard from "./ProductCard";
 
 function ProductList(props) {
   const products = props.data;
+  const nav_to = props.nav_to;
   return (
     <>
       <div className="productlist">
-        {products.map((product, index) => {
-          return <ProductCard key={product.id} {...product}></ProductCard>;
+        {products.map((product) => {
+          return (
+            <ProductCard
+              key={product.id}
+              {...product}
+              nav_to={nav_to}
+            ></ProductCard>
+          );
         })}
       </div>
     </>

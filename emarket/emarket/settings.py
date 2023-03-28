@@ -47,10 +47,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'emarket.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR), 'client'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -168,7 +169,10 @@ SIMPLE_JWT = {
 
 }
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'client', 'build', 'static'),
+        )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'emarket')

@@ -24,6 +24,7 @@ function MyProducts() {
     fetchData();
   }, []);
   const navigate = useNavigate();
+  const nav_to = "/myproducts/";
   const handleClick = () => {
     navigate("/addproduct");
   };
@@ -34,7 +35,7 @@ function MyProducts() {
           <span class="addbuttonspan">Add Product</span>
         </button>
       </div>
-      <ProductList data={myproducts_data}></ProductList>
+      <ProductList data={myproducts_data} nav_to={nav_to}></ProductList>
     </>
   );
 }

@@ -14,7 +14,6 @@ function Home() {
     async function fetchData() {
       try {
         const response = await api.get(url);
-        console.log(response.data);
         setProductData(response.data);
       } catch (error) {
         console.error(error);
@@ -29,7 +28,7 @@ function Home() {
         This is Home <i class="fa-solid fa-home"></i>
       </h1>
       <div className="products-display">
-        <ProductList data={product_data}></ProductList>
+        <ProductList data={product_data} nav_to={"/product/"}></ProductList>
       </div>
     </div>
   );
