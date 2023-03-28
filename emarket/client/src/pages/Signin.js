@@ -9,8 +9,8 @@ import settings from "../settings.json";
 
 function SigninBackend({ profile }) {
   //console.log("in signin backend");
-  const base_url = settings.base_url;
-  const url = base_url + "users/signin/";
+  const api_url = settings.api_url;
+  const url = api_url + "users/signin/";
   const data = { username: profile.name, email: profile.email };
 
   const navigate = useNavigate();

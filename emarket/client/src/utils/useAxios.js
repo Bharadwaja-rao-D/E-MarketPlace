@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import settings from "../settings.json";
 import { useEffect, useState } from "react";
 
-const base_url = settings.base_url;
+const api_url = settings.api_url;
 
 export default function useAxiosInstance() {
   //Defining manually for now
@@ -16,7 +16,7 @@ export default function useAxiosInstance() {
   //console.log(authTokens);
 
   const axiosInstance = axios.create({
-    baseURL: base_url,
+    baseURL: api_url,
     headers: { Authorization: `Bearer ${authTokens?.access}` },
   });
 
@@ -30,7 +30,7 @@ export default function useAxiosInstance() {
     //Token has expired
 
     console.log("experied: " + authTokens.refresh);
-    const res = await axios.post(`${base_url}/token/refresh/`, {
+    const res = await axios.post(`${api_url}/token/refresh/`, {
       refresh: authTokens.refresh,
     });
 
