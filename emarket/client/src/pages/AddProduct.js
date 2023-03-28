@@ -55,8 +55,10 @@ function AddProduct() {
           required
         />
 
-        <label htmlFor="cost">Cost:</label>
-        <input type="number" id="cost" name="cost" required />
+        <label htmlFor="selling_cost">Actual Cost:</label>
+        <input type="number" id="actual_cost" name="actual_cost" required />
+        <label htmlFor="selling_cost">Selling Cost:</label>
+        <input type="number" id="selling_cost" name="selling_cost" required />
 
         <label htmlFor="description">Description:</label>
         <textarea
