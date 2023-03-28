@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import settings from "../settings.json";
 import useAxiosInstance from "../utils/useAxios";
 
+const api_url = settings.api_url;
+
 function SignupBackend({ profile, contact }) {
-  const url = settings.base_url + "users/signup/";
+  const url = api_url + "users/signup/";
   console.log(profile);
   const data = {
     email: profile.email,
@@ -47,7 +49,7 @@ export default function Signup() {
       mobile_number: mobile,
     };
     const response = await axios.post(
-      settings.base_url + "generate_otp/",
+      api_url + "generate_otp/",
       data
     );
     console.log(response);
@@ -70,7 +72,7 @@ export default function Signup() {
       mobile_number: mobile,
       otp: otprecv,
     };
-    const response = await axios.post(settings.base_url + "verify_otp/", data);
+    const response = await axios.post(api_url + "verify_otp/", data);
     if (response.status === 200) setVerified(true);
     else {
       setMsg("Invalid otp");

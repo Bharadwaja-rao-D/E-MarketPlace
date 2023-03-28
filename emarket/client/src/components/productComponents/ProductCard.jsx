@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "../../styles/productCard.css";
 import { useNavigate } from "react-router-dom";
+import settings from "../../settings.json";
+
+const base_url = settings.base_url;
 
 const ProductCard = ({ id, name, cost, date_of_purchase, image }) => {
   const navigate = useNavigate();
@@ -17,7 +20,7 @@ const ProductCard = ({ id, name, cost, date_of_purchase, image }) => {
       }}
     >
       <div className="product-img">
-        <img src={"http://localhost:8000/" + image.image} alt="" />
+        <img src={base_url+ image.image} alt="" />
       </div>
 
       <h1>{name}</h1>
