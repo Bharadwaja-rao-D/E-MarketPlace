@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from api.models import Product, Image
 from api.models import Customer
+from api.serializers.userSerializers import CustomerSerializer
 
 class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,10 +38,12 @@ class ProductDetailSerializer(serializers.ModelSerializer):
             child=serializers.ImageField(allow_empty_file=False, use_url=False),
             write_only=True
             ) # To add/upload new images into the db
+    seller_id = serializers.IntegerField(read_only=True)
+
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'description', 'date_of_purchase', 'images', 'uploaded_images')
+        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'description', 'date_of_purchase', 'images', 'uploaded_images', 'seller_id')
 
     def create(self, validated_data):
         # Get the seller id from the view and add it to the serialzer
@@ -55,3 +58,21 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
         return product
 
+class ProductDetailBuyerSerializer(serializers.Serializer):
+
+    product_info = ProductDetailSerializer(read_only=True)
+    seller_info = CustomerSerializer(read_only=True)
+    interested = serializers.BooleanField(default=False)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        comb_data = {
+                'product':{
+                    **data['product_info'],
+                    },
+                'seller': {
+                    **data['seller_info'],
+                    }
+                }
+
+        return comb_data

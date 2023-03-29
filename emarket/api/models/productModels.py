@@ -1,3 +1,5 @@
+#TODO: Add a seperate table sold product
+
 import os
 from django.db import models
 from django.dispatch import receiver
@@ -16,8 +18,6 @@ class Product(models.Model):
     date_of_purchase = models.DateField()
     seller = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='seller_id')
-    buyer = models.ForeignKey(
-        Customer, on_delete=models.CASCADE, null=True, blank=True, related_name='buyer_id')
 
     def __str__(self):
         return self.name
