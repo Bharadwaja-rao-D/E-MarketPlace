@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from api.models import Product, Image
 from api.models import Customer
-from api.serializers.userSerializers import CustomerSerializer
 
 class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,6 +40,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     seller_id = serializers.IntegerField(read_only=True)
 
 
+    # TODO: Might not need seller_id look into it later
     class Meta:
         model = Product
         fields = ('id', 'name', 'actual_cost', 'selling_cost', 'description', 'date_of_purchase', 'images', 'uploaded_images', 'seller_id')
@@ -60,19 +60,44 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
 class ProductDetailBuyerSerializer(serializers.Serializer):
 
-    product_info = ProductDetailSerializer(read_only=True)
-    seller_info = CustomerSerializer(read_only=True)
+    product = ProductDetailSerializer(read_only=True)
     interested = serializers.BooleanField(default=False)
+    email= serializers.EmailField( max_length=60)
+    username = serializers.CharField(max_length=30)
+    contact = serializers.CharField(max_length=10)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
         comb_data = {
                 'product':{
-                    **data['product_info'],
+                    **data['product']
                     },
+                'interested': data['interested'],
                 'seller': {
-                    **data['seller_info'],
+                    'username': data['username'],
+                    'email': data['email'],
+                    'contact': data['contact']
                     }
                 }
 
         return comb_data
+
+"""
+class ProductDetailSellerSerializer(serializers.Serializer):
+
+    product = ProductDetailSerializer(read_only=True)
+    buyers_id = serializers.IntegerField(many=True)
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        comb_data = {
+                'product':{
+                    **data['product']
+                    },
+                'interested_buyers':{
+                    data['buyers_id']
+                    }
+                }
+
+        return comb_data
+        """
