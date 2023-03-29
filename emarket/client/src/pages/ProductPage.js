@@ -43,7 +43,8 @@ function ProductPage() {
           <div className="productinfo">
             <h2>{data.name}</h2>
             <p>Date of purchase: {data.date_of_purchase}</p>
-            <p>Cost: &#8377; {data.cost}</p>
+            <p>Actual Cost: &#8377; {data.actual_cost}</p>
+            <p>Selling Cost: &#8377; {data.selling_cost}</p>
           </div>
           <div className="sellerinfo">
             <h2>Seller Name: Name of {data.seller_id}</h2>

@@ -25,7 +25,7 @@ function Home() {
   return (
     <div>
       <h1>
-        This is Home <i class="fa-solid fa-home"></i>
+        This is Home <i className="fa-solid fa-home"></i>
       </h1>
       <div className="products-display">
         <ProductList data={product_data} nav_to={"/product/"}></ProductList>
