@@ -1,6 +1,6 @@
 .image-stack{
     background-color: var(--grey);
-    width: 100px;
+    display: flex;
 }
 
 .image-single img{

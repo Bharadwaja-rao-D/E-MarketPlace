@@ -5,6 +5,7 @@ import useAxiosInstance from "../utils/useAxios";
 import "../styles/productPage.css";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import SellerInfo from "../components/userComponents/SellerInfo";
+import ImageStack from "../components/productComponents/ImageStack";
 
 function ProductPage() {
   const { id } = useParams();
@@ -31,6 +32,7 @@ function ProductPage() {
         <div className="productdata">
           <div className="product-imgs">
             <ProductImages />
+            <ImageStack images={data.product.images}/>
           </div>
           <ProductInfo {...data.product} />
           <SellerInfo {...data.seller} />
