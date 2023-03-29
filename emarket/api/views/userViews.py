@@ -46,21 +46,44 @@ def signin(request):
 
 
 # Takes email, username and contact, adds the new user to database and returns the token
-@api_view(['POST'])
-def signup(request):
-    data = JSONParser().parse(request)
-    serializer = CustomerSerializer(data=data)
-    if serializer.is_valid():
-        try:
-            serializer.save()
-        except Customer.IntegrityError:
-            return Response({}, status=status.HTTP_400_BAD_REQUEST)
-        user = Customer.objects.get(email=serializer.data['email'])
-        refresh = RefreshToken.for_user(user)
-        return Response({
-            'token': {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token)
-            }
-        }, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class Signup(APIView):
+    parser_classes = [JSONParser]
+
+    def post(self, request):
+        data = JSONParser().parse(request)
+        serializer = CustomerSerializer(data=data)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+            except Customer.IntegrityError:
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
+            user = Customer.objects.get(email=serializer.data['email'])
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'token': {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token)
+                }
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    """
+    def put(self, request):
+        serializer = CustomerSerializer(data=request.data)
+        user = Customer.objects.get(email=email)
+        if serializer.is_valid():
+            try:
+                serializer.save()
+            except Customer.IntegrityError:
+                return Response({}, status=status.HTTP_400_BAD_REQUEST)
+            user = Customer.objects.get(email=serializer.data['email'])
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                'token': {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token)
+                }
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    """
+

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
 
-from api.serializers.productSerializers import ProductDetailBuyerSerializer,  ProductDetailSerializer, ProductSerializer
+from api.serializers.productSerializers import ProductDetailBuyerSerializer, ProductDetailSellerSerializer,  ProductDetailSerializer, ProductSerializer
 from api.utils import get_user_id_from_token
 from api.models import Customer, Interested, Product
 
@@ -48,7 +48,7 @@ class Products(APIView):
 # cart query param in get to add/remove from the cart
 # POST to edit the info of the product
 # TODO: Small refactoring
-class ProductsDetailed(APIView):
+class ProductsDetailedBuyer(APIView):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     authentication_classes = [JWTAuthentication ]
@@ -94,18 +94,8 @@ class ProductsDetailed(APIView):
 
         seller = product.seller
 
-        """
-        if buyer_id == seller.id:
-            # Sellers mode
-
-            # Join query
-            interested = Interested.objects.filter(
-            serializer = ProductDetailSellerSerializer({'product': product, 'interested_buyers': })
-
-        else:
-        """
-    # Buyers mode
-    # Check and extract other details and send it to the serializer
+        # Buyers mode
+        # Check and extract other details and send it to the serializer
 
         contact = None
         interest_obj = None
@@ -122,7 +112,7 @@ class ProductsDetailed(APIView):
         email = seller.email
         username = seller.username
         serializer = ProductDetailBuyerSerializer({'product': product, 'interested': interested, 'contact': contact, 'email': email, 'username': username})
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     # To post the product
     # Should be accessible only to the seller of the product
@@ -158,6 +148,26 @@ class ProductsDetailed(APIView):
         product.delete() # Deletes images in the Image model and deletes the images from the file system
 
         return Response(status=status.HTTP_200_OK)
+
+# Get request to get the info that is displayed in myproduct/:id page
+# Only seller can call it
+class ProductDetailedSeller(APIView):
+    parser_classes = [JSONParser, MultiPartParser, FormParser]
+    authentication_classes = [JWTAuthentication ]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        caller_id = get_user_id_from_token(request)
+        product = Product.objects.get(pk=pk)
+
+        seller = product.seller
+        if seller.id != caller_id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        interested_peeps = Interested.objects.filter(product=product)
+        serializer = ProductDetailSellerSerializer({'product': product, 'interested_peeps': interested_peeps})
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class Test(APIView):
     parser_classes = [JSONParser]

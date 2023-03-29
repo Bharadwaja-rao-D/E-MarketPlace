@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from api.models import Product, Image
 from api.models import Customer
+from api.models.productModels import Interested
+from api.serializers.userSerializers import CustomerSerializer
 
 class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -82,22 +84,14 @@ class ProductDetailBuyerSerializer(serializers.Serializer):
 
         return comb_data
 
-"""
+class InterestedSerializer(serializers.ModelSerializer):
+    buyer = CustomerSerializer()
+    class Meta:
+        model = Interested
+        fields = ('buyer', 'accept')
+
 class ProductDetailSellerSerializer(serializers.Serializer):
 
     product = ProductDetailSerializer(read_only=True)
-    buyers_id = serializers.IntegerField(many=True)
+    interested_peeps = InterestedSerializer(read_only=True, many=True)
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        comb_data = {
-                'product':{
-                    **data['product']
-                    },
-                'interested_buyers':{
-                    data['buyers_id']
-                    }
-                }
-
-        return comb_data
-        """

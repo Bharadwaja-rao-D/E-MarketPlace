@@ -16,12 +16,13 @@ urlpatterns = [
     # All user related views
     path('users/', userViews.index.as_view()),
     path('users/signin/', userViews.signin),
-    path('users/signup/', userViews.signup),
+    path('users/signup/', userViews.Signup.as_view()),
 
     # All product related views
 
     path('products/', productViews.Products.as_view()),
-    path('products/<int:pk>/', productViews.ProductsDetailed.as_view()),
+    path('products/<int:pk>/', productViews.ProductsDetailedBuyer.as_view()),
+    path('products/seller/<int:pk>/', productViews.ProductDetailedSeller.as_view()),
 
     # OTP / 2FA related views
     path('generate_otp/', otpViews.generate_otp),
