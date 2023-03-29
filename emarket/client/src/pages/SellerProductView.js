@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import ProductImages from "../components/productComponents/ProductImages";
 import "../styles/sellerProductView.css";
 import useAxiosInstance from "../utils/useAxios";
+import ProductInfo from "../components/productComponents/ProductInfo";
 
 // A detailed product display page
 function MyProductPage() {
@@ -40,10 +41,7 @@ function MyProductPage() {
     console.log(response);
     navigate("/myproducts");
   };
-  //   API call with id to get data
 
-  // TODO Look at how to display multiple images
-  // TODO style the page
   return (
     <div className="myproductpage">
       <div className="product">
@@ -51,14 +49,7 @@ function MyProductPage() {
           {/* Product images slides show will go here */}
           <ProductImages />
         </div>
-        <div className="product-info">
-          <h2>{data.name}</h2>
-          <p>Date of purchase: {data.date_of_purchase}</p>
-          <p>Actual Cost: &#8377; {data.actual_cost}</p>
-          <p>Selling Cost: &#8377; {data.selling_cost}</p>
-          <h2>Description:</h2>
-          <p>{data.description}</p>
-        </div>
+        <ProductInfo {...data.product} />
       </div>
       <div className="buttons">
         <button onClick={handleEditClick} className="edit-button">

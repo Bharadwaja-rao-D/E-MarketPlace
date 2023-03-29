@@ -19,11 +19,6 @@
   grid-column: 2/3;
 }
 
-.description {
-  grid-row: 3/4;
-  grid-column: 1/3;
-}
-
 @media only screen and (max-width: 750px) {
   .productdata {
     display: flex;
