@@ -54,5 +54,8 @@ class Customer(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+    def get_contact(self):
+        return self.contact
+
     def __str__(self):
         return self.username

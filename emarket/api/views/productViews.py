@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
 
-from api.serializers.productSerializers import ProductDetailSerializer, ProductSerializer
+from api.serializers.productSerializers import ProductDetailBuyerSerializer,  ProductDetailSerializer, ProductSerializer
 from api.utils import get_user_id_from_token
 from api.models import Customer, Interested, Product
 
@@ -66,11 +66,13 @@ class ProductsDetailed(APIView):
         buyer = Customer.objects.get(pk=buyer_id)
         interested = request.query_params.get('interested')
 
+        # Extract the product
         product = self.get_product(pk)
         if product is None:
-            return Response(data={"message": "product not found"},status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={"message": "product not found"},status=status.HTTP_404_NOT_FOUND)
 
 
+        #TODO: See a good way to handle different query params instead of many if else statements
         if interested == "true":
             # Add product into the callers cart
             interest = Interested(product=product, buyer=buyer)
@@ -88,10 +90,38 @@ class ProductsDetailed(APIView):
                 interest.delete()
                 return Response(status=status.HTTP_200_OK)
             except Interested.DoesNotExist:
-                return Response(data={"message": "product is not in cart"},status=status.HTTP_400_BAD_REQUEST)
+                return Response(data={"message": "product is not in cart"},status=status.HTTP_404_NOT_FOUND)
 
+        seller = product.seller
 
-        serializer = ProductDetailSerializer(product)
+        """
+        if buyer_id == seller.id:
+            # Sellers mode
+
+            # Join query
+            interested = Interested.objects.filter(
+            serializer = ProductDetailSellerSerializer({'product': product, 'interested_buyers': })
+
+        else:
+        """
+    # Buyers mode
+    # Check and extract other details and send it to the serializer
+
+        contact = None
+        interest_obj = None
+
+        # If there as an entry in interested table and the accept is true then give sellers contact, else no
+        try:
+            interest_obj = Interested.objects.get(product=product, buyer=buyer)
+            interested = True
+            if interest_obj.accept:
+                contact = seller.contact
+        except Interested.DoesNotExist:
+            interested = False
+
+        email = seller.email
+        username = seller.username
+        serializer = ProductDetailBuyerSerializer({'product': product, 'interested': interested, 'contact': contact, 'email': email, 'username': username})
         return Response(serializer.data)
 
     # To post the product
@@ -101,7 +131,7 @@ class ProductsDetailed(APIView):
 
         product = self.get_product(pk)
         if product is None:
-            return Response(data={"message": "product not found"},status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={"message": "product not found"},status=status.HTTP_404_NOT_FOUND)
 
         if user_id != product.seller_id:
             return Response(data={"message": "Accessible only to seller"},status=status.HTTP_403_FORBIDDEN)
@@ -128,3 +158,15 @@ class ProductsDetailed(APIView):
         product.delete() # Deletes images in the Image model and deletes the images from the file system
 
         return Response(status=status.HTTP_200_OK)
+
+class Test(APIView):
+    parser_classes = [JSONParser]
+
+    def get(self, request):
+
+        product_info = Product.objects.get(pk=1)
+        seller_info = Product.objects.get(pk=1)
+
+        info = ProductDetailBuyerSerializer({'product_info': product_info, 'seller_info': seller_info})
+        return Response(info.data)
+

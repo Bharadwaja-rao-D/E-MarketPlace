@@ -26,4 +26,6 @@ urlpatterns = [
     # OTP / 2FA related views
     path('generate_otp/', otpViews.generate_otp),
     path('verify_otp/', otpViews.verify_otp),
+
+    path('test/', productViews.Test.as_view())
 ]

@@ -44,9 +44,8 @@ def signin(request):
         }
     }, status=status.HTTP_200_OK)
 
+
 # Takes email, username and contact, adds the new user to database and returns the token
-
-
 @api_view(['POST'])
 def signup(request):
     data = JSONParser().parse(request)

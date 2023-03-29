@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+tmux neww pipenv shell
+tmux neww
+tmux neww
+pipenv shell
