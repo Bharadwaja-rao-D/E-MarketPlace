@@ -7,10 +7,8 @@
 .seller-product-imgs {
   grid-column: 2/3;
 }
-.product-info {
+.productinfo {
   grid-column: 3/4;
-  display: flex;
-  flex-direction: column;
 }
 .buttons {
   margin-top: 3rem;

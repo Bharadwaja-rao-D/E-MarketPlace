@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ProductImages from "../components/productComponents/ProductImages";
 import "../styles/sellerProductView.css";
 import useAxiosInstance from "../utils/useAxios";
 import ProductInfo from "../components/productComponents/ProductInfo";
+import ImageStack from "../components/productComponents/ImageStack";
 
 // A detailed product display page
 function MyProductPage() {
   // Getting parameters from the url
   const { id } = useParams();
   const api = useAxiosInstance();
-  const url = "products/" + id + "/";
-  const [data, setData] = useState({});
+  const url = "products/seller/" + id + "/";
+  const [data, setData] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await api.get(url);
         setData(response.data);
+        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -37,17 +38,18 @@ function MyProductPage() {
   const handleDelete = async () => {
     console.log("Api call to delete the product ");
     // cant go back after navigae navigate in such a way
-    const response = await api.delete(url);
+    const response = await api.delete("products/" + id + "/");
     console.log(response);
     navigate("/myproducts");
   };
-
+  if (data === null) {
+    return <div></div>;
+  }
   return (
     <div className="myproductpage">
       <div className="product">
         <div className="seller-product-imgs">
-          {/* Product images slides show will go here */}
-          <ProductImages />
+          <ImageStack images={data.product.images} />
         </div>
         <ProductInfo {...data.product} />
       </div>

@@ -22,7 +22,7 @@ function Edit() {
     async function fetchData() {
       try {
         const response = await api.get(url);
-        setData(response.data);
+        setData(response.data.product);
       } catch (error) {
         console.error(error);
       }

@@ -1,11 +1,8 @@
 .productcard {
-    /*position: relative;*/
-    /*TODO: Here if we keep z-index negative then onClick is not working...*/
   background: var(--blue);
   border-radius: 1rem;
   padding: 1rem;
   max-width: 400px;
-  /* height: 20rem; */
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -26,12 +23,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 100%; */
   height: 15rem;
   border-radius: 0.5rem;
 }
 .product-img img {
-  width: 80%;
-  height: auto;
+  max-height: 90%;
+  max-width: 90%;
+  object-fit: contain;
   max-height: 15rem;
 }
