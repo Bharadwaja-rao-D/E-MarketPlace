@@ -4,7 +4,7 @@ import "../styles/sellerProductView.css";
 import useAxiosInstance from "../utils/useAxios";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import ImageStack from "../components/productComponents/ImageStack";
-
+import RequestList from "../components/userComponents/RequestList";
 // A detailed product display page
 function MyProductPage() {
   // Getting parameters from the url
@@ -45,6 +45,8 @@ function MyProductPage() {
   if (data === null) {
     return <div></div>;
   }
+
+  console.log(data.interested_peeps);
   return (
     <div className="myproductpage">
       <div className="product">
@@ -65,6 +67,9 @@ function MyProductPage() {
         </button>
       </div>
       {/* the comments and requests goes here */}
+      <div>
+        <RequestList interested_peeps={data.interested_peeps} />
+      </div>
     </div>
   );
 }
