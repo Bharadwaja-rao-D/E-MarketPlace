@@ -60,6 +60,30 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
         return product
 
+    """
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        # Get the seller id from the view and add it to the serialzer
+        uploaded_images = validated_data.pop('uploaded_images')
+        product = Product.objects.get(**validated_data)
+
+
+        # Delete the old images
+        for img in instance.images:
+            Image.objects.get(image=img).delete()
+
+
+        print(self.images)
+        # Add new images
+        for img in uploaded_images:
+            Image.objects.create(product=product, image=img)
+
+        instance.save()
+
+        return instance
+
+        """
+
 class ProductDetailBuyerSerializer(serializers.Serializer):
 
     product = ProductDetailSerializer(read_only=True)

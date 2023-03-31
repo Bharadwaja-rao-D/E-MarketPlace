@@ -13,7 +13,7 @@ function Edit() {
   const [dop, setdop] = useState("2023-01-03");
   const navigte = useNavigate();
   const { id } = useParams();
-  const url = "products/" + id + "/";
+  const url = "products/seller/" + id + "/";
   const api = useAxiosInstance();
 
   // Get Data by api call
@@ -64,7 +64,7 @@ function Edit() {
       console.log(error);
     }
     // display a successfully uploaded banner and then navigate in 2 to 5 secs
-    navigte("/myproducts");
+    //navigte("/myproducts");
   };
 
   if (data === null) {

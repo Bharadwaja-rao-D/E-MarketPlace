@@ -20,7 +20,7 @@ class Product(models.Model):
         Customer, on_delete=models.CASCADE, related_name='seller_id')
 
     def __str__(self):
-        return self.name
+        return "product: %s, selling cost: %s and desc: %s" % (self.name, self.selling_cost, self.description)
 
 
 class Image(models.Model):
