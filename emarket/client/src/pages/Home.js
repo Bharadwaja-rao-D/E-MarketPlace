@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-// import { Product_data } from "../data";
 import ProductList from "../components/productComponents/ProductList";
 import "../styles/homePage.css";
-// import useAxios from "../utils/useAxios";
-import useAxiosInstance from "../utils/useAxios";
+import DisplayData from "../components/commonComponents/DisplayData";
 
 function Home() {
-  const api = useAxiosInstance();
   const url = "products/?type=buyer";
+
+    /*
+  const api = useAxiosInstance();
   const [product_data, setProductData] = useState([]);
+  const {apidata, loading, error} = useAxios(url)
 
   useEffect(() => {
     async function fetchData() {
@@ -22,13 +23,14 @@ function Home() {
 
     fetchData();
   }, []);
+    */
   return (
     <div>
       <h1>
-        This is Home <i class="fa-solid fa-home"></i>
+        This is Home <i className="fa-solid fa-home"></i>
       </h1>
       <div className="products-display">
-        <ProductList data={product_data} nav_to={"/product/"}></ProductList>
+       <DisplayData url={url} Child={ProductList} nav_to="/product/"  />
       </div>
     </div>
   );

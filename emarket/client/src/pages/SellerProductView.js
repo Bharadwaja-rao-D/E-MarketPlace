@@ -1,33 +1,75 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import "../styles/sellerProductView.css";
+import useAxiosInstance from "../utils/useAxios";
+import ProductInfo from "../components/productComponents/ProductInfo";
+import ImageStack from "../components/productComponents/ImageStack";
+import RequestList from "../components/userComponents/RequestList";
 // A detailed product display page
 function MyProductPage() {
   // Getting parameters from the url
   const { id } = useParams();
-  //   API call with id to get data
-  // Holds the no of images of products
-  const no_of_imgs = 3;
-  const bl = 1;
-  // TODO Look at how to display multiple images
-  // TODO style the page
+  const api = useAxiosInstance();
+  const url = "products/seller/" + id + "/";
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get(url);
+        setData(response.data);
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const handleEditClick = () => {
+    navigate("/myproducts/edit/" + id);
+  };
+  const handleSold = () => {
+    console.log("Api call to mark the product as sold and navigate back");
+    // cant go back after navigae navigate in such a way
+    // navigate("/myproducts");
+  };
+  const handleDelete = async () => {
+    console.log("Api call to delete the product ");
+    // cant go back after navigae navigate in such a way
+    const response = await api.delete("products/seller/" + id + "/");
+    console.log(response);
+    navigate("/myproducts");
+  };
+  if (data === null) {
+    return <div></div>;
+  }
+
+  console.log(data.interested_peeps);
   return (
     <div className="myproductpage">
-      <h3> This is product page of id={id}</h3>
-      <div className="product-imgs">
-        Product images slides show will go here
+      <div className="product">
+        <div className="seller-product-imgs">
+          <ImageStack images={data.product.images} />
+        </div>
+        <ProductInfo {...data.product} />
       </div>
-      <h2>Product name</h2>
-      <p>Date of purchase: Date</p>
-      <p>Cost: &#8377; 100</p>
-      <p className="description">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident sint
-        quo odio aspernatur a ullam accusamus cupiditate natus corrupti totam,
-        perferendis quis in excepturi vitae. Soluta error non aliquid veniam!
-      </p>
-      <button>Edit INFO</button>
-      <button>Mark as Sold</button>
-      <button>Delete</button>
+      <div className="buttons">
+        <button onClick={handleEditClick} className="edit-button">
+          Edit Info <i className="fa fa-edit"></i>
+        </button>
+        <button onClick={handleSold} className="sold-button">
+          Mark as sold <i className="fa fa-check"></i>
+        </button>
+        <button onClick={handleDelete} className="delete-button">
+          Delete Product <i className="fa fa-trash" aria-hidden="true"></i>
+        </button>
+      </div>
+      {/* the comments and requests goes here */}
+      <div>
+        <RequestList interested_peeps={data.interested_peeps} />
+      </div>
     </div>
   );
 }

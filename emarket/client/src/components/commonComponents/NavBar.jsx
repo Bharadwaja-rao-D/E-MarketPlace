@@ -44,7 +44,7 @@ function NavBar() {
       <div className="right">
         <div className="cart">
           <a href="\cart">
-            <i class="fa-solid fa-shopping-cart"></i>
+            <i className="fa-solid fa-shopping-cart"></i>
           </a>
         </div>
         <a className="profileimg" href="\profile">

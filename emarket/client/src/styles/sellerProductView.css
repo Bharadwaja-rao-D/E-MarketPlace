@@ -1,0 +1,31 @@
+.product {
+  margin-top: 5rem;
+  display: grid;
+  grid-template-columns: 2rem 1fr 1fr 2rem;
+  gap: 1rem;
+}
+.seller-product-imgs {
+  grid-column: 2/3;
+}
+.productinfo {
+  grid-column: 3/4;
+}
+.buttons {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-around;
+}
+.buttons button {
+  padding: 0.25rem;
+  border-radius: 0.5em;
+}
+
+.edit-button {
+  background-color: antiquewhite;
+}
+.sold-button {
+  background-color: rgb(88, 246, 88);
+}
+.delete-button {
+  background-color: red;
+}

@@ -1,29 +1,68 @@
 // import DisplayProfile from "../components/userComponents/DisplayProfile";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/profile.css";
+import OTPVeify from "../components/userComponents/otpVerity";
+import useAxiosInstance from "../utils/useAxios";
+import { useNavigate } from "react-router-dom";
+
 function EditContact() {
   const [change, setChange] = useState(false);
-  const HandleClick = () => {
+  const [contact, setContact] = useState(null);
+  const api = useAxiosInstance();
+  const url = "";
+  useEffect(() => {
+    async function changeContact() {
+      // try {
+      //   const response = await api.get(url);
+      // } catch (error) {
+      //   console.error(error);
+      // }
+      // console.log("got here");
+      // console.log(contact);
+      setChange(false);
+    }
+
+    changeContact();
+  }, [contact]);
+
+  const getContact = (val) => {
+    setContact(val);
+  };
+
+  const handleEdit = () => {
     setChange(true);
   };
   if (!change) {
     return (
       <div>
-        <button onClick={HandleClick}>Edit Info</button>
+        <button onClick={handleEdit}>Edit Info</button>
       </div>
     );
   } else {
     return (
-      <div>Component to edit contact info Similar to one in Signup page</div>
+      <div>
+        <OTPVeify getContact={getContact} />
+        <button
+          onClick={() => {
+            setChange(false);
+          }}
+        >
+          cancel
+        </button>
+      </div>
     );
   }
 }
 
 function Profile() {
-  //get data
-  // return <DisplayProfile>{/* Need to give props here */}</DisplayProfile>;
   const user = JSON.parse(localStorage.getItem("profile"));
   console.log(user);
+  const navigate = useNavigate();
+  const Logout = () => {
+    localStorage.removeItem("profile");
+    navigate("/signin");
+    // console.log("LOGOUT");
+  };
   return (
     <div className="profile">
       <div className="profile-info">
@@ -41,7 +80,7 @@ function Profile() {
           </p>
         </div>
       </div>
-      <button>Logout</button>
+      <button onClick={Logout}>Logout</button>
       <div className="edit-info">
         <EditContact />
       </div>

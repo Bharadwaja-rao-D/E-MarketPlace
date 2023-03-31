@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ProductImages from "../components/productComponents/ProductImages";
 import useAxiosInstance from "../utils/useAxios";
 import "../styles/productPage.css";
+import ProductInfo from "../components/productComponents/ProductInfo";
+import SellerInfo from "../components/userComponents/SellerInfo";
+import ImageStack from "../components/productComponents/ImageStack";
 
-// A detailed product display page
 function ProductPage() {
-  // Getting parameters from the url
   const { id } = useParams();
-  //   API call with id to get data
-  // Holds the no of images of products
-  const no_of_imgs = 3;
-  const bl = 1;
-  // TODO Look at how to display multiple images
-  // TODO style the page
-
   const api = useAxiosInstance();
+  const navigte = useNavigate();
   const url = "products/" + id;
   const [data, setData] = useState(null);
   useEffect(() => {
@@ -32,30 +27,45 @@ function ProductPage() {
     fetchData();
   }, []);
 
+  const handleInterest = async () => {
+    try {
+      const response = await api.get(url + "/?interested=true");
+      navigte(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handlenotint = async () => {
+    try {
+      const response = await api.get(url + "/?interested=false");
+      navigte(0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="productpage">
       {data && (
         <div className="productdata">
           <div className="product-imgs">
-            {/* Product images slides show will go here */}
-            <ProductImages />
+            <ImageStack images={data.product.images} />
           </div>
-          <div className="productinfo">
-            <h2>{data.name}</h2>
-            <p>Date of purchase: {data.date_of_purchase}</p>
-            <p>Cost: &#8377; {data.cost}</p>
+          <div className="buyer-product-info">
+            <ProductInfo {...data.product} />
           </div>
-          <div className="sellerinfo">
-            <h2>Seller Name: Name of {data.seller_id}</h2>
-            <h3>Email ID: Sller Email ID</h3>
-            <p>{bl ? "ok" : "not ok"}</p>
-          </div>
-          <div className="description">
-            <h2>Description:</h2>
-            <p>{data.description}</p>
+          <div className="buyer-seller-info">
+            <SellerInfo {...data.seller} />
           </div>
         </div>
       )}
+
+      {data && !data.interested ? (
+        <button onClick={handleInterest}>Interested</button>
+      ) : (
+        <button onClick={handlenotint}>Not Interested</button>
+      )}
+
       <div>A component to display comments here</div>
     </div>
   );

@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from api.models import Product, Image
 from api.models import Customer
+from api.models.productModels import Interested
+from api.serializers.userSerializers import CustomerSerializer
 
 class ImagesSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,6 +60,30 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
         return product
 
+    """
+    def update(self, instance, validated_data):
+        instance = super().update(instance, validated_data)
+        # Get the seller id from the view and add it to the serialzer
+        uploaded_images = validated_data.pop('uploaded_images')
+        product = Product.objects.get(**validated_data)
+
+
+        # Delete the old images
+        for img in instance.images:
+            Image.objects.get(image=img).delete()
+
+
+        print(self.images)
+        # Add new images
+        for img in uploaded_images:
+            Image.objects.create(product=product, image=img)
+
+        instance.save()
+
+        return instance
+
+        """
+
 class ProductDetailBuyerSerializer(serializers.Serializer):
 
     product = ProductDetailSerializer(read_only=True)
@@ -82,22 +108,14 @@ class ProductDetailBuyerSerializer(serializers.Serializer):
 
         return comb_data
 
-"""
+class InterestedSerializer(serializers.ModelSerializer):
+    buyer = CustomerSerializer()
+    class Meta:
+        model = Interested
+        fields = ('buyer', 'accept')
+
 class ProductDetailSellerSerializer(serializers.Serializer):
 
     product = ProductDetailSerializer(read_only=True)
-    buyers_id = serializers.IntegerField(many=True)
+    interested_peeps = InterestedSerializer(read_only=True, many=True)
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        comb_data = {
-                'product':{
-                    **data['product']
-                    },
-                'interested_buyers':{
-                    data['buyers_id']
-                    }
-                }
-
-        return comb_data
-        """
