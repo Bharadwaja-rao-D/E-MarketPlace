@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/sellerProductView.css";
-import useAxiosInstance from "../utils/useAxios";
+import useAxiosInstance, { useAxios } from "../utils/useAxios";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import ImageStack from "../components/productComponents/ImageStack";
 import RequestList from "../components/userComponents/RequestList";
+import Loading from "../components/commonComponents/Loading";
 // A detailed product display page
 function MyProductPage() {
   // Getting parameters from the url
@@ -13,19 +14,9 @@ function MyProductPage() {
   const url = "products/seller/" + id + "/";
   const [data, setData] = useState(null);
   const navigate = useNavigate();
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get(url);
-        setData(response.data);
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
-    fetchData();
-  }, []);
+    const {apidata } = useAxios(url)
+    const {apidata: interested_peeps} = useAxios("products/seller/interested/" + id + "/")
 
   const handleEditClick = () => {
     navigate("/myproducts/edit/" + id);
@@ -42,18 +33,17 @@ function MyProductPage() {
     console.log(response);
     navigate("/myproducts");
   };
-  if (data === null) {
+  if (apidata === null) {
     return <div></div>;
   }
 
-  console.log(data.interested_peeps);
   return (
     <div className="myproductpage">
       <div className="product">
         <div className="seller-product-imgs">
-          <ImageStack images={data.product.images} />
+          <ImageStack images={apidata.images} />
         </div>
-        <ProductInfo {...data.product} />
+        <ProductInfo {...apidata} />
       </div>
       <div className="buttons">
         <button onClick={handleEditClick} className="edit-button">
@@ -67,9 +57,9 @@ function MyProductPage() {
         </button>
       </div>
       {/* the comments and requests goes here */}
-      <div>
-        <RequestList interested_peeps={data.interested_peeps} />
-      </div>
+          <div>
+            {interested_peeps && <RequestList interested_peeps={interested_peeps} />}
+          </div>
     </div>
   );
 }
