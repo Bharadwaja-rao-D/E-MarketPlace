@@ -6,6 +6,7 @@ import "../styles/productPage.css";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import SellerInfo from "../components/userComponents/SellerInfo";
 import ImageStack from "../components/productComponents/ImageStack";
+import DisplayData from "../components/commonComponents/DisplayData";
 
 function ProductPage() {
   const { id } = useParams();
