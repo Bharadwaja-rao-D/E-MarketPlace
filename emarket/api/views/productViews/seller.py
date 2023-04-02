@@ -5,9 +5,8 @@ from rest_framework.views import APIView, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from django.db import IntegrityError
 
-from api.serializers.productSerializers import  InterestedSerializer, ProductDetailSellerSerializer,  ProductDetailSerializer, ProductSerializer
+from api.serializers.productSerializers import  InterestedSerializer,   ProductDetailSerializer, ProductSerializer
 from api.utils import get_product, get_user_id_from_token
 from api.models import  Interested, Product
 
@@ -111,5 +110,19 @@ class ProductInterestedSeller(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     # To accept/reject the interest of the buyer
-    def post(self, request):
-        pass
+    def post(self, request, pk):
+
+        product = get_product(pk)
+
+        serializer = InterestedSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            buyer_id = data['buyer_id']
+            interested_obj = Interested.objects.get(buyer_id=buyer_id, product=product)
+            print(interested_obj.accept)
+            interested_obj.accept = data['accept']
+            interested_obj.save()
+
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
