@@ -1,0 +1,23 @@
+.filter-btn {
+  padding: 0.5rem 0.25rem;
+  width: 2rem;
+}
+.filter-dropdown {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  min-width: 120px;
+}
+
+.filter-dropdown label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.filter-dropdown input[type="radio"] {
+  margin-right: 0.5rem;
+}

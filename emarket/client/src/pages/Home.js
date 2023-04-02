@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import ProductList from "../components/productComponents/ProductList";
 import "../styles/homePage.css";
 import DisplayData from "../components/commonComponents/DisplayData";
+import SearchBar from "../components/commonComponents/SearchBar";
+import Filter from "../components/commonComponents/Filter";
+import Test from "../components/commonComponents/Test";
 
 function Home() {
   const url = "products/?type=buyer";
 
-    /*
+  /*
   const api = useAxiosInstance();
   const [product_data, setProductData] = useState([]);
   const {apidata, loading, error} = useAxios(url)
@@ -26,11 +29,12 @@ function Home() {
     */
   return (
     <div>
+      <Test />
       <h1>
         This is Home <i className="fa-solid fa-home"></i>
       </h1>
       <div className="products-display">
-       <DisplayData url={url} Child={ProductList} nav_to="/product/"  />
+        <DisplayData url={url} Child={ProductList} nav_to="/product/" />
       </div>
     </div>
   );

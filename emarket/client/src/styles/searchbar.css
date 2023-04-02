@@ -1,0 +1,14 @@
+.searchbar {
+  display: flex;
+  /* max-width: 80%; */
+  /* margin: auto; */
+  /* margin-top: 1rem; */
+  justify-content: flex-end;
+  align-items: center;
+}
+.searchbar input {
+  max-width: 25rem;
+}
+.search-icon {
+  padding: 0.5rem 0.25rem;
+}
