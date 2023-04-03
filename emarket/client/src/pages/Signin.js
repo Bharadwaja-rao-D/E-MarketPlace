@@ -53,7 +53,7 @@ function SigninGoogle() {
         )
         .then((res) => {
           setProfile(res.data);
-          localStorage.setItem("profile", JSON.stringify(res.data));
+          sessionStorage.setItem("profile", JSON.stringify(res.data));
         })
         .catch((_err) => {});
     }
