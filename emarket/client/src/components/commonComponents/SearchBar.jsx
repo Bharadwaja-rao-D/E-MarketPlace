@@ -1,24 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
+import "../../styles/searchbar.css";
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
+    setSearchText(event.target.value);
   };
 
   const handleSearch = () => {
-    axios
-      .get(`https://example.com/search?query=${searchTerm}`)
-      .then((response) => {
-        // Handle successful response
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error(error);
-      });
+    //  Need an api call here
+    console.log(searchText);
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -27,15 +20,15 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+    <div className="searchbar">
       <input
         type="text"
         placeholder="Search"
-        value={searchTerm}
+        value={searchText}
         onChange={handleInputChange}
         onKeyDown={handleKeyPress}
       />
-      <button onClick={handleSearch}>
+      <button onClick={handleSearch} className="search-icon">
         <i class="fa fa-search" aria-hidden="true"></i>
       </button>
     </div>

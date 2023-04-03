@@ -1,15 +1,13 @@
 import "../styles/addProduct.css";
 import React, { useState } from "react";
-import axios from "axios";
 import useAxiosInstance from "../utils/useAxios";
-import settings from "../settings.json";
 import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
   const navigte = useNavigate();
-  const url = "products/";
+  const url = "products/seller/";
   const api = useAxiosInstance();
 
   const handleImageChange = (e) => {

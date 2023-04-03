@@ -6,4 +6,4 @@ from api.models.customerModels import Customer
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['email', 'username', 'contact']
+        fields = ['id', 'email', 'username', 'contact']

@@ -22,7 +22,7 @@ function Edit() {
     async function fetchData() {
       try {
         const response = await api.get(url);
-        setData(response.data.product);
+        setData(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -64,7 +64,7 @@ function Edit() {
       console.log(error);
     }
     // display a successfully uploaded banner and then navigate in 2 to 5 secs
-    //navigte("/myproducts");
+    navigte("/myproducts");
   };
 
   if (data === null) {

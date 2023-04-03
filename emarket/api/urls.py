@@ -1,6 +1,6 @@
 from django.urls import path
 from api.views import userViews
-from api.views import productViews
+from api.views.productViews import buyer, seller
 from api.views import otpViews
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -20,13 +20,18 @@ urlpatterns = [
 
     # All product related views
 
-    path('products/', productViews.Products.as_view()),
-    path('products/<int:pk>/', productViews.ProductsDetailedBuyer.as_view()),
-    path('products/seller/<int:pk>/', productViews.ProductDetailedSeller.as_view()),
+    #For Buyers side
+    path('products/', buyer.Products.as_view()),
+    path('products/<int:pk>/', buyer.ProductsDetailedBuyer.as_view()),
+    path('products/interested/', buyer.ProductInterestedBuyer.as_view()),
+    path('products/interested/<int:pk>/', buyer.ProductInterestedBuyer.as_view()),
+
+    #For Sellers side
+    path('products/seller/', seller.ProductsSeller.as_view()),
+    path('products/seller/<int:pk>/', seller.ProductDetailedSeller.as_view()),
+    path('products/seller/interested/<int:pk>/', seller.ProductInterestedSeller.as_view()),
 
     # OTP / 2FA related views
     path('generate_otp/', otpViews.generate_otp),
     path('verify_otp/', otpViews.verify_otp),
-
-    path('test/', productViews.Test.as_view())
 ]
