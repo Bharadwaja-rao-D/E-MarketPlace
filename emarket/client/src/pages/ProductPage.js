@@ -5,6 +5,7 @@ import "../styles/productPage.css";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import SellerInfo from "../components/userComponents/SellerInfo";
 import ImageStack from "../components/productComponents/ImageStack";
+import CommentSection from "../components/userComponents/CommentSection";
 
 function ProductPage() {
   const { id } = useParams();
@@ -27,9 +28,8 @@ function ProductPage() {
   }, []);
 
   const handleInterest = async () => {
-
     try {
-      const response = await api.post('products/interested/'+id+'/');
+      const response = await api.post("products/interested/" + id + "/");
       navigte(0);
     } catch (error) {
       console.error(error);
@@ -37,7 +37,7 @@ function ProductPage() {
   };
   const handlenotint = async () => {
     try {
-      const response = await api.delete('products/interested/'+id+'/');
+      const response = await api.delete("products/interested/" + id + "/");
       navigte(0);
     } catch (error) {
       console.error(error);
@@ -67,6 +67,7 @@ function ProductPage() {
       )}
 
       <div>A component to display comments here</div>
+      <CommentSection comment_list={[]} />
     </div>
   );
 }
