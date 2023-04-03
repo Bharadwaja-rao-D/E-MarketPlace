@@ -17,7 +17,7 @@ function SigninBackend({ profile }) {
   axios
     .post(url, data)
     .then((res) => {
-      localStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
+      sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
       console.log("go to home ");
       navigate("/"); //redirect to home page
     })
@@ -29,7 +29,7 @@ function SigninBackend({ profile }) {
 function SigninGoogle() {
   //console.log("in signin google");
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [profile, setProfile] = useState("");
 
   const login = useGoogleLogin({
@@ -40,6 +40,7 @@ function SigninGoogle() {
   //Getting users personal info from google
   useEffect(() => {
     if (user) {
+      console.log(user);
       axios
         .get(
           `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,

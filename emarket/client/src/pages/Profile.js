@@ -55,11 +55,11 @@ function EditContact() {
 }
 
 function Profile() {
-  const user = JSON.parse(localStorage.getItem("profile"));
+  const user = JSON.parse(sessionStorage.getItem("profile"));
   console.log(user);
   const navigate = useNavigate();
   const Logout = () => {
-    localStorage.removeItem("profile");
+    sessionStorage.removeItem("profile");
     navigate("/signin");
     // console.log("LOGOUT");
   };

@@ -21,7 +21,7 @@ function SignupBackend({ profile, contact }) {
   axios
     .post(url, data)
     .then((res) => {
-      localStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
+      sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
       console.log("Added new user");
       navigate("/");
     })
@@ -34,7 +34,7 @@ function SignupBackend({ profile, contact }) {
 export default function Signup() {
   //TODO: phone number verification
 
-  const profile = JSON.parse(localStorage.getItem("profile"));
+  const profile = JSON.parse(sessionStorage.getItem("profile"));
   const [mobile, setMobile] = useState(null);
   const getMobile = (val) => {
     setMobile(val);
