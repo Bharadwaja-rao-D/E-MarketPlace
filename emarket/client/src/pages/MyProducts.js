@@ -5,7 +5,7 @@ import "../styles/myproductsPage.css";
 import DisplayData from "../components/commonComponents/DisplayData";
 
 function MyProducts() {
-  const url = "products/?type=seller";
+  const url = "products/seller/";
   const navigate = useNavigate();
   const nav_to = "/myproducts/";
   const handleClick = () => {

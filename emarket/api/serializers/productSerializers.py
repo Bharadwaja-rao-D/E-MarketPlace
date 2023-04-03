@@ -109,13 +109,16 @@ class ProductDetailBuyerSerializer(serializers.Serializer):
         return comb_data
 
 class InterestedSerializer(serializers.ModelSerializer):
-    buyer = CustomerSerializer()
+    buyer = CustomerSerializer(read_only=True)
+    buyer_id = serializers.IntegerField(write_only=True)
     class Meta:
         model = Interested
-        fields = ('buyer', 'accept')
+        fields = ('buyer', 'accept', 'buyer_id')
 
+"""
 class ProductDetailSellerSerializer(serializers.Serializer):
 
     product = ProductDetailSerializer(read_only=True)
     interested_peeps = InterestedSerializer(read_only=True, many=True)
+"""
 

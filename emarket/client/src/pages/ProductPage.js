@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ProductImages from "../components/productComponents/ProductImages";
 import useAxiosInstance from "../utils/useAxios";
 import "../styles/productPage.css";
 import ProductInfo from "../components/productComponents/ProductInfo";
@@ -28,8 +27,9 @@ function ProductPage() {
   }, []);
 
   const handleInterest = async () => {
+
     try {
-      const response = await api.get(url + "/?interested=true");
+      const response = await api.post('products/interested/'+id+'/');
       navigte(0);
     } catch (error) {
       console.error(error);
@@ -37,7 +37,7 @@ function ProductPage() {
   };
   const handlenotint = async () => {
     try {
-      const response = await api.get(url + "/?interested=false");
+      const response = await api.delete('products/interested/'+id+'/');
       navigte(0);
     } catch (error) {
       console.error(error);
