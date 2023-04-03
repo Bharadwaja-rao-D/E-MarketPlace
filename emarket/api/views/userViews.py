@@ -7,6 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 from api.serializers.userSerializers import CustomerSerializer
 from api.models.customerModels import Customer
@@ -28,6 +30,7 @@ class index(APIView):
 
 
 # Takes email and username, returns token if the user is found, else returns error
+@swagger_auto_schema(method='post', request_body=CustomerSerializer)
 @api_view(['POST'])
 def signin(request):
 
@@ -48,6 +51,8 @@ def signin(request):
 # Takes email, username and contact, adds the new user to database and returns the token
 class Signup(APIView):
     parser_classes = [JSONParser]
+
+    @swagger_auto_schema( request_body=CustomerSerializer)
 
     def post(self, request):
         data = JSONParser().parse(request)

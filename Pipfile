@@ -11,6 +11,8 @@ psycopg2 = "*"
 pillow = "*"
 django-cors-headers = "*"
 twilio = "*"
+django-rest-swagger = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
