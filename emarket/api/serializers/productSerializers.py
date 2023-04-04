@@ -9,6 +9,10 @@ class ImagesSerializer(serializers.ModelSerializer):
         model = Image
         fields = ('image', 'id')
 
+class ProductListSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+
 # Used in the grid view of home page
 # where only name, cost, age and a single image is displayed
 class ProductSerializer(serializers.ModelSerializer):
@@ -18,7 +22,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'date_of_purchase', 'image')
+        fields = ('id', 'name', 'image')
+        optional_fields = ('id', 'name', 'actual_cost', 'selling_cost', 'date_of_purchase', 'image')
 
     def to_representation(self, instance):
         representation =  super().to_representation(instance)

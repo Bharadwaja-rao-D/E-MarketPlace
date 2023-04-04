@@ -7,7 +7,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
 from drf_yasg.utils import swagger_auto_schema
 
-from api.serializers.productSerializers import ProductDetailBuyerSerializer,  ProductSerializer
+from api.serializers.productSerializers import ProductDetailBuyerSerializer, ProductListSerializer,  ProductSerializer
 from api.utils import get_buyer, get_product
 from api.models import  Interested, Product
 
@@ -22,8 +22,24 @@ class Products(GenericAPIView):
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     serializer_class = ProductSerializer
 
-    #@swagger_auto_schema(method='get', query_serializer=ProductSerializer)
+    # Will have query params:
+    # 1. search: To get the list of names of products
+    # 2. prefix: To get the grid of products that start with the given prefix
     def get(self, request):
+
+        search = request.GET.get('search')
+        prefix = request.GET.get('prefix')
+
+        if prefix:
+            products = Product.objects.filter(name__icontains=prefix)
+            serilaizer = ProductSerializer(products, many=True)
+            return Response(serilaizer.data)
+
+        if search:
+            products = Product.objects.filter(name__icontains=search).values('id','name')
+            serilaizer = ProductListSerializer(products, many=True)
+            return Response(serilaizer.data)
+
         products = Product.objects.all()
         serilaizer = ProductSerializer(products, many=True)
         return Response(serilaizer.data)
