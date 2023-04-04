@@ -16,7 +16,7 @@ urlpatterns = [
     # All user related views
     path('users/', userViews.index.as_view()),
     path('users/signin/', userViews.signin),
-    path('users/signup/', userViews.Signup.as_view()),
+    path('users/signup/', userViews.signup),
 
     # All product related views
 

@@ -1,3 +1,4 @@
+import requests
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
@@ -29,16 +30,24 @@ class index(APIView):
         return Response({'user_id': u_id}, status=status.HTTP_200_OK)
 
 
-# Takes email and username, returns token if the user is found, else returns error
-@swagger_auto_schema(method='post', request_body=CustomerSerializer)
+def get_user_info(token):
+    url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token="+token
+    profile = requests.get(url, headers={"Authorization": "Bearer "+token})
+    return profile.json()
+
 @api_view(['POST'])
 def signin(request):
-
     data = JSONParser().parse(request)
+    token = data['token']
+    profile = get_user_info(token)
+    email = profile['email']
+    name = profile['name']
+
     try:
-        customer = Customer.objects.get(email=data['email'])
+        customer = Customer.objects.get(username=name, email=email)
     except Customer.DoesNotExist:
-        return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+        return Response({}, status=status.HTTP_404_NOT_FOUND)
+
     refresh = RefreshToken.for_user(customer)
     return Response({
         'token': {
@@ -48,47 +57,27 @@ def signin(request):
     }, status=status.HTTP_200_OK)
 
 
-# Takes email, username and contact, adds the new user to database and returns the token
-class Signup(APIView):
-    parser_classes = [JSONParser]
+@api_view(['POST'])
+def signup(request):
+    data = JSONParser().parse(request)
+    token = data['token']
+    contact = data['contact']
+    profile = get_user_info(token)
+    email = profile['email']
+    name = profile['name']
 
-    @swagger_auto_schema( request_body=CustomerSerializer)
-
-    def post(self, request):
-        data = JSONParser().parse(request)
-        serializer = CustomerSerializer(data=data)
-        if serializer.is_valid():
-            try:
-                serializer.save()
-            except Customer.IntegrityError:
-                return Response({}, status=status.HTTP_400_BAD_REQUEST)
-            user = Customer.objects.get(email=serializer.data['email'])
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'token': {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token)
+    customer = {'email': email, 'username': name, 'contact': contact}
+    serializer = CustomerSerializer(data=customer)
+    if serializer.is_valid():
+        serializer.save()
+        customer = Customer.objects.get(username=name, email=email)
+        refresh = RefreshToken.for_user(customer)
+        return Response({
+            'token': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)
                 }
-            }, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            }, status=status.HTTP_200_OK)
 
-    """
-    def put(self, request):
-        serializer = CustomerSerializer(data=request.data)
-        user = Customer.objects.get(email=email)
-        if serializer.is_valid():
-            try:
-                serializer.save()
-            except Customer.IntegrityError:
-                return Response({}, status=status.HTTP_400_BAD_REQUEST)
-            user = Customer.objects.get(email=serializer.data['email'])
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'token': {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token)
-                }
-            }, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    """
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
