@@ -3,8 +3,6 @@ import ProductList from "../components/productComponents/ProductList";
 import "../styles/homePage.css";
 import DisplayData from "../components/commonComponents/DisplayData";
 import SearchBar from "../components/commonComponents/SearchBar";
-import Filter from "../components/commonComponents/Filter";
-import Test from "../components/commonComponents/Test";
 
 function Home() {
   const url = "products/";
@@ -29,7 +27,7 @@ function Home() {
     */
   return (
     <div>
-      <Test />
+      <SearchBar />
       <h1>
         This is Home <i className="fa-solid fa-home"></i>
       </h1>
