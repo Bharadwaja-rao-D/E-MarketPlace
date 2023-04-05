@@ -20,6 +20,7 @@ function SignupBackend({ gtoken, contact }) {
     .post(url, data)
     .then((res) => {
       sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
+      sessionStorage.setItem("profile", JSON.stringify(res.data["profile"]));
       console.log("Added new user");
       navigate("/");
     })
@@ -41,9 +42,7 @@ export default function Signup() {
   return (
     <div className="signup">
       <OTPVeify getContact={getMobile} />
-      {mobile && gtoken && (
-        <SignupBackend gtoken={gtoken} contact={mobile} />
-      )}
+      {mobile && gtoken && <SignupBackend gtoken={gtoken} contact={mobile} />}
     </div>
   );
 }

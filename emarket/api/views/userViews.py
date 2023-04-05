@@ -35,6 +35,7 @@ def get_user_info(token):
     profile = requests.get(url, headers={"Authorization": "Bearer "+token})
     return profile.json()
 
+
 @api_view(['POST'])
 def signin(request):
     data = JSONParser().parse(request)
@@ -53,7 +54,8 @@ def signin(request):
         'token': {
             'refresh': str(refresh),
             'access': str(refresh.access_token)
-        }
+        },
+        'profile': profile
     }, status=status.HTTP_200_OK)
 
 
@@ -76,8 +78,8 @@ def signup(request):
             'token': {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token)
-                }
-            }, status=status.HTTP_200_OK)
+            },
+            'profile': profile
+        }, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-

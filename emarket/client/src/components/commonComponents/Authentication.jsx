@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Authentication() {
   const location = useLocation().pathname;
   const navigate = useNavigate();
-  const profile = sessionStorage.getItem("gtoken");
+  const profile = sessionStorage.getItem("profile");
 
   useEffect(() => {
     if (profile === null) {
@@ -15,5 +15,5 @@ export default function Authentication() {
     }
   });
 
-  return <div></div>;
+  return <></>;
 }
