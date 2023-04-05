@@ -1,5 +1,6 @@
 .image-stack {
-  background-color: var(--grey);
+  /* background-color: var(--grey); */
+  background-color: inherit;
   display: flex;
   justify-content: space-between;
   align-items: center;

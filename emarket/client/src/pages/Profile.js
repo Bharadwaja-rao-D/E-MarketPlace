@@ -1,58 +1,8 @@
 // import DisplayProfile from "../components/userComponents/DisplayProfile";
 import React, { useState, useEffect } from "react";
 import "../styles/profile.css";
-import OTPVeify from "../components/userComponents/otpVerity";
-import useAxiosInstance from "../utils/useAxios";
 import { useNavigate } from "react-router-dom";
-
-function EditContact() {
-  const [change, setChange] = useState(false);
-  const [contact, setContact] = useState(null);
-  const api = useAxiosInstance();
-  const url = "";
-  useEffect(() => {
-    async function changeContact() {
-      // try {
-      //   const response = await api.get(url);
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      // console.log("got here");
-      // console.log(contact);
-      setChange(false);
-    }
-
-    changeContact();
-  }, [contact]);
-
-  const getContact = (val) => {
-    setContact(val);
-  };
-
-  const handleEdit = () => {
-    setChange(true);
-  };
-  if (!change) {
-    return (
-      <div>
-        <button onClick={handleEdit}>Edit Info</button>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <OTPVeify getContact={getContact} />
-        <button
-          onClick={() => {
-            setChange(false);
-          }}
-        >
-          cancel
-        </button>
-      </div>
-    );
-  }
-}
+import EditContact from "../components/userComponents/EditContact";
 
 function Profile() {
   const user = JSON.parse(sessionStorage.getItem("profile"));
@@ -80,7 +30,9 @@ function Profile() {
           </p>
         </div>
       </div>
-      <button onClick={Logout}>Logout</button>
+      <button onClick={Logout} className="logout-btn">
+        Logout <i className="fa fa-sign-out"></i>
+      </button>
       <div className="edit-info">
         <EditContact />
       </div>

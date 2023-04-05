@@ -1,5 +1,11 @@
 :root {
-  --grey: #f1f2f5;
+  --pr1: #a5e8d3;
+  --pr1_dark: #8ac4b1;
+  --pr1_light: #b0f7df;
+  --pr2: #dcdcdd;
+  --pr2_dark: #c3c4c7;
+  --pr2_light: #fefeff;
+  --grey: #dcdcdd;
   --black: black;
   --blue: #a5e8d3;
 }
@@ -16,6 +22,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: medium;
+  /* background-color: burlywood; */
 }
 
 code {

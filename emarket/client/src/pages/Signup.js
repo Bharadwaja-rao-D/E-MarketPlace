@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import settings from "../settings.json";
-import OTPVeify from "../components/userComponents/otpVerity";
+import OTPVeify from "../components/userComponents/otpVerify";
 
 const api_url = settings.api_url;
 
@@ -40,9 +40,11 @@ export default function Signup() {
   };
 
   return (
-    <div className="signup">
-      <OTPVeify getContact={getMobile} />
-      {mobile && gtoken && <SignupBackend gtoken={gtoken} contact={mobile} />}
+    <div className="my-background">
+      <div className="signup">
+        <OTPVeify getContact={getMobile} />
+        {mobile && gtoken && <SignupBackend gtoken={gtoken} contact={mobile} />}
+      </div>
     </div>
   );
 }

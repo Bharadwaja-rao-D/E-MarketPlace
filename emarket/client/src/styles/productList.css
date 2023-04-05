@@ -19,7 +19,7 @@
   margin-top: 0.25rem;
 }
 .product-img {
-  background-color: var(--grey);
+  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
