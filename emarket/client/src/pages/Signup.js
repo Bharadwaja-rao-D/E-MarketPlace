@@ -7,12 +7,10 @@ import OTPVeify from "../components/userComponents/otpVerity";
 
 const api_url = settings.api_url;
 
-function SignupBackend({ profile, contact }) {
+function SignupBackend({ gtoken, contact }) {
   const url = api_url + "users/signup/";
-  console.log(profile);
   const data = {
-    email: profile.email,
-    username: profile.name,
+    token: gtoken,
     contact: contact,
   };
 
@@ -34,7 +32,7 @@ function SignupBackend({ profile, contact }) {
 export default function Signup() {
   //TODO: phone number verification
 
-  const profile = JSON.parse(sessionStorage.getItem("profile"));
+  const gtoken = sessionStorage.getItem("gtoken");
   const [mobile, setMobile] = useState(null);
   const getMobile = (val) => {
     setMobile(val);
@@ -43,8 +41,8 @@ export default function Signup() {
   return (
     <div className="signup">
       <OTPVeify getContact={getMobile} />
-      {mobile && profile && (
-        <SignupBackend profile={profile} contact={mobile} />
+      {mobile && gtoken && (
+        <SignupBackend gtoken={gtoken} contact={mobile} />
       )}
     </div>
   );

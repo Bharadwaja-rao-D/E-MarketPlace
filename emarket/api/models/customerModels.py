@@ -33,7 +33,7 @@ class CustomerManger(BaseUserManager):
 class Customer(AbstractBaseUser):
     email 					= models.EmailField(verbose_name="email", max_length=60, unique=True)
     username 				= models.CharField(max_length=30)
-    contact  				= models.CharField(max_length=10, unique=True)
+    contact  				= models.CharField(max_length=10)
     profile_url             = models.URLField(max_length=120)
 
     date_joined				= models.DateTimeField(verbose_name='date joined', auto_now_add=True)

@@ -7,11 +7,13 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import credentials from "../credentials.json";
 import settings from "../settings.json";
 
-function SigninBackend({ profile }) {
+function SigninBackend({ gtoken }) {
   //console.log("in signin backend");
   const api_url = settings.api_url;
   const url = api_url + "users/signin/";
-  const data = { username: profile.name, email: profile.email };
+  const data = { token: gtoken}
+
+  sessionStorage.setItem("gtoken", JSON.stringify(gtoken));
 
   const navigate = useNavigate();
   axios
@@ -21,43 +23,29 @@ function SigninBackend({ profile }) {
       console.log("go to home ");
       navigate("/"); //redirect to home page
     })
-    .catch((_err) => {
-      navigate("/signup"); //redirect to signup page
+    .catch((err) => {
+        if(err.response.status == 404){
+            navigate("/signup"); //redirect to signup page
+        }
+        else {
+            console.log(err.response.status)
+        }
+
     });
 }
 
 function SigninGoogle() {
   //console.log("in signin google");
 
-  const [user, setUser] = useState(null);
-  const [profile, setProfile] = useState("");
+  const [gtoken, setGtoken] = useState(null);
 
   const login = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
+    onSuccess: (codeResponse) => setGtoken(codeResponse.access_token),
     onError: (error) => console.log("Login Failed:", error),
   });
 
-  //Getting users personal info from google
-  useEffect(() => {
-    if (user) {
-      console.log(user);
-      axios
-        .get(
-          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.access_token}`,
-              Accept: "application/json",
-            },
-          }
-        )
-        .then((res) => {
-          setProfile(res.data);
-          sessionStorage.setItem("profile", JSON.stringify(res.data));
-        })
-        .catch((_err) => {});
-    }
-  }, [user]);
+    console.log(gtoken)
+
 
   return (
     <div className="signin">
@@ -67,7 +55,7 @@ function SigninGoogle() {
       </div>
       <div className="signin-button">
         <button onClick={() => login()}>Sign in with Google </button>
-        {profile && <SigninBackend profile={profile} />}
+        {gtoken && <SigninBackend gtoken={gtoken} />}
       </div>
     </div>
   );
