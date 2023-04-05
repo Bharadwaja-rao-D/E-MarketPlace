@@ -9,6 +9,10 @@ class ImagesSerializer(serializers.ModelSerializer):
         model = Image
         fields = ('image', 'id')
 
+class ProductListSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+
 # Used in the grid view of home page
 # where only name, cost, age and a single image is displayed
 class ProductSerializer(serializers.ModelSerializer):

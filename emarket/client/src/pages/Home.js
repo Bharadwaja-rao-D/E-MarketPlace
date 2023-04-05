@@ -7,7 +7,7 @@ import Filter from "../components/commonComponents/Filter";
 import Test from "../components/commonComponents/Test";
 
 function Home() {
-  const url = "products/?type=buyer";
+  const url = "products/";
 
   /*
   const api = useAxiosInstance();

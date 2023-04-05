@@ -30,6 +30,7 @@ export default function OTPVeify(props) {
     };
     try {
       const response = await axios.post(api_url + "verify_otp/", data);
+      console.log(response);
       props.getContact(mobile);
     } catch (e) {
       console.log(e);

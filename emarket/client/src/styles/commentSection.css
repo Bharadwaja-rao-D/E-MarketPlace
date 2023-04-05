@@ -1,0 +1,14 @@
+.new-comment {
+  display: flex;
+  align-items: center;
+}
+.new-comment i {
+  padding: 0.5rem 0.25rem;
+  border: 1.5px solid black;
+}
+.new-comment i:hover {
+  cursor: pointer;
+}
+/* .new-comment input[type="text"] {
+  border: none;
+} */

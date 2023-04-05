@@ -9,11 +9,12 @@ function NavBar() {
   const location = useLocation().pathname;
   const [showall, setshowall] = useState(true);
   if (location === "/signin" || location === "/signup") {
-    return <div></div>;
+    return <></>;
   }
   // better to chnage this
-  const profile = localStorage.getItem("profile");
+  const profile = sessionStorage.getItem("profile");
   const img_url = profile ? JSON.parse(profile).picture : "";
+  console.log(img_url);
   return (
     <div className="navbar">
       <div className="logo">

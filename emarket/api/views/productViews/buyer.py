@@ -1,11 +1,13 @@
+from rest_framework.generics import GenericAPIView
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.views import APIView, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
+from drf_yasg.utils import swagger_auto_schema
 
-from api.serializers.productSerializers import ProductDetailBuyerSerializer,  ProductSerializer
+from api.serializers.productSerializers import ProductDetailBuyerSerializer, ProductListSerializer,  ProductSerializer
 from api.utils import get_buyer, get_product
 from api.models import  Interested, Product
 
@@ -13,25 +15,45 @@ from api.models import  Interested, Product
 # POST to add a new product
 # TODO: Add different query params: one for search, one for sorting, one for categories and so on...
 
-class Products(APIView):
+class Products(GenericAPIView):
 
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
+    serializer_class = ProductSerializer
 
+    # Will have query params:
+    # 1. search: To get the list of names of products
+    # 2. prefix: To get the grid of products that start with the given prefix
     def get(self, request):
+
+        search = request.GET.get('search')
+        prefix = request.GET.get('prefix')
+
+        if prefix:
+            products = Product.objects.filter(name__icontains=prefix)
+            serilaizer = ProductSerializer(products, many=True)
+            return Response(serilaizer.data)
+
+        if search:
+            products = Product.objects.filter(name__icontains=search).values('id','name')
+            serilaizer = ProductListSerializer(products, many=True)
+            return Response(serilaizer.data)
+
         products = Product.objects.all()
         serilaizer = ProductSerializer(products, many=True)
         return Response(serilaizer.data)
 
 
 # Get to get detailed view of product
-class ProductsDetailedBuyer(APIView):
+class ProductsDetailedBuyer(GenericAPIView):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
+    serializer_class = ProductDetailBuyerSerializer
 
+    #@swagger_auto_schema( request_body=ProductDetailBuyerSerializer)
 
     def get(self, request, pk):
 
@@ -65,11 +87,13 @@ class ProductsDetailedBuyer(APIView):
 
 
 
-class ProductInterestedBuyer(APIView):
+class ProductInterestedBuyer(GenericAPIView):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
+    serializer_class = ProductSerializer
+
 
     # Get products in the cart for grid view
     def get(self, request):

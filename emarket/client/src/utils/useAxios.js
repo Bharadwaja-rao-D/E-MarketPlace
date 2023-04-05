@@ -10,7 +10,7 @@ const api_url = settings.api_url;
 export default function useAxiosInstance() {
   //Defining manually for now
   const [authTokens, setAuthTokens] = useState(
-    JSON.parse(localStorage.getItem("authTokens"))
+    JSON.parse(sessionStorage.getItem("authTokens"))
   );
 
   //console.log(authTokens);
@@ -34,7 +34,7 @@ export default function useAxiosInstance() {
       refresh: authTokens.refresh,
     });
 
-    localStorage.setItem("authTokens", JSON.stringify(res.data));
+    sessionStorage.setItem("authTokens", JSON.stringify(res.data));
     setAuthTokens(res.data);
     req.headers.Authorization = `Bearer ${res.data.access}`;
     return req;
@@ -44,32 +44,31 @@ export default function useAxiosInstance() {
 }
 
 //only for get thing
-export function useAxios(rel_url, options={}){
-    const [apidata, setApiData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+export function useAxios(rel_url, options = {}) {
+  const [apidata, setApiData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    console.log("Called api " + rel_url);
+  console.log("Called api " + rel_url);
 
-    let api = useAxiosInstance();
+  let api = useAxiosInstance();
 
-    const fetchData = async () => {
-            try {
-                let res = await api.get(rel_url);
-                setApiData(res.data);
-            } catch (error) {
-                console.log(error);
-                setError(error.status);
-            }
+  const fetchData = async () => {
+    try {
+      let res = await api.get(rel_url);
+      setApiData(res.data);
+    } catch (error) {
+      console.log(error);
+      setError(error.status);
+    }
 
-        setLoading(false);
-    };
+    setLoading(false);
+  };
 
-    useEffect(() => {
-        //setTimeout(() => {fetchData()}, 1000);
-        fetchData();
-    }, [rel_url]);
+  useEffect(() => {
+    //setTimeout(() => {fetchData()}, 1000);
+    fetchData();
+  }, [rel_url]);
 
-    return { apidata, loading, error };
+  return { apidata, loading, error };
 }
-
