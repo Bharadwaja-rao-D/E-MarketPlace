@@ -28,7 +28,7 @@ const ProductCard = ({
       }}
     >
       <div className="product-img">
-        <img src={base_url + image.image} alt="" />
+      {image && <img src={base_url + image.image} alt="" />}
       </div>
 
       <h1>{name}</h1>

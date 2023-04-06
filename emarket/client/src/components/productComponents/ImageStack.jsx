@@ -18,6 +18,7 @@ export default function ImageStack({ images }) {
   const imagesCount = images.length;
   const [counter, setCounter] = useState(0);
 
+
   const before = () => {
     setCounter((imagesCount + counter - 1) % imagesCount);
   };
