@@ -18,6 +18,7 @@ export default function ImageStack({ images }) {
   const imagesCount = images.length;
   const [counter, setCounter] = useState(0);
 
+
   const before = () => {
     setCounter((imagesCount + counter - 1) % imagesCount);
   };
@@ -28,13 +29,9 @@ export default function ImageStack({ images }) {
 
   return (
     <div className="image-stack">
-      <button onClick={() => before()}>
-        <i className="fa fa-angle-double-left"></i>
-      </button>
+      <i className="fa fa-angle-double-left fa-2x" onClick={() => before()}></i>
       <ImageDisplay index={counter} image_details={images[counter]} />
-      <button onClick={() => after()}>
-        <i className="fa fa-angle-double-right"></i>
-      </button>
+      <i className="fa fa-angle-double-right fa-2x" onClick={() => after()}></i>
     </div>
   );
 }

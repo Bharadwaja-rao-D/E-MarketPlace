@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/signin.css";
+import "../../styles/OTPform.css";
 import axios from "axios";
 import { useState } from "react";
 import settings from "../../settings.json";

@@ -46,16 +46,16 @@ function SigninGoogle() {
   console.log(gtoken);
 
   return (
-    <div className="signin">
-      <div className="signin-header">
+    <div className="my-background">
+      <div className="signin">
         <h2>Welcome to</h2>
         <h2>IITH E-MarketPlace</h2>
-      </div>
-      <div className="signin-button">
-        <button onClick={() => login()}>
-          Sign in with Google <i className="fa fa-google fa-2x"></i>{" "}
-        </button>
-        {gtoken && <SigninBackend gtoken={gtoken} />}
+        <div className="signin-button">
+          <button onClick={() => login()}>
+            Sign in with Google <i className="fa fa-google fa-2x"></i>{" "}
+          </button>
+          {gtoken && <SigninBackend gtoken={gtoken} />}
+        </div>
       </div>
     </div>
   );

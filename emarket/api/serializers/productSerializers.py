@@ -64,21 +64,16 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
         return product
 
-    """
     def update(self, instance, validated_data):
         instance = super().update(instance, validated_data)
+
         # Get the seller id from the view and add it to the serialzer
         uploaded_images = validated_data.pop('uploaded_images')
         product = Product.objects.get(**validated_data)
+        images = Image.objects.filter(product=product)
 
+        images.delete() # Does this delete images from the file system ???
 
-        # Delete the old images
-        for img in instance.images:
-            Image.objects.get(image=img).delete()
-
-
-        print(self.images)
-        # Add new images
         for img in uploaded_images:
             Image.objects.create(product=product, image=img)
 
@@ -86,7 +81,6 @@ class ProductDetailSerializer(serializers.ModelSerializer):
 
         return instance
 
-        """
 
 class ProductDetailBuyerSerializer(serializers.Serializer):
 

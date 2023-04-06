@@ -24,6 +24,8 @@ function AddProduct() {
     e.preventDefault();
     const formData = new FormData(e.target);
     formData.delete("uploaded_images");
+    // const new_imgs = images.sort((a, b) => b.lastModified - a.lastModified);
+
     images.forEach((image) => {
       formData.append("uploaded_images", image);
     });
