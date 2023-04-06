@@ -5,7 +5,7 @@ export default function SellerInfo(props) {
     <div className="sellerinfo">
       <h2>Seller Name:{props.username}</h2>
       <h3>Email ID: {props.email}</h3>
-      {props.contact && <p>Contact No: {props.contact}</p>}
+      {props.contact && <h3>Contact No: {props.contact}</h3>}
     </div>
   );
 }

@@ -5,7 +5,12 @@ import DisplayData from "../components/commonComponents/DisplayData";
 import SearchBar from "../components/commonComponents/SearchBar";
 
 function Home() {
-  const url = "products/";
+  const [url, setURL] = useState("products/");
+
+  const changeUrl = (new_url) => {
+    setURL(new_url);
+    // console.log(new_url);
+  };
 
   /*
   const api = useAxiosInstance();
@@ -27,10 +32,7 @@ function Home() {
     */
   return (
     <div>
-      <SearchBar />
-      <h1>
-        This is Home <i className="fa-solid fa-home"></i>
-      </h1>
+      <SearchBar changeUrl={changeUrl} />
       <div className="products-display">
         <DisplayData url={url} Child={ProductList} nav_to="/product/" />
       </div>
