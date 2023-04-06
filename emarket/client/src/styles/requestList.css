@@ -19,6 +19,11 @@
   padding: 0.25rem;
   margin-right: 1rem;
 }
+.choices button:hover {
+  cursor: pointer;
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 2px 3px var(--pr2);
+}
 .accept {
   background-color: greenyellow;
 }

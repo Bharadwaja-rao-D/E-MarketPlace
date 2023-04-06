@@ -1,13 +1,12 @@
 import { useState } from "react";
 import "../../styles/searchbar.css";
 import useAxiosInstance from "../../utils/useAxios";
-
+import { useNavigate } from "react-router-dom";
 const SearchBar = ({ changeUrl }) => {
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
-  // const related_items = ["laptop", "Lenovo Laptop", "Laptop Cover"];
-  // const related_items = [""];
   const [related_items, setrelated_items] = useState([]);
+  const navigate = useNavigate();
   const api = useAxiosInstance();
 
   const handleInputChange = async (event) => {
@@ -61,7 +60,17 @@ const SearchBar = ({ changeUrl }) => {
         ></i>
         <div className="results">
           {related_items.map((item, index) => {
-            return <p key={index}>{item.name}</p>;
+            return (
+              <p
+                key={index}
+                className="related-item"
+                onClick={() => {
+                  navigate("/product/" + item.id);
+                }}
+              >
+                {item.name}
+              </p>
+            );
           })}
         </div>
       </div>
