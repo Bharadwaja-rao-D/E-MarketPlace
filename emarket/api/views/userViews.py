@@ -1,5 +1,4 @@
 import requests
-from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 from rest_framework import status
@@ -8,8 +7,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from drf_yasg.utils import swagger_auto_schema
-from drf_yasg import openapi
 
 from api.serializers.userSerializers import CustomerSerializer
 from api.models.customerModels import Customer
@@ -83,3 +80,28 @@ def signup(request):
         }, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Contact(APIView):
+
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    # Gives the contact of the caller of api
+    def get(self, request):
+        user_id = get_user_id_from_token(request)
+        user = Customer.objects.get(pk=user_id)
+        return Response ({
+            'contact': user.get_contact()
+            })
+
+    # Gives the contact of the caller of api
+    def post(self, request):
+        user_id = get_user_id_from_token(request)
+        user = Customer.objects.get(pk=user_id)
+        data = JSONParser().parse(request)
+        new_contact = data['contact']
+
+        return Response ({
+            'contact': user.update_contact(new_contact)
+            })
+
