@@ -57,5 +57,10 @@ class Customer(AbstractBaseUser):
     def get_contact(self):
         return self.contact
 
+    def update_contact(self, new_contact):
+        self.contact = new_contact
+        self.save()
+        return self.contact
+
     def __str__(self):
         return self.username
