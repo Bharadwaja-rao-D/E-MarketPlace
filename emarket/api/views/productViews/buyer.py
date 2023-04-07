@@ -104,7 +104,7 @@ class ProductInterestedBuyer(APIView):
         products = [interested_product.product for interested_product in interested_products]
 
         serializer = ProductSerializer(products, many=True)
-        return Response({'interested_products': serializer.data})
+        return Response(serializer.data)
 
     # To add product into the cart
     def post(self, request, pk):
