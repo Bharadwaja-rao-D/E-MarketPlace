@@ -1,21 +1,21 @@
-from rest_framework.generics import GenericAPIView
+from django.db.models import Subquery
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.views import APIView, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
-from drf_yasg.utils import swagger_auto_schema
 
 from api.serializers.productSerializers import ProductDetailBuyerSerializer, ProductListSerializer,  ProductSerializer
-from api.utils import get_buyer, get_product
+from api.utils import get_buyer, get_product, get_user_id_from_token
 from api.models import  Interested, Product
+from api.models.customerModels import Customer
 
 # GET to get grid view of products
 # POST to add a new product
 # TODO: Add different query params: one for search, one for sorting, one for categories and so on...
 
-class Products(GenericAPIView):
+class Products(APIView):
 
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
@@ -46,14 +46,13 @@ class Products(GenericAPIView):
 
 
 # Get to get detailed view of product
-class ProductsDetailedBuyer(GenericAPIView):
+class ProductsDetailedBuyer(APIView):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
     serializer_class = ProductDetailBuyerSerializer
 
-    #@swagger_auto_schema( request_body=ProductDetailBuyerSerializer)
 
     def get(self, request, pk):
 
@@ -87,19 +86,25 @@ class ProductsDetailedBuyer(GenericAPIView):
 
 
 
-class ProductInterestedBuyer(GenericAPIView):
+class ProductInterestedBuyer(APIView):
 
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     authentication_classes = [JWTAuthentication ]
     permission_classes = [IsAuthenticated]
-    serializer_class = ProductSerializer
 
 
     # Get products in the cart for grid view
     def get(self, request):
-        products = Product.objects.all()
-        serilaizer = ProductSerializer(products, many=True)
-        return Response(serilaizer.data)
+        user_id = get_user_id_from_token(request)
+        user = Customer.objects.get(pk=user_id)
+
+        # Perform inner join b/w Interested and Products table
+
+        interested_products = Interested.objects.filter(buyer=user).select_related('product')
+        products = [interested_product.product for interested_product in interested_products]
+
+        serializer = ProductSerializer(products, many=True)
+        return Response({'interested_products': serializer.data})
 
     # To add product into the cart
     def post(self, request, pk):

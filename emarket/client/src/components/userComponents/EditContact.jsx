@@ -3,24 +3,25 @@ import OTPVeify from "./otpVerify";
 import useAxiosInstance from "../../utils/useAxios";
 import "../../styles/editcontact.css";
 
-export default function EditContact() {
+export default function EditContact({ changeContact }) {
   const [change, setChange] = useState(false);
   const [contact, setContact] = useState(null);
   const api = useAxiosInstance();
-  const url = "";
+  const url = "users/contact/";
   useEffect(() => {
-    async function changeContact() {
-      // try {
-      //   const response = await api.get(url);
-      // } catch (error) {
-      //   console.error(error);
-      // }
-      // console.log("got here");
-      // console.log(contact);
+    async function editContact() {
+      try {
+        const data = {
+          contact: contact,
+        };
+        const response = await api.post(url, data);
+      } catch (error) {
+        console.error(error);
+      }
+      changeContact(contact);
       setChange(false);
     }
-
-    changeContact();
+    if (contact !== null) editContact();
   }, [contact]);
 
   const getContact = (val) => {
@@ -48,7 +49,7 @@ export default function EditContact() {
           }}
           className="cancel-btn"
         >
-          cancel
+          cancel<i className="fa fa-times"></i>
         </button>
       </div>
     );

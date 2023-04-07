@@ -1,21 +1,39 @@
 import { useState } from "react";
-import axios from "axios";
 import "../../styles/searchbar.css";
-
-const SearchBar = () => {
+import useAxiosInstance from "../../utils/useAxios";
+import { useNavigate } from "react-router-dom";
+const SearchBar = ({ changeUrl }) => {
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
-  // const related_items = ["laptop", "Lenovo Laptop", "Laptop Cover"];
-  const related_items = [""];
+  const [related_items, setrelated_items] = useState([]);
+  const navigate = useNavigate();
+  const api = useAxiosInstance();
 
-  const handleInputChange = (event) => {
-    setSearchText(event.target.value);
+  const handleInputChange = async (event) => {
+    const new_text = event.target.value;
+    setSearchText(new_text);
     // API cal to get related items
+    //products/?search=text
+    try {
+      const url = "products/?search=" + new_text;
+      const response = await api.get(url);
+      // console.log(response.data);
+      setrelated_items(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+    if (new_text.length === 0) {
+      setrelated_items([]);
+    }
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     //  Need an api call here
+    //products/?prefix=text
     console.log(searchText);
+    const url = "products/?prefix=" + searchText;
+    changeUrl(url);
+    setrelated_items([]);
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -42,7 +60,17 @@ const SearchBar = () => {
         ></i>
         <div className="results">
           {related_items.map((item, index) => {
-            return <p key={index}>{item}</p>;
+            return (
+              <p
+                key={index}
+                className="related-item"
+                onClick={() => {
+                  navigate("/product/" + item.id);
+                }}
+              >
+                {item.name}
+              </p>
+            );
           })}
         </div>
       </div>

@@ -61,9 +61,20 @@ function ProductPage() {
       )}
 
       {data && !data.interested ? (
-        <button onClick={handleInterest}>Interested</button>
+        <div className="interested-btn">
+          <button
+            onClick={handleInterest}
+            style={{ backgroundColor: " rgb(29, 250, 29)" }}
+          >
+            Interested <i className="fa fa-cart-plus fa-xl"></i>
+          </button>
+        </div>
       ) : (
-        <button onClick={handlenotint}>Not Interested</button>
+        <div className="interested-btn">
+          <button onClick={handlenotint} style={{ backgroundColor: "red" }}>
+            Not Interested <i className="fa fa-times fa-xl"></i>
+          </button>
+        </div>
       )}
 
       <div>A component to display comments here</div>

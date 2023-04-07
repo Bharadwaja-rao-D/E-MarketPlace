@@ -113,10 +113,3 @@ class InterestedSerializer(serializers.ModelSerializer):
         model = Interested
         fields = ('buyer', 'accept', 'buyer_id')
 
-"""
-class ProductDetailSellerSerializer(serializers.Serializer):
-
-    product = ProductDetailSerializer(read_only=True)
-    interested_peeps = InterestedSerializer(read_only=True, many=True)
-"""
-

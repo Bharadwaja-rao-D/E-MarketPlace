@@ -50,10 +50,11 @@ export function useAxios(rel_url, options = {}) {
   const [error, setError] = useState(null);
 
   console.log("Called api " + rel_url);
-
   let api = useAxiosInstance();
 
   const fetchData = async () => {
+    setLoading(true);
+    setApiData(null);
     try {
       let res = await api.get(rel_url);
       setApiData(res.data);
@@ -66,7 +67,9 @@ export function useAxios(rel_url, options = {}) {
   };
 
   useEffect(() => {
-    //setTimeout(() => {fetchData()}, 1000);
+    // setTimeout(() => {
+    //   fetchData();
+    // }, 1000);
     fetchData();
   }, [rel_url]);
 

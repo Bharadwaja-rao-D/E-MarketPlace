@@ -16,9 +16,9 @@ export default function OTPVeify(props) {
     const data = {
       mobile_number: mobile,
     };
-
     const response = await axios.post(api_url + "generate_otp/", data);
     setMsg("OTP sent to " + mobile);
+    console.log("Sent OTP");
   };
 
   const verify_otp = async (e) => {

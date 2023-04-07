@@ -19,6 +19,11 @@
   padding: 0.25rem;
   border-radius: 0.5em;
 }
+.buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 2px 2px 2px 3px var(--pr2);
+  cursor: pointer;
+}
 
 .edit-button {
   background-color: antiquewhite;
