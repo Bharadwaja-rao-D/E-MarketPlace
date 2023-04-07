@@ -29,18 +29,25 @@ class Products(APIView):
 
         search = request.GET.get('search')
         prefix = request.GET.get('prefix')
+        sort = request.GET.get('sort')
 
         if prefix:
             products = Product.objects.filter(name__icontains=prefix)
-            serilaizer = ProductSerializer(products, many=True)
-            return Response(serilaizer.data)
+        else:
+            products = Product.objects.all()
+
+        if sort == 'cost-asc':
+            products.order_by('cost')
+        elif sort == 'cost-desc':
+            products.order_by('-cost')
+        elif sort == 'dop':
+            products.order_by('date_of_purchase')
 
         if search:
             products = Product.objects.filter(name__icontains=search).values('id','name')
             serilaizer = ProductListSerializer(products, many=True)
             return Response(serilaizer.data)
 
-        products = Product.objects.all()
         serilaizer = ProductSerializer(products, many=True)
         return Response(serilaizer.data)
 
