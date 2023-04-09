@@ -1,2 +1,2 @@
 from  .customerModels import Customer
-from  .productModels import Product, Comments, Interested, Image
+from  .productModels import Product, Comment, Interested, Image

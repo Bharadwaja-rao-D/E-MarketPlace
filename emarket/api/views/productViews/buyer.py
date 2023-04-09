@@ -1,4 +1,3 @@
-from django.db.models import Subquery
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.views import APIView, status
 from rest_framework.response import Response

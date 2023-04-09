@@ -32,7 +32,7 @@ class Image(models.Model):
         return self.image.name
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     comment = models.CharField(max_length=100)
     product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
     commentor_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
