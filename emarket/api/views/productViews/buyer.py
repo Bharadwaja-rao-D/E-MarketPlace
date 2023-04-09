@@ -37,9 +37,9 @@ class Products(APIView):
             products = Product.objects.all()
 
         if sort == 'cost-asc':
-            products.order_by('cost')
+            products.order_by('selling_cost')
         elif sort == 'cost-desc':
-            products.order_by('-cost')
+            products.order_by('-selling_cost')
         elif sort == 'dop':
             products.order_by('date_of_purchase')
 
