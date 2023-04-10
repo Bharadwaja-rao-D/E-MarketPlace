@@ -5,6 +5,7 @@ import Loading from "./Loading";
 //This component fetches the data, displays the loading page and then calls the child prop when data is recieved
 export default function DisplayData({ url, Child, ...rest }) {
   const { apidata, loading, error } = useAxios(url);
+  console.log(apidata);
   return (
     <div className="display-data">
       {loading && <Loading />}

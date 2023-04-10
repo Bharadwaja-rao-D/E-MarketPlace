@@ -6,14 +6,14 @@ const SearchBar = ({ changeUrl }) => {
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
   const [related_items, setrelated_items] = useState([]);
+  const [order, setOrder] = useState(true);
+  const [filter, setFilter] = useState("cost-asc");
   const navigate = useNavigate();
   const api = useAxiosInstance();
 
   const handleInputChange = async (event) => {
     const new_text = event.target.value;
     setSearchText(new_text);
-    // API cal to get related items
-    //products/?search=text
     try {
       const url = "products/?search=" + new_text;
       const response = await api.get(url);
@@ -28,10 +28,7 @@ const SearchBar = ({ changeUrl }) => {
   };
 
   const handleSearch = async () => {
-    //  Need an api call here
-    //products/?prefix=text
-    console.log(searchText);
-    const url = "products/?prefix=" + searchText;
+    const url = "/products/?prefix=" + searchText + "&sort=" + filter;
     changeUrl(url);
     setrelated_items([]);
   };
@@ -41,7 +38,13 @@ const SearchBar = ({ changeUrl }) => {
     }
   };
   const handleChoice = (event) => {
-    console.log(event.target.value);
+    const choice = event.target.value;
+    if (choice == "cost") {
+      setFilter(order ? "cost-asc" : "cost-desc");
+    } else {
+      setFilter("dop");
+    }
+    //products/?prefix=searchTest&sort=cost-asc cost-desc dop
   };
   return (
     <div className="searchbar">
@@ -86,9 +89,13 @@ const SearchBar = ({ changeUrl }) => {
                 type="radio"
                 name="option"
                 value="cost"
-                onChange={handleChoice}
+                onClick={handleChoice}
               />
-              Cost
+              Cost{" "}
+              <i
+                className={order ? "fa fa-arrow-up" : "fa fa-arrow-down"}
+                onClick={() => setOrder(!order)}
+              ></i>
             </label>
             <label>
               <input

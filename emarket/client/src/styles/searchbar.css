@@ -4,9 +4,6 @@
   align-items: center;
   margin: 1rem 5rem;
   padding: 0rem 1rem;
-  /* background-color: red; */
-  /* position: relative; */
-  /* z-index: -1; */
 }
 
 .search {
@@ -74,6 +71,7 @@
   border: 1px solid #dbdbdb;
   border-radius: 0.25rem;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1);
+  width: 400%;
 }
 .filter-options label {
   padding: 0.25rem 0.25rem;
@@ -83,11 +81,22 @@
   cursor: pointer;
   background-color: var(--pr2);
 }
+.filter-options label i {
+  margin-left: 1rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+.filter-options label i:hover {
+  background-color: white;
+}
 @media only screen and (max-width: 750px) {
   .searchbar {
     margin: 1rem 1rem;
   }
   .search {
     width: 70%;
+  }
+  .filter-options {
+    width: auto;
   }
 }
