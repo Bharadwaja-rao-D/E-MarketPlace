@@ -77,8 +77,7 @@ function ProductPage() {
         </div>
       )}
 
-      <div>A component to display comments here</div>
-      <CommentSection comment_list={[]} />
+      <CommentSection id={id} />
     </div>
   );
 }

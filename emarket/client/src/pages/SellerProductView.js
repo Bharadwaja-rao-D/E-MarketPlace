@@ -6,6 +6,7 @@ import ProductInfo from "../components/productComponents/ProductInfo";
 import ImageStack from "../components/productComponents/ImageStack";
 import RequestList from "../components/userComponents/RequestList";
 import Loading from "../components/commonComponents/Loading";
+import CommentSection from "../components/userComponents/CommentSection";
 // A detailed product display page
 function MyProductPage() {
   // Getting parameters from the url
@@ -15,8 +16,10 @@ function MyProductPage() {
   const [data, setData] = useState(null);
   const navigate = useNavigate();
 
-    const {apidata } = useAxios(url)
-    const {apidata: interested_peeps} = useAxios("products/seller/interested/" + id + "/")
+  const { apidata } = useAxios(url);
+  const { apidata: interested_peeps } = useAxios(
+    "products/seller/interested/" + id + "/"
+  );
 
   const handleEditClick = () => {
     navigate("/myproducts/edit/" + id);
@@ -57,9 +60,12 @@ function MyProductPage() {
         </button>
       </div>
       {/* the comments and requests goes here */}
-          <div>
-            {interested_peeps && <RequestList interested_peeps={interested_peeps} />}
-          </div>
+      <div>
+        {interested_peeps && (
+          <RequestList interested_peeps={interested_peeps} />
+        )}
+      </div>
+      <CommentSection id={id} />
     </div>
   );
 }
