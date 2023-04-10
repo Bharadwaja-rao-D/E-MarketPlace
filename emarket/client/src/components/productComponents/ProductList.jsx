@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../styles/productList.css";
 import { useNavigate } from "react-router-dom";
 import settings from "../../settings.json";
+import Notification from "../commonComponents/Notification";
 
 const base_url = settings.base_url;
 
@@ -27,8 +28,9 @@ const ProductCard = ({
         handleClick(id);
       }}
     >
+      <Notification count={0} />
       <div className="product-img">
-      {image && <img src={base_url + image.image} alt="" />}
+        {image && <img src={base_url + image.image} alt="" />}
       </div>
 
       <h1>{name}</h1>

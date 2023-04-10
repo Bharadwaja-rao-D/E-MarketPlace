@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import "../../styles/navbar.css";
+import Notification from "./Notification";
 
 function NavBar() {
   // This is not a good way for rendering
@@ -32,6 +33,7 @@ function NavBar() {
         </li>
         <li className="item">
           <a href="/myproducts">My Products</a>
+          <Notification count={0} />
         </li>
         <li className="item">
           <a href="/soldproducts">Sold Products</a>
