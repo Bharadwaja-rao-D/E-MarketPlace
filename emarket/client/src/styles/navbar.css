@@ -111,6 +111,7 @@ a {
   .navbar {
     grid-template-columns: auto 1fr 1rem 1fr;
     gap: 0rem;
+    /* position: relative; */
   }
   .right {
     grid-column: 4/5;
@@ -121,7 +122,9 @@ a {
   }
 
   .mobile-navitems {
-    position: relative;
+    position: absolute;
+    top: 100%;
+    width: 100%;
     z-index: 99;
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,

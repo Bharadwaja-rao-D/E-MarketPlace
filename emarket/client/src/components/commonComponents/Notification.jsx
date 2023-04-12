@@ -1,10 +1,10 @@
 import React from "react";
 import "../../styles/notification.css";
 
-export default function Notification({ count }) {
+export default function Notification() {
   return (
     <div className="notification-badge">
-      {count > 0 && <span className="badge">{count}</span>}
+      <div className="badge"></div>
     </div>
   );
 }

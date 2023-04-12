@@ -13,6 +13,7 @@ const ProductCard = ({
   selling_cost,
   date_of_purchase,
   image,
+  notification,
   nav_to,
 }) => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const ProductCard = ({
         handleClick(id);
       }}
     >
-      <Notification count={0} />
+      {notification && nav_to === "/myproducts/" && <Notification />}
       <div className="product-img">
         {image && <img src={base_url + image.image} alt="" />}
       </div>

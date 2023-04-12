@@ -33,7 +33,7 @@ function NavBar() {
         </li>
         <li className="item">
           <a href="/myproducts">My Products</a>
-          <Notification count={0} />
+          {/* <Notification /> */}
         </li>
         <li className="item">
           <a href="/soldproducts">Sold Products</a>
