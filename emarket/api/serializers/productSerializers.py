@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from api.models import Product, Image
 from api.models import Customer
-from api.models.productModels import Interested
+from api.models.productModels import Interested, SoldProduct
 from api.serializers.userSerializers import CustomerSerializer
 
 class ImagesSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'date_of_purchase', 'image')
+        fields = ('id', 'name', 'actual_cost', 'selling_cost', 'date_of_purchase', 'image', 'notification')
 
     def to_representation(self, instance):
         representation =  super().to_representation(instance)
@@ -40,8 +40,9 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductDetailSerializer(serializers.ModelSerializer):
     images = ImagesSerializer(many=True, read_only=True) # To send images present in db
     uploaded_images = serializers.ListField(
-            child=serializers.ImageField(allow_empty_file=False, use_url=False),
-            write_only=True
+            child=serializers.ImageField(allow_empty_file=True, use_url=False),
+            required=False,
+            write_only=True,
             ) # To add/upload new images into the db
     seller_id = serializers.IntegerField(read_only=True)
 
@@ -56,11 +57,18 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         seller_id = self.context.get('seller_id')
         seller = Customer.objects.get(pk=seller_id)
         validated_data['seller'] = seller
-        uploaded_images = validated_data.pop('uploaded_images')
+
+        if 'uploaded_images' in validated_data:
+            uploaded_images = validated_data.pop('uploaded_images')
+
         product = Product.objects.create(**validated_data)
 
-        for img in uploaded_images:
-            Image.objects.create(product=product, image=img)
+        if 'uploaded_images' in validated_data:
+            uploaded_images = validated_data.pop('uploaded_images')
+            for img in uploaded_images:
+                Image.objects.create(product=product, image=img)
+        else:
+            Image.objects.create(product=product)
 
         return product
 
@@ -113,3 +121,8 @@ class InterestedSerializer(serializers.ModelSerializer):
         model = Interested
         fields = ('buyer', 'accept', 'buyer_id')
 
+
+class SoldProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SoldProduct
+        fields = "__all__"

@@ -6,9 +6,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from api.serializers.productSerializers import  InterestedSerializer,   ProductDetailSerializer, ProductSerializer
+from api.serializers.productSerializers import  InterestedSerializer,   ProductDetailSerializer, ProductSerializer, SoldProductSerializer
 from api.utils import get_product, get_user_id_from_token
 from api.models import  Interested, Product
+from api.models.productModels import SoldProduct
 
 class ProductsSeller(APIView):
 
@@ -42,6 +43,7 @@ class ProductDetailedSeller(APIView):
     permission_classes = [IsAuthenticated]
 
     # Get request to get the info that is displayed in myproduct/:id page
+    # Here the notification should become false
     def get(self, request, pk):
 
         caller_id = get_user_id_from_token(request)
@@ -52,6 +54,8 @@ class ProductDetailedSeller(APIView):
             return Response(data={"message": "Accessible only to seller"},status=status.HTTP_403_FORBIDDEN)
 
         serializer = ProductDetailSerializer(product)
+        product.notification = False
+        product.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # To update the product
@@ -126,3 +130,19 @@ class ProductInterestedSeller(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+class SoldProducts(APIView):
+
+    authentication_classes = [JWTAuthentication ]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        seller_id = get_user_id_from_token(request)
+        sold_products = SoldProduct.objects.filter(seller=seller_id)
+        serializer = SoldProductSerializer(sold_products)
+        return Response(serializer.data)
+
+    def post(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        # Think a way of getting the first image

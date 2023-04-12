@@ -14,17 +14,18 @@ class Product(models.Model):
     name = models.CharField(max_length=30)
     actual_cost = models.PositiveIntegerField()
     selling_cost = models.PositiveIntegerField()
-    description = models.CharField(max_length=100)
+    description = models.TextField()
     date_of_purchase = models.DateField()
     seller = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='seller_id')
+    notification = models.BooleanField(default=False)
 
     def __str__(self):
         return "product: %s, selling cost: %s and desc: %s" % (self.name, self.selling_cost, self.description)
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to=user_images_path)
+    image = models.ImageField(upload_to=user_images_path, default='images/core/no_image.png')
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='images')
 
@@ -33,12 +34,12 @@ class Image(models.Model):
 
 
 class Comment(models.Model):
-    comment = models.CharField(max_length=100)
-    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    commentor_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    comment = models.TextField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    commentor = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "product: %s, commentor: %s and comment: %s" % (self.product_id, self.commentor_id, self.comment)
+        return "product: %s, commentor: %s and comment: %s" % (self.product, self.commentor, self.comment)
 
 
 class Interested(models.Model):
@@ -59,3 +60,14 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
 
+
+def user_sold_images_path(instance, filename):
+    return 'images/{0}/{1}'.format(instance.product.seller.id, filename)
+
+class SoldProduct(models.Model):
+    name = models.CharField(max_length=30)
+    selling_cost = models.PositiveIntegerField()
+    date_of_purchase = models.DateField()
+    seller = models.ForeignKey(
+        Customer, on_delete=models.CASCADE, related_name='sellerId')
+    image = models.ImageField(upload_to=user_sold_images_path)

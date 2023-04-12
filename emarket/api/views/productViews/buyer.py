@@ -113,6 +113,7 @@ class ProductInterestedBuyer(APIView):
         return Response(serializer.data)
 
     # To add product into the cart
+    # Here the notification field in the product will become true
     def post(self, request, pk):
 
         product = get_product(pk)
@@ -125,6 +126,8 @@ class ProductInterestedBuyer(APIView):
 
         try:
             interest.save()
+            product.notification = True
+            product.save()
             return Response(status=status.HTTP_200_OK)
         except IntegrityError :
             return Response(data={"message": "product already added to cart"},status=status.HTTP_409_CONFLICT)

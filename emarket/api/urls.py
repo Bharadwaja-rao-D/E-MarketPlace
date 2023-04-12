@@ -32,6 +32,10 @@ urlpatterns = [
     path('products/seller/<int:pk>/', seller.ProductDetailedSeller.as_view()),
     path('products/seller/interested/<int:pk>/', seller.ProductInterestedSeller.as_view()),
 
+    # For sold products
+    path('products/sold/', seller.SoldProducts.as_view()),
+    path('products/sold/interested/<int:pk>/', seller.ProductInterestedSeller.as_view()),
+
     # For comments
     path('comments/<int:pk>', comments.Comments.as_view()),
 
