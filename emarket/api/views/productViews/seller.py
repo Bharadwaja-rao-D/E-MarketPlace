@@ -2,6 +2,7 @@
 
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.views import APIView, status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -10,6 +11,20 @@ from api.serializers.productSerializers import  InterestedSerializer,   ProductD
 from api.utils import get_product, get_user_id_from_token
 from api.models import  Interested, Product
 from api.models.productModels import SoldProduct
+
+
+class Notification(APIView):
+
+    authentication_classes = [JWTAuthentication ]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_id = get_user_id_from_token(request)
+        notifications = Product.objects.filter(seller_id=user_id, notification=True)
+        if len(notifications):
+            return Response(True)
+        else:
+            return Response(False)
 
 class ProductsSeller(APIView):
 

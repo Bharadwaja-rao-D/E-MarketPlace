@@ -30,6 +30,7 @@ urlpatterns = [
     #For Sellers side
     path('products/seller/', seller.ProductsSeller.as_view()),
     path('products/seller/<int:pk>/', seller.ProductDetailedSeller.as_view()),
+    path('products/seller/notifications/', seller.Notification.as_view()),
     path('products/seller/interested/<int:pk>/', seller.ProductInterestedSeller.as_view()),
 
     # For sold products
