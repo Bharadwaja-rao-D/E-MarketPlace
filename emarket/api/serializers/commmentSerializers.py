@@ -29,6 +29,6 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation =  super().to_representation(instance)
-        representation['commentor'] = str(instance.commentor_id)
+        representation['commentor'] = str(instance.commentor)
 
         return representation
