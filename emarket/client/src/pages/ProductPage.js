@@ -6,6 +6,7 @@ import ProductInfo from "../components/productComponents/ProductInfo";
 import SellerInfo from "../components/userComponents/SellerInfo";
 import ImageStack from "../components/productComponents/ImageStack";
 import CommentSection from "../components/userComponents/CommentSection";
+import Alert from "../components/commonComponents/Alert";
 
 function ProductPage() {
   const { id } = useParams();
@@ -13,6 +14,7 @@ function ProductPage() {
   const navigte = useNavigate();
   const url = "products/" + id;
   const [data, setData] = useState(null);
+  const [alert, setAlert] = useState(false);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -34,6 +36,7 @@ function ProductPage() {
     } catch (error) {
       console.error(error);
     }
+    setAlert(false);
   };
   const handlenotint = async () => {
     try {
@@ -42,38 +45,56 @@ function ProductPage() {
     } catch (error) {
       console.error(error);
     }
+    setAlert(false);
   };
-
+  if (data === null) {
+    return <></>;
+  }
   return (
     <div className="productpage">
-      {data && (
-        <div className="productdata">
-          <div className="product-imgs">
-            <ImageStack images={data.product.images} />
-          </div>
-          <div className="buyer-product-info">
-            <ProductInfo {...data.product} />
-          </div>
-          <div className="buyer-seller-info">
-            <SellerInfo {...data.seller} />
-          </div>
+      <div className="productdata">
+        <div className="product-imgs">
+          <ImageStack images={data.product.images} />
         </div>
-      )}
+        <div className="buyer-product-info">
+          <ProductInfo {...data.product} />
+        </div>
+        <div className="buyer-seller-info">
+          <SellerInfo {...data.seller} />
+        </div>
+      </div>
 
-      {data && !data.interested ? (
+      {!data.interested ? (
         <div className="interested-btn">
           <button
-            onClick={handleInterest}
+            onClick={() => setAlert(true)}
             style={{ backgroundColor: " rgb(29, 250, 29)" }}
           >
             Interested <i className="fa fa-cart-plus fa-xl"></i>
           </button>
+          {alert && (
+            <Alert
+              message="Are you sure you want to add product to your cart?"
+              onYesClick={handleInterest}
+              onNoClick={() => setAlert(false)}
+            />
+          )}
         </div>
       ) : (
         <div className="interested-btn">
-          <button onClick={handlenotint} style={{ backgroundColor: "red" }}>
+          <button
+            onClick={() => setAlert(true)}
+            style={{ backgroundColor: "red" }}
+          >
             Not Interested <i className="fa fa-times fa-xl"></i>
           </button>
+          {alert && (
+            <Alert
+              message="Are you sure you want to remove product from your cart?"
+              onYesClick={handlenotint}
+              onNoClick={() => setAlert(false)}
+            />
+          )}
         </div>
       )}
 

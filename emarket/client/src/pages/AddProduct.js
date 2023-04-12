@@ -2,10 +2,12 @@ import "../styles/addProduct.css";
 import React, { useState } from "react";
 import useAxiosInstance from "../utils/useAxios";
 import { useNavigate } from "react-router-dom";
+import Alert from "../components/commonComponents/Alert";
 
 function AddProduct() {
   const [images, setImages] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
+  const [formdata, setFormdata] = useState();
+  const [alert, setAlert] = useState(false);
   const navigte = useNavigate();
   const url = "products/seller/";
   const api = useAxiosInstance();
@@ -20,17 +22,9 @@ function AddProduct() {
     // Need more clarity on this
     // How to change form data?
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    formData.delete("uploaded_images");
-    // const new_imgs = images.sort((a, b) => b.lastModified - a.lastModified);
-
-    images.forEach((image) => {
-      formData.append("uploaded_images", image);
-    });
+  const sendData = async () => {
     try {
-      const response = await api.post(url, formData);
+      const response = await api.post(url, formdata);
       // setImageUrls(response.data.image_urls);
       console.log(response);
     } catch (error) {
@@ -38,6 +32,18 @@ function AddProduct() {
     }
     // display a successfully uploaded banner and then navigate in 2 to 5 secs
     navigte("/myproducts");
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const new_formdata = new FormData(e.target);
+    new_formdata.delete("uploaded_images");
+    // const new_imgs = images.sort((a, b) => b.lastModified - a.lastModified);
+
+    images.forEach((image) => {
+      new_formdata.append("uploaded_images", image);
+    });
+    setFormdata(new_formdata);
+    setAlert(true);
   };
 
   return (
@@ -101,6 +107,13 @@ function AddProduct() {
 
         <input type="submit" value="Add Product" />
       </form>
+      {alert && (
+        <Alert
+          message="Are you sure you want to add Product?"
+          onYesClick={sendData}
+          onNoClick={() => setAlert(false)}
+        />
+      )}
     </div>
   );
 }

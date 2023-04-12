@@ -7,6 +7,7 @@ import ImageStack from "../components/productComponents/ImageStack";
 import RequestList from "../components/userComponents/RequestList";
 import Loading from "../components/commonComponents/Loading";
 import CommentSection from "../components/userComponents/CommentSection";
+import Alert from "../components/commonComponents/Alert";
 // A detailed product display page
 function MyProductPage() {
   // Getting parameters from the url
@@ -14,6 +15,8 @@ function MyProductPage() {
   const api = useAxiosInstance();
   const url = "products/seller/" + id + "/";
   const [data, setData] = useState(null);
+  const [alert, setAlert] = useState(false);
+
   const navigate = useNavigate();
 
   const { apidata } = useAxios(url);
@@ -52,12 +55,36 @@ function MyProductPage() {
         <button onClick={handleEditClick} className="edit-button">
           Edit Info <i className="fa fa-edit"></i>
         </button>
-        <button onClick={handleSold} className="sold-button">
+        <button
+          onClick={() => {
+            setAlert(1);
+          }}
+          className="sold-button"
+        >
           Mark as sold <i className="fa fa-check"></i>
         </button>
-        <button onClick={handleDelete} className="delete-button">
+        {alert === 1 && (
+          <Alert
+            message="Are you sure you want to Mark the product as sold?"
+            onYesClick={handleSold}
+            onNoClick={() => setAlert(false)}
+          />
+        )}
+        <button
+          onClick={() => {
+            setAlert(2);
+          }}
+          className="delete-button"
+        >
           Delete Product <i className="fa fa-trash" aria-hidden="true"></i>
         </button>
+        {alert === 2 && (
+          <Alert
+            message="Are you sure you want to Delete Product?"
+            onYesClick={handleDelete}
+            onNoClick={() => setAlert(false)}
+          />
+        )}
       </div>
       {/* the comments and requests goes here */}
       <div>

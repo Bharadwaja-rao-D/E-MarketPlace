@@ -24,6 +24,7 @@ function App() {
     "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
     "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
   ];
+  console.log(sessionStorage.getItem("profile"));
 
   return (
     <Router>

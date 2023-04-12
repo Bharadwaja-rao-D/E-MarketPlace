@@ -2,8 +2,10 @@ import "../styles/addProduct.css";
 import React, { useState, useEffect } from "react";
 import useAxiosInstance from "../utils/useAxios";
 import { useNavigate, useParams } from "react-router-dom";
+import Alert from "../components/commonComponents/Alert";
 
 function Edit() {
+  const [alert, setAlert] = useState(false);
   const [images, setImages] = useState([]);
   const [data, setData] = useState(null);
   const [name, setName] = useState("name");
@@ -11,6 +13,7 @@ function Edit() {
   const [selling_cost, setSC] = useState(100);
   const [description, setDescriprion] = useState("test desc");
   const [dop, setdop] = useState("2023-01-03");
+  const [formdata, setFormdata] = useState();
   const navigte = useNavigate();
   const { id } = useParams();
   const url = "products/seller/" + id + "/";
@@ -18,7 +21,6 @@ function Edit() {
 
   // Get Data by api call
   useEffect(() => {
-    console.log("called API");
     async function fetchData() {
       try {
         const response = await api.get(url);
@@ -49,15 +51,9 @@ function Edit() {
     images.splice(idx, 1);
     setImages([...images]);
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    formData.delete("uploaded_images");
-    images.forEach((image) => {
-      formData.append("uploaded_images", image);
-    });
+  const sendData = async () => {
     try {
-      const response = await api.put(url, formData);
+      const response = await api.put(url, formdata);
       // setImageUrls(response.data.image_urls);
       console.log(response);
     } catch (error) {
@@ -65,6 +61,17 @@ function Edit() {
     }
     // display a successfully uploaded banner and then navigate in 2 to 5 secs
     navigte("/myproducts");
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const new_formdata = new FormData(e.target);
+    console.log(new_formdata);
+    new_formdata.delete("uploaded_images");
+    images.forEach((image) => {
+      new_formdata.append("uploaded_images", image);
+    });
+    setFormdata(new_formdata);
+    setAlert(true);
   };
 
   if (data === null) {
@@ -156,6 +163,13 @@ function Edit() {
 
         <input type="submit" value="Edit Product" />
       </form>
+      {alert && (
+        <Alert
+          message="Are you sure you want to edit Product?"
+          onYesClick={sendData}
+          onNoClick={() => setAlert(false)}
+        />
+      )}
     </div>
   );
 }
