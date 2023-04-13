@@ -21,8 +21,12 @@ export default function Alert({ message, onYesClick, onNoClick }) {
       <div className="alert-content">
         <p>{message}</p>
         <div className="alert-buttons">
-          <button onClick={handleYesClick}>Yes</button>
-          <button onClick={handleNoClick}>No</button>
+          <button onClick={handleYesClick}>
+            Yes <i className="fa fa-check"></i>
+          </button>
+          <button onClick={handleNoClick}>
+            No <i className="fa fa-times"></i>
+          </button>
         </div>
       </div>
     </div>
