@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useAxiosInstance from "../utils/useAxios";
-import "../styles/productPage.css";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import SellerInfo from "../components/userComponents/SellerInfo";
 import ImageStack from "../components/productComponents/ImageStack";
 import CommentSection from "../components/userComponents/CommentSection";
 import Alert from "../components/commonComponents/Alert";
+import "../styles/productPage.css";
 
 function ProductPage() {
   const { id } = useParams();

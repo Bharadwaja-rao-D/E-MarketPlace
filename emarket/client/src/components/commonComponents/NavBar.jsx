@@ -61,6 +61,7 @@ function NavBar() {
         <a href="#" onClick={() => setshowall(!showall)}>
           <i className="fa-solid fa-bars"></i>
         </a>
+        {/* {notification && <Notification />} */}
       </div>
       <div className="right">
         <div className="cart">

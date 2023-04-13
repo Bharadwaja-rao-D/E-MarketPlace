@@ -82,6 +82,7 @@ function RequestCard({ index, buyer }) {
 export default function RequestList({ interested_peeps }) {
   return (
     <div className="request-list">
+      <h3>Request List:</h3>
       {interested_peeps.map((user, idx) => {
         return <RequestCard key={idx} buyer={user} />;
       })}

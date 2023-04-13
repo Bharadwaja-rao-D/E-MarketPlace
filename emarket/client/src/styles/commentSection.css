@@ -3,9 +3,9 @@
   flex-direction: column;
   max-width: 80%;
   margin: 2rem auto;
-  padding: 2rem;
+  padding: 1rem;
   background-color: var(--pr1_light);
-  border-radius: 3rem;
+  border-radius: 1rem;
   box-shadow: 4px 4px 4px rgba(104, 104, 104, 0.3),
     4px 4px 4px rgba(140, 255, 251, 0.15);
 }
@@ -35,7 +35,10 @@
   border-radius: 50%;
 }
 .comment-text {
-  padding-left: 1rem;
+  padding: 1rem 0rem;
+  /* text-align: justify;
+  text-justify: auto;
+  word-break: break-all; */
 }
 
 .new-comment {
@@ -58,3 +61,17 @@
 /* .new-comment input[type="text"] {
   border: none;
 } */
+
+@media only screen and (max-width: 600px) {
+  .commentsection {
+    margin: 1rem 1rem;
+    max-width: 100%;
+  }
+  .comment {
+    margin: 0.5rem 0rem;
+  }
+  .new-comment {
+    margin: 0.5rem 0rem;
+    margin-top: 1rem;
+  }
+}

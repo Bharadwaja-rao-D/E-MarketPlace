@@ -10,7 +10,6 @@ import MyProductPage from "./pages/SellerProductView";
 import Edit from "./pages/ProductEdit";
 import NavBar from "./components/commonComponents/NavBar";
 import SoldProducts from "./pages/SoldProducts";
-import MarkAsSold from "./pages/MarkAsSold";
 import Profile from "./pages/Profile";
 import AddProduct from "./pages/AddProduct";
 import AllLinks from "./components/userComponents/AllLinks";
@@ -47,7 +46,6 @@ function App() {
         <Route exact path="/myproducts/:id" element={<MyProductPage />}></Route>
         <Route exact path="/myproducts/edit/:id" element={<Edit />}></Route>
         <Route path="product/:id" element={<ProductPage />} />
-        <Route path="mark-as-sold/:id" element={<MarkAsSold />} />
 
         <Route path="image-stack" element={<ImageStack images={images} />} />
       </Routes>

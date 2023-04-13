@@ -55,7 +55,7 @@ input[type="submit"]:hover {
   display: flex;
   flex-direction: column;
   background-color: var(--grey);
-  border-radius: 1rem;
+  border-radius: 0.5rem;
 }
 
 .uploaded_image img {
