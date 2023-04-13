@@ -1,9 +1,14 @@
 import React from "react";
-import { Product_data } from "../data";
 import ProductList from "../components/productComponents/ProductList";
+import DisplayData from "../components/commonComponents/DisplayData";
 
 function SoldProducts() {
-  return <ProductList data={Product_data}></ProductList>;
+    const url = "products/sold/";
+    return (
+      <div className="products-display">
+        <DisplayData url={url} Child={ProductList} nav_to="" />
+      </div>
+    );
 }
 
 export default SoldProducts;

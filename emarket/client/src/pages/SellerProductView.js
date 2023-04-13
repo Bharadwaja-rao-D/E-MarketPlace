@@ -27,14 +27,12 @@ function MyProductPage() {
   const handleEditClick = () => {
     navigate("/myproducts/edit/" + id);
   };
-  const handleSold = () => {
-    console.log("Api call to mark the product as sold and navigate back");
-    // cant go back after navigae navigate in such a way
-    // navigate("/myproducts");
+  const handleSold = async () => {
+    const response = await api.post("products/sold/" + id + "/");
+    console.log(response);
+    navigate("/myproducts");
   };
   const handleDelete = async () => {
-    console.log("Api call to delete the product ");
-    // cant go back after navigae navigate in such a way
     const response = await api.delete("products/seller/" + id + "/");
     console.log(response);
     navigate("/myproducts");

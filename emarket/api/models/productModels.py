@@ -70,7 +70,11 @@ def user_sold_images_path(instance, filename):
 class SoldProduct(models.Model):
     name = models.CharField(max_length=30)
     selling_cost = models.PositiveIntegerField()
+    actual_cost = models.PositiveIntegerField()
     date_of_purchase = models.DateField()
     seller = models.ForeignKey(
         Customer, on_delete=models.CASCADE, related_name='sellerId')
     image = models.ImageField(upload_to=user_sold_images_path)
+
+    def __str__(self):
+        return "product: %s, selling cost: %s " % (self.name, self.selling_cost)

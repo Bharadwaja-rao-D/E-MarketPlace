@@ -157,7 +157,7 @@ class SoldProducts(APIView):
     def get(self, request):
         seller_id = get_user_id_from_token(request)
         sold_products = SoldProduct.objects.filter(seller=seller_id)
-        serializer = SoldProductSerializer(sold_products)
+        serializer = SoldProductSerializer(sold_products, many=True)
         return Response(serializer.data)
 
     def post(self, request, pk):
@@ -183,8 +183,11 @@ class SoldProducts(APIView):
         shutil.copy(image_path, dest_path)
 
         product_data = ser.data
-        sold_product = SoldProduct(name = product_data['name'], selling_cost = product_data['selling_cost'],
-                                   date_of_purchase = product_data['date_of_purchase'], image = dest_path_name , seller = product.seller)
+        sold_product = SoldProduct(name = product_data['name'],
+                                   selling_cost = product_data['selling_cost'],
+                                   actual_cost = product_data['actual_cost'],
+                                   date_of_purchase = product_data['date_of_purchase'],
+                                   image = dest_path_name , seller = product.seller)
 
         sold_product.save()
         product.delete()
