@@ -29,6 +29,7 @@ const SearchBar = ({ changeUrl }) => {
 
   const handleSearch = async () => {
     const url = "/products/?prefix=" + searchText + "&sort=" + filter;
+      console.log(url)
     changeUrl(url);
     setrelated_items([]);
   };

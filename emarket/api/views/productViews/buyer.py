@@ -10,6 +10,10 @@ from api.utils import get_buyer, get_product, get_user_id_from_token
 from api.models import  Interested, Product
 from api.models.customerModels import Customer
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 # GET to get grid view of products
 # POST to add a new product
 # TODO: Add different query params: one for search, one for sorting, one for categories and so on...
@@ -30,17 +34,20 @@ class Products(APIView):
         prefix = request.GET.get('prefix')
         sort = request.GET.get('sort')
 
-        if prefix:
-            products = Product.objects.filter(name__icontains=prefix)
-        else:
-            products = Product.objects.all()
+        order = 'name'
 
         if sort == 'cost-asc':
-            products.order_by('selling_cost')
+            order = 'selling_cost'
         elif sort == 'cost-desc':
-            products.order_by('-selling_cost')
+            order = '-selling_cost'
         elif sort == 'dop':
-            products.order_by('date_of_purchase')
+            order = '-date_of_purchase'
+
+        if prefix:
+            products = Product.objects.filter(name__icontains=prefix).order_by(order)
+        else:
+            products = Product.objects.all().order_by(order)
+
 
         if search:
             products = Product.objects.filter(name__icontains=search).values('id','name')

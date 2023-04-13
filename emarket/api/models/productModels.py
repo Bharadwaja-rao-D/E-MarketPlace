@@ -21,7 +21,7 @@ class Product(models.Model):
     notification = models.BooleanField(default=False)
 
     def __str__(self):
-        return "product: %s, selling cost: %s and desc: %s" % (self.name, self.selling_cost, self.description)
+        return "product: %s, selling cost: %s " % (self.name, self.selling_cost)
 
 
 class Image(models.Model):
