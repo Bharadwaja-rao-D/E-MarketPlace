@@ -18,6 +18,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   text-align: center;
 }
+.fa-exclamation-triangle {
+  padding-right: 1rem;
+}
 .alert-content p {
   padding: 1rem;
   font-size: large;

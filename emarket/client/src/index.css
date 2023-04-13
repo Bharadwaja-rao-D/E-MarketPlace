@@ -35,3 +35,8 @@ code {
   margin: auto;
   margin-bottom: 1rem;
 }
+.page-name {
+  margin-top: 1rem;
+  text-align: center;
+  border-bottom: 2px solid black;
+}

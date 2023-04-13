@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 import Notification from "./Notification";
 import useAxiosInstance from "../../utils/useAxios";
@@ -10,6 +10,7 @@ function NavBar() {
   const [showall, setshowall] = useState(true);
   const [notification, setNotification] = useState(false);
   const api = useAxiosInstance();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getData() {
@@ -45,16 +46,16 @@ function NavBar() {
         </a>
       </div>
       <ul className={showall ? "navitems" : " navitems mobile-navitems"}>
-        <li className="item">
-          <a href="/">Home</a>
+        <li className="item" onClick={() => navigate("/")}>
+          <a>Home</a>
         </li>
-        <li className="item">
-          <a href="/myproducts">My Products</a>
+        <li className="item" onClick={() => navigate("/myproducts")}>
+          <a>My Products</a>
           {notification && <Notification />}
           {/* <Notification /> */}
         </li>
-        <li className="item">
-          <a href="/soldproducts">Sold Products</a>
+        <li className="item" onClick={() => navigate("/soldproducts")}>
+          <a>Sold Products</a>
         </li>
       </ul>
       <div className="hamburger">

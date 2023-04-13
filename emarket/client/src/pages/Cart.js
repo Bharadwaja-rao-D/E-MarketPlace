@@ -7,11 +7,14 @@ function Cart() {
   const nav_to = "/product/";
   const url = "products/interested/";
   return (
-    <div>
+    <>
+      <h2 className="page-name">
+        My Cart <i className="fa fa-shopping-cart"></i>
+      </h2>
       <div className="products-display">
         <DisplayData url={url} Child={ProductList} nav_to="/product/" />
       </div>
-    </div>
+    </>
   );
 }
 

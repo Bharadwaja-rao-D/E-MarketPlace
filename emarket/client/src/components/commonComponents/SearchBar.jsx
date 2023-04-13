@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/searchbar.css";
 import useAxiosInstance from "../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +7,17 @@ const SearchBar = ({ changeUrl }) => {
   const [isOpen, setisOpen] = useState(false);
   const [related_items, setrelated_items] = useState([]);
   const [order, setOrder] = useState(true);
-  const [filter, setFilter] = useState("cost-asc");
+  const [filter, setFilter] = useState(null);
   const navigate = useNavigate();
   const api = useAxiosInstance();
+
+  useEffect(() => {
+    if (filter !== null) {
+      const url = "/products/?prefix=" + searchText + "&sort=" + filter;
+      changeUrl(url);
+      setrelated_items([]);
+    }
+  }, [filter]);
 
   const handleInputChange = async (event) => {
     const new_text = event.target.value;
@@ -29,7 +37,7 @@ const SearchBar = ({ changeUrl }) => {
 
   const handleSearch = async () => {
     const url = "/products/?prefix=" + searchText + "&sort=" + filter;
-      console.log(url)
+    console.log(url);
     changeUrl(url);
     setrelated_items([]);
   };
@@ -42,8 +50,10 @@ const SearchBar = ({ changeUrl }) => {
     const choice = event.target.value;
     if (choice == "cost") {
       setFilter(order ? "cost-asc" : "cost-desc");
+      // handleSearch();
     } else {
       setFilter("dop");
+      // handleSearch();
     }
     //products/?prefix=searchTest&sort=cost-asc cost-desc dop
   };

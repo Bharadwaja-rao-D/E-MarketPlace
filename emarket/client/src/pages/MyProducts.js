@@ -13,12 +13,13 @@ function MyProducts() {
   };
   return (
     <>
+      <h2 className="page-name">My Products</h2>
       <div className="btn-cont">
         <button onClick={() => handleClick()} className="addbutton">
           <span class="addbuttonspan">Add Product</span>
         </button>
       </div>
-      <DisplayData url={url} Child={ProductList} nav_to={nav_to}/>
+      <DisplayData url={url} Child={ProductList} nav_to={nav_to} />
     </>
   );
 }

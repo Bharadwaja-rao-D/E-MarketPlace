@@ -70,6 +70,9 @@
   .comment {
     margin: 0.5rem 0rem;
   }
+  .comment-text {
+    padding: 0.25rem 0rem;
+  }
   .new-comment {
     margin: 0.5rem 0rem;
     margin-top: 1rem;

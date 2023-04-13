@@ -89,14 +89,29 @@
 .filter-options label i:hover {
   background-color: white;
 }
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 1000px) {
   .searchbar {
-    margin: 1rem 1rem;
+    margin: 1rem 2rem;
   }
   .search {
     width: 70%;
   }
   .filter-options {
-    width: auto;
+    width: 250%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .searchbar {
+    margin: 1rem 1rem;
+    padding: 0;
+    position: relative;
+  }
+  .filter {
+    position: static;
+  }
+  .filter-options {
+    width: 80%;
+    left: 5%;
   }
 }

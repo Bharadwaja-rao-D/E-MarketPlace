@@ -43,11 +43,11 @@ function Profile() {
         <div className="profile-text">
           <h1>{user.name}</h1>
           <p>
-            <span>Email :</span>
+            <span>Email : </span>
             {user.email}
           </p>
           <p>
-            <span>Contact No :</span>
+            <span>Contact No : </span>
             {contact}
           </p>
         </div>

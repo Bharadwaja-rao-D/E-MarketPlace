@@ -5,9 +5,12 @@ import DisplayData from "../components/commonComponents/DisplayData";
 function SoldProducts() {
   const url = "products/sold/";
   return (
-    <div className="products-display">
-      <DisplayData url={url} Child={ProductList} nav_to={null} />
-    </div>
+    <>
+      <h2 className="page-name">Sold Products</h2>
+      <div className="products-display">
+        <DisplayData url={url} Child={ProductList} nav_to={null} />
+      </div>
+    </>
   );
 }
 

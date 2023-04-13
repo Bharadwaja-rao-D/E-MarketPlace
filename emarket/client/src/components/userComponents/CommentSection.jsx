@@ -65,7 +65,9 @@ export default function CommentSection({ id }) {
   };
   return (
     <div className="commentsection">
-      <h3>Comment Section</h3>
+      <h3>
+        Comment Section <i className="fa fa-comment"></i>
+      </h3>
       <div className="comments">
         {comment_list.map((comment, idx) => {
           return <CommentCard key={idx} comment={comment} />;

@@ -19,7 +19,10 @@ export default function Alert({ message, onYesClick, onNoClick }) {
   return (
     <div className="alert-wrapper">
       <div className="alert-content">
-        <p>{message}</p>
+        <p>
+          <i className="fa fa-exclamation-triangle"></i>
+          {message}
+        </p>
         <div className="alert-buttons">
           <button onClick={handleYesClick}>
             Yes <i className="fa fa-check"></i>
