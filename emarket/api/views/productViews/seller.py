@@ -1,8 +1,10 @@
 # All the apis here will start with the url /api/seller/
+from django.conf import settings
+import os
+import shutil
 
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.views import APIView, status
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -159,5 +161,32 @@ class SoldProducts(APIView):
         return Response(serializer.data)
 
     def post(self, request, pk):
+        user_id = get_user_id_from_token(request)
+
         product = Product.objects.get(pk=pk)
-        # Think a way of getting the first image
+
+        if product.seller.id != user_id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+        ser = ProductSerializer(product)
+        paths = ser.data['image']['image'].split('/')
+        image_path = paths[-2] +'/'+ paths[-1]
+        image_path = f"{settings.MEDIA_ROOT}/images/{image_path}"
+        paths = image_path.split('/')
+        dest_path_name = f"sold_images/{paths[-2]}/{paths[-1]}"
+        dest_path = paths[-2] +'/'+ paths[-1]
+        dest_path = f"{settings.MEDIA_ROOT}/sold_images/{dest_path}"
+
+        if not os.path.exists(os.path.dirname(dest_path)):
+            os.makedirs(os.path.dirname(dest_path))
+
+        shutil.copy(image_path, dest_path)
+
+        product_data = ser.data
+        sold_product = SoldProduct(name = product_data['name'], selling_cost = product_data['selling_cost'],
+                                   date_of_purchase = product_data['date_of_purchase'], image = dest_path_name , seller = product.seller)
+
+        sold_product.save()
+        product.delete()
+
+        return Response()

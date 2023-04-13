@@ -35,7 +35,7 @@ urlpatterns = [
 
     # For sold products
     path('products/sold/', seller.SoldProducts.as_view()),
-    path('products/sold/interested/<int:pk>/', seller.ProductInterestedSeller.as_view()),
+    path('products/sold/<int:pk>/', seller.SoldProducts.as_view()),
 
     # For comments
     path('comments/<int:pk>', comments.Comments.as_view()),

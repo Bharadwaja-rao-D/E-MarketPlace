@@ -57,12 +57,15 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     when corresponding `Product` object is deleted.
     """
     if instance.image:
-        if os.path.isfile(instance.image.path):
-            os.remove(instance.image.path)
+        path = instance.image.path
+        image_dir = path.split('/')[-2]
+        if image_dir != 'core':
+            if os.path.isfile(path):
+                os.remove(path)
 
 
 def user_sold_images_path(instance, filename):
-    return 'images/{0}/{1}'.format(instance.product.seller.id, filename)
+    return 'sold_images/{0}/{1}'.format(instance.product.seller.id, filename)
 
 class SoldProduct(models.Model):
     name = models.CharField(max_length=30)

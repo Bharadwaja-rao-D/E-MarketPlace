@@ -57,14 +57,14 @@ class ProductDetailSerializer(serializers.ModelSerializer):
         seller_id = self.context.get('seller_id')
         seller = Customer.objects.get(pk=seller_id)
         validated_data['seller'] = seller
+        uploaded_images = None
 
         if 'uploaded_images' in validated_data:
             uploaded_images = validated_data.pop('uploaded_images')
 
         product = Product.objects.create(**validated_data)
 
-        if 'uploaded_images' in validated_data:
-            uploaded_images = validated_data.pop('uploaded_images')
+        if uploaded_images:
             for img in uploaded_images:
                 Image.objects.create(product=product, image=img)
         else:
