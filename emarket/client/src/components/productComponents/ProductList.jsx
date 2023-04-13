@@ -18,9 +18,10 @@ const ProductCard = ({
 }) => {
   const navigate = useNavigate();
   const [notify, setNotify] = useState(true);
+  const img_src = nav_to === null ? image : image.image;
 
   const handleClick = (id) => {
-    navigate(nav_to + id);
+    if (nav_to !== null) navigate(nav_to + id);
   };
   return (
     <div
@@ -31,7 +32,7 @@ const ProductCard = ({
     >
       {notification && nav_to === "/myproducts/" && <Notification />}
       <div className="product-img">
-        {image && <img src={base_url + image.image} alt="" />}
+        <img src={base_url + img_src} alt="" />
       </div>
 
       <h1>{name}</h1>
