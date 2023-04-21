@@ -3,6 +3,7 @@ import ProductList from "../components/productComponents/ProductList";
 import "../styles/homePage.css";
 import DisplayData from "../components/commonComponents/DisplayData";
 import SearchBar from "../components/commonComponents/SearchBar";
+import Pagenation from "../components/commonComponents/Pagenation";
 
 function Home() {
   const [url, setURL] = useState("products/");
@@ -36,6 +37,7 @@ function Home() {
       <div className="products-display">
         <DisplayData url={url} Child={ProductList} nav_to="/product/" />
       </div>
+      <Pagenation changeUrl={changeUrl} />
     </div>
   );
 }
