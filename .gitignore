@@ -1,6 +1,7 @@
 swe.sh
 images/
 sold_images/
+images_old/
 Pipfile
 Pipfile.lock
 .gitignore
