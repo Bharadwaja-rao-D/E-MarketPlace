@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
 
 from api.serializers.productSerializers import ProductDetailBuyerSerializer, ProductListSerializer,  ProductSerializer
-from api.utils import get_buyer, get_product, get_user_id_from_token
+from api.utils import MyPaginationClass, get_buyer, get_product, get_user_id_from_token
 from api.models import  Interested, Product
 from api.models.customerModels import Customer
 
@@ -24,6 +24,7 @@ class Products(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     serializer_class = ProductSerializer
+    pagination_class = MyPaginationClass
 
     # Will have query params:
     # 1. search: To get the list of names of products
@@ -54,8 +55,10 @@ class Products(APIView):
             serilaizer = ProductListSerializer(products, many=True)
             return Response(serilaizer.data)
 
-        serilaizer = ProductSerializer(products, many=True)
-        return Response(serilaizer.data)
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(products, request)
+        serilaizer = ProductSerializer(page, many=True)
+        return paginator.get_paginated_response(serilaizer.data)
 
 
 # Get to get detailed view of product
