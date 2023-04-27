@@ -6,11 +6,12 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.db import IntegrityError
 
 from api.serializers.productSerializers import ProductDetailBuyerSerializer, ProductListSerializer,  ProductSerializer
-from api.utils import MyPaginationClass, get_buyer, get_product, get_user_id_from_token
+from api.utils import  get_buyer, get_product, get_user_id_from_token, Pagination
 from api.models import  Interested, Product
 from api.models.customerModels import Customer
 
 import logging
+
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class Products(APIView):
     permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]
     serializer_class = ProductSerializer
-    pagination_class = MyPaginationClass
+
 
     # Will have query params:
     # 1. search: To get the list of names of products
@@ -34,6 +35,11 @@ class Products(APIView):
         search = request.GET.get('search')
         prefix = request.GET.get('prefix')
         sort = request.GET.get('sort')
+        page = request.GET.get('page')
+
+        if page is None:
+            page = 1
+
 
         order = 'name'
 
@@ -55,10 +61,11 @@ class Products(APIView):
             serilaizer = ProductListSerializer(products, many=True)
             return Response(serilaizer.data)
 
-        paginator = self.pagination_class()
-        page = paginator.paginate_queryset(products, request)
-        serilaizer = ProductSerializer(page, many=True)
-        return paginator.get_paginated_response(serilaizer.data)
+        serilaizer = ProductSerializer(products, many=True)
+        data = serilaizer.data
+        pagination = Pagination(len(data))
+        pagination.set_page(page)
+        return Response(data[pagination.start: pagination.end])
 
 
 # Get to get detailed view of product
@@ -111,6 +118,11 @@ class ProductInterestedBuyer(APIView):
 
     # Get products in the cart for grid view
     def get(self, request):
+        page = request.GET.get('page')
+
+        if page is None:
+            page = 1
+
         user_id = get_user_id_from_token(request)
         user = Customer.objects.get(pk=user_id)
 
@@ -120,7 +132,10 @@ class ProductInterestedBuyer(APIView):
         products = [interested_product.product for interested_product in interested_products]
 
         serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
+        data = serializer.data
+        pagination = Pagination(len(data))
+        pagination.set_page(page)
+        return Response(data[pagination.start: pagination.end])
 
     # To add product into the cart
     # Here the notification field in the product will become true

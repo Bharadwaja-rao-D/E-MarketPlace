@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from api.serializers.productSerializers import  InterestedSerializer,   ProductDetailSerializer, ProductSerializer, SoldProductSerializer
-from api.utils import get_product, get_user_id_from_token
+from api.utils import get_product, get_user_id_from_token, Pagination
 from api.models import  Interested, Product
 from api.models.productModels import SoldProduct
 
@@ -36,10 +36,20 @@ class ProductsSeller(APIView):
 
     # For grid view in myproducts page
     def get(self, request):
+
+        page = request.GET.get('page')
+        if page is None:
+            page = 1
+
         seller_id = get_user_id_from_token(request)
         products = Product.objects.filter(seller_id=seller_id)
         serilaizer = ProductSerializer(products, many=True)
-        return Response(serilaizer.data)
+
+        data = serilaizer.data
+        pagination = Pagination(len(data))
+        pagination.set_page(page)
+
+        return Response(data[pagination.start: pagination.end])
 
     # To add new product
     def post(self, request):
@@ -155,10 +165,20 @@ class SoldProducts(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+
+        page = request.GET.get('page')
+        if page is None:
+            page = 1
+
         seller_id = get_user_id_from_token(request)
         sold_products = SoldProduct.objects.filter(seller=seller_id)
         serializer = SoldProductSerializer(sold_products, many=True)
-        return Response(serializer.data)
+
+        data = serializer.data
+        pagination = Pagination(len(data))
+        pagination.set_page(page)
+
+        return Response(data[pagination.start: pagination.end])
 
     def post(self, request, pk):
         user_id = get_user_id_from_token(request)

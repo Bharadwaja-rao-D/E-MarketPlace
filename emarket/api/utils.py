@@ -1,6 +1,7 @@
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework.pagination import PageNumberPagination
 from api.models import Customer, Product
+from django.conf import settings
 
 def get_user_id_from_token(request):
     auth_header = request.headers.get('Authorization')
@@ -20,8 +21,18 @@ def get_buyer(request):
     return Customer.objects.get(pk=buyer_id)
 
 
-class MyPaginationClass(PageNumberPagination):
-    page_size = 12
-    page_query_param = 'page'
-    page_size_query_param = 'page_size'
-    max_page_size = 100
+page_size = settings.PAGE_SIZE
+
+class Pagination():
+    start = 0
+    end = page_size
+
+    def __init__(self, total_objs):
+        self.total_objs = total_objs
+
+    def set_page(self, page_no):
+        self.start = (page_no-1)*page_size
+        if self.start + page_size > self.total_objs:
+            self.end = self.total_objs
+        else:
+            self.end = self.start + page_size
