@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import "../../styles/searchbar.css";
 import useAxiosInstance from "../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
-const SearchBar = ({ changeUrl }) => {
+
+const SearchBar = ({url, changeUrl }) => {
+
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
   const [related_items, setrelated_items] = useState([]);
@@ -13,8 +15,9 @@ const SearchBar = ({ changeUrl }) => {
 
   useEffect(() => {
     if (filter !== null) {
-      const url = "/products/?prefix=" + searchText + "&sort=" + filter;
-      changeUrl(url);
+        console.log(url)
+      const new_url = url+`&prefix=` + searchText + "&sort=" + filter;
+      changeUrl(new_url);
       setrelated_items([]);
     }
   }, [filter]);
@@ -23,8 +26,8 @@ const SearchBar = ({ changeUrl }) => {
     const new_text = event.target.value;
     setSearchText(new_text);
     try {
-      const url = "products/?search=" + new_text;
-      const response = await api.get(url);
+      const new_url = url+`&search=` + new_text;
+      const response = await api.get(new_url);
       // console.log(response.data);
       setrelated_items(response.data);
     } catch (e) {
@@ -36,9 +39,8 @@ const SearchBar = ({ changeUrl }) => {
   };
 
   const handleSearch = async () => {
-    const url = "/products/?prefix=" + searchText + "&sort=" + filter;
-    console.log(url);
-    changeUrl(url);
+    const new_url = url+"&prefix=" + searchText + "&sort=" + filter;
+    changeUrl(new_url);
     setrelated_items([]);
   };
   const handleKeyPress = (event) => {

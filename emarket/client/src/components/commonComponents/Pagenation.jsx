@@ -2,17 +2,19 @@ import React from "react";
 import { useState } from "react";
 import "../../styles/pagenation.css";
 
-export default function Pagenation({ changeUrl }) {
+export default function Pagenation({ setPage }) {
   const [count, setCount] = useState(1);
   const decreasePage = () => {
     if (count > 1) {
       const new_count = count - 1;
       setCount(new_count);
+      setPage(new_count);
     }
   };
   const increasePage = () => {
     const new_count = count + 1;
     setCount(new_count);
+      setPage(new_count);
   };
 
   return (

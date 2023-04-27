@@ -6,38 +6,25 @@ import SearchBar from "../components/commonComponents/SearchBar";
 import Pagenation from "../components/commonComponents/Pagenation";
 
 function Home() {
-  const [url, setURL] = useState("products/");
+    const [page, setPage] = useState(1)
+  const [url, setURL] = useState("products/?page="+page);
 
   const changeUrl = (new_url) => {
     setURL(new_url);
-    // console.log(new_url);
   };
 
-  /*
-  const api = useAxiosInstance();
-  const [product_data, setProductData] = useState([]);
-  const {apidata, loading, error} = useAxios(url)
+    useEffect(() => {
+        setURL("products/?page="+page)
+    }, [page]);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await api.get(url);
-        setProductData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
-    fetchData();
-  }, []);
-    */
   return (
     <div>
-      <SearchBar changeUrl={changeUrl} />
+      <SearchBar url={url} changeUrl={changeUrl} />
       <div className="products-display">
         <DisplayData url={url} Child={ProductList} nav_to="/product/" />
       </div>
-      <Pagenation changeUrl={changeUrl} />
+      <Pagenation setPage={setPage} />
     </div>
   );
 }
