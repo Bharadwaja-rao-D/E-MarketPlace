@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
  * @param {changeUrl} param1
  *
  */
-const SearchBar = ({ url, changeUrl }) => {
+const SearchBar = ({url, changeUrl }) => {
+
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
   const [related_items, setrelated_items] = useState([]);

@@ -57,6 +57,14 @@ const ProductCard = ({
 function ProductList(props) {
   const products = props.data;
   const nav_to = props.nav_to;
+
+    if (products.length == 0) {
+        return (
+            <div>
+                <h2>No products available...</h2>
+            </div>
+        );
+    }
   return (
     <>
       <div className="productlist">
