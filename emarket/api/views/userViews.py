@@ -17,11 +17,9 @@ from api.utils import get_user_id_from_token
 class index(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
-
     def get(self, request):
         u_id = get_user_id_from_token(request)
         return Response({'user_id': u_id}, status=status.HTTP_200_OK)
-
     def post(self, request):
         u_id = get_user_id_from_token(request)
         return Response({'user_id': u_id}, status=status.HTTP_200_OK)
