@@ -5,6 +5,10 @@ import "../../styles/navbar.css";
 import Notification from "./Notification";
 import useAxiosInstance from "../../utils/useAxios";
 
+/**
+ *
+ * The component for an awsome responsive NavBar
+ */
 function NavBar() {
   const location = useLocation().pathname;
   const [showall, setshowall] = useState(true);
@@ -47,15 +51,15 @@ function NavBar() {
       </div>
       <ul className={showall ? "navitems" : " navitems mobile-navitems"}>
         <li className="item" onClick={() => navigate("/")}>
-          <a>Home</a>
+          <a href="/">Home</a>
         </li>
         <li className="item" onClick={() => navigate("/myproducts")}>
-          <a>My Products</a>
+          <a href="/myproducts">My Products</a>
           {notification && <Notification />}
           {/* <Notification /> */}
         </li>
         <li className="item" onClick={() => navigate("/soldproducts")}>
-          <a>Sold Products</a>
+          <a href="/soldproducts">Sold Products</a>
         </li>
       </ul>
       <div className="hamburger">

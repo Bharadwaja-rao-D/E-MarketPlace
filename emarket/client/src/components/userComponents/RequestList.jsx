@@ -4,7 +4,13 @@ import useAxiosInstance from "../../utils/useAxios";
 import { useLocation } from "react-router-dom";
 import Alert from "../commonComponents/Alert";
 
-function RequestCard({ index, buyer }) {
+/**
+ * This will display a user and his request for the contact info
+ * @param {*} param0
+ * @returns
+ */
+// removed index arg
+function RequestCard({ buyer }) {
   const location = useLocation();
   const path = location.pathname.split("/");
   const id = path[path.length - 1];
@@ -79,6 +85,11 @@ function RequestCard({ index, buyer }) {
   );
 }
 
+/**
+ * Takes as argument a list of requests and displays them using request cards component
+ * @param {*} param0
+ * @returns
+ */
 export default function RequestList({ interested_peeps }) {
   return (
     <div className="request-list">

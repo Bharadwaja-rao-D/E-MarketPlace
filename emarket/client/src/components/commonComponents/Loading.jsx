@@ -1,6 +1,10 @@
 import React from "react";
 import "../../styles/loading.css";
 
+/**
+ *
+ *  A cool animation to show while the data is being loaded
+ */
 export default function Loading() {
   return (
     <div className="loader">

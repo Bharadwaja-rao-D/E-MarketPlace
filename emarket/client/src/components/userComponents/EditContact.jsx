@@ -3,6 +3,12 @@ import OTPVeify from "./otpVerify";
 import useAxiosInstance from "../../utils/useAxios";
 import "../../styles/editcontact.css";
 
+/**
+ * A component to change the contact of a user
+ * This component will also handle the verification of the users new contact
+ * @param {*} param0
+ * @returns
+ */
 export default function EditContact({ changeContact }) {
   const [change, setChange] = useState(false);
   const [contact, setContact] = useState(null);

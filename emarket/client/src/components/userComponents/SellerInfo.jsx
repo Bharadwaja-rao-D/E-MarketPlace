@@ -1,6 +1,12 @@
 import React from "react";
 import "../../styles/sellerinfo.css";
 
+/**
+ * This component displays the seller info of a product.
+ * Contact information is shared only based on the previlages
+ * @param {*} props
+ * @returns
+ */
 export default function SellerInfo(props) {
   return (
     <div className="sellerinfo">

@@ -3,8 +3,13 @@ import "../../styles/searchbar.css";
 import useAxiosInstance from "../../utils/useAxios";
 import { useNavigate } from "react-router-dom";
 
-const SearchBar = ({url, changeUrl }) => {
-
+/**
+ * This component is the search bar which takes and changes the API url as per the search and filter
+ * @param {url} param0
+ * @param {changeUrl} param1
+ *
+ */
+const SearchBar = ({ url, changeUrl }) => {
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
   const [related_items, setrelated_items] = useState([]);
@@ -13,20 +18,23 @@ const SearchBar = ({url, changeUrl }) => {
   const navigate = useNavigate();
   const api = useAxiosInstance();
 
-  useEffect(() => {
-    if (filter !== null) {
-        console.log(url)
-      const new_url = url+`&prefix=` + searchText + "&sort=" + filter;
-      changeUrl(new_url);
-      setrelated_items([]);
-    }
-  }, [filter]);
+  useEffect(
+    (changeUrl, searchText, url) => {
+      if (filter !== null) {
+        console.log(url);
+        const new_url = url + `&prefix=` + searchText + "&sort=" + filter;
+        changeUrl(new_url);
+        setrelated_items([]);
+      }
+    },
+    [filter]
+  );
 
   const handleInputChange = async (event) => {
     const new_text = event.target.value;
     setSearchText(new_text);
     try {
-      const new_url = url+`&search=` + new_text;
+      const new_url = url + `&search=` + new_text;
       const response = await api.get(new_url);
       // console.log(response.data);
       setrelated_items(response.data);
@@ -39,7 +47,7 @@ const SearchBar = ({url, changeUrl }) => {
   };
 
   const handleSearch = async () => {
-    const new_url = url+"&prefix=" + searchText + "&sort=" + filter;
+    const new_url = url + "&prefix=" + searchText + "&sort=" + filter;
     changeUrl(new_url);
     setrelated_items([]);
   };
@@ -50,7 +58,7 @@ const SearchBar = ({url, changeUrl }) => {
   };
   const handleChoice = (event) => {
     const choice = event.target.value;
-    if (choice == "cost") {
+    if (choice === "cost") {
       setFilter(order ? "cost-asc" : "cost-desc");
       // handleSearch();
     } else {

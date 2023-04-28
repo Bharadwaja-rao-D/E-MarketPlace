@@ -6,6 +6,11 @@ import Notification from "../commonComponents/Notification";
 
 const base_url = settings.base_url;
 
+/**
+ * This will display the short product cards we can see in the website
+ * @param {*} param0
+ * @returns
+ */
 const ProductCard = ({
   id,
   name,
@@ -44,6 +49,11 @@ const ProductCard = ({
 
 // export default ProductCard;
 
+/**
+ * This will take a list of products to display and displays their product cards. The data contains the products list and nav_to contiains where to navigate to if clicked on card.
+ * @param {data,nav_to} props
+ * @returns
+ */
 function ProductList(props) {
   const products = props.data;
   const nav_to = props.nav_to;

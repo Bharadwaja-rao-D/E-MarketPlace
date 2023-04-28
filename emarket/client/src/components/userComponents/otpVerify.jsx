@@ -5,6 +5,11 @@ import { useState } from "react";
 import settings from "../../settings.json";
 const api_url = settings.api_url;
 
+/**
+ * This component takes the contact number as input and will handle the backend based verification of it
+ * @param {props} props
+ * @returns
+ */
 export default function OTPVeify(props) {
   const [mobile, setMobile] = useState("");
   const [otprecv, setOtprecv] = useState("");
@@ -18,19 +23,16 @@ export default function OTPVeify(props) {
     };
     const response = await axios.post(api_url + "generate_otp/", data);
     setMsg("OTP sent to " + mobile);
-    console.log("Sent OTP");
   };
 
   const verify_otp = async (e) => {
     e.preventDefault();
-    console.log("Verify otp");
     const data = {
       mobile_number: mobile,
       otp: otprecv,
     };
     try {
       const response = await axios.post(api_url + "verify_otp/", data);
-      console.log(response);
       props.getContact(mobile);
     } catch (e) {
       console.log(e);

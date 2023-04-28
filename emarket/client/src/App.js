@@ -12,7 +12,6 @@ import NavBar from "./components/commonComponents/NavBar";
 import SoldProducts from "./pages/SoldProducts";
 import Profile from "./pages/Profile";
 import AddProduct from "./pages/AddProduct";
-import AllLinks from "./components/userComponents/AllLinks";
 import Cart from "./pages/Cart";
 
 import ImageStack from "./components/productComponents/ImageStack";

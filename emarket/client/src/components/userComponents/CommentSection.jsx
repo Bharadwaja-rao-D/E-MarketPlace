@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import "../../styles/commentSection.css";
 import useAxiosInstance from "../../utils/useAxios";
 
-function CommentCard({ index, comment }) {
+/**
+ * Displays a simgle comment and the commentor
+ *
+ * @param { comment} param0 An object with commentor info and comment text
+ * @returns
+ */
+// removed index arg from here
+function CommentCard({ comment }) {
   const username = JSON.parse(sessionStorage.getItem("profile")).name;
   const name = comment.commentor === username ? "You" : comment.commentor;
   return (
@@ -16,6 +23,11 @@ function CommentCard({ index, comment }) {
   );
 }
 
+/**
+ * takes the id of the product and displays its comments
+ * @param {*} param0
+ * @returns
+ */
 export default function CommentSection({ id }) {
   const [comment, setComment] = useState("");
   const api = useAxiosInstance();

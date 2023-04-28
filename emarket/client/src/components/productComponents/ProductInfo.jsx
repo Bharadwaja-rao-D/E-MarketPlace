@@ -1,6 +1,11 @@
 import React from "react";
 import "../../styles/productinfo.css";
 
+/**
+ * A basic component to display product related info in the product page and other pages
+ * @param {name,date_of_purchase, actual_cost,selling_cost,description} props
+ * @returns
+ */
 export default function ProductInfo(props) {
   return (
     <div className="product-info">
