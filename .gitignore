@@ -2,6 +2,7 @@ swe.sh
 images/
 sold_images/
 images_old/
+__pycache__/
 Pipfile
 Pipfile.lock
 .gitignore

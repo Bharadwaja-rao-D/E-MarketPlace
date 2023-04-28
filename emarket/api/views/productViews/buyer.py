@@ -64,7 +64,7 @@ class Products(APIView):
         serilaizer = ProductSerializer(products, many=True)
         data = serilaizer.data
         pagination = Pagination(len(data))
-        pagination.set_page(page)
+        pagination.set_page(int(page))
         return Response(data[pagination.start: pagination.end])
 
 
@@ -134,7 +134,7 @@ class ProductInterestedBuyer(APIView):
         serializer = ProductSerializer(products, many=True)
         data = serializer.data
         pagination = Pagination(len(data))
-        pagination.set_page(page)
+        pagination.set_page(int(page))
         return Response(data[pagination.start: pagination.end])
 
     # To add product into the cart

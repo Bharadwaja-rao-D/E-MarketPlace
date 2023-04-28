@@ -47,7 +47,7 @@ class ProductsSeller(APIView):
 
         data = serilaizer.data
         pagination = Pagination(len(data))
-        pagination.set_page(page)
+        pagination.set_page(int(page))
 
         return Response(data[pagination.start: pagination.end])
 
@@ -176,7 +176,7 @@ class SoldProducts(APIView):
 
         data = serializer.data
         pagination = Pagination(len(data))
-        pagination.set_page(page)
+        pagination.set_page(int(page))
 
         return Response(data[pagination.start: pagination.end])
 
