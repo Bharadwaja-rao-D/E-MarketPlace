@@ -25,7 +25,7 @@ function CommentCard({ comment }) {
 
 /**
  * takes the id of the product and displays its comments
- * @param {*} param0
+ * @param {id} param0
  * @returns
  */
 export default function CommentSection({ id }) {
@@ -40,7 +40,7 @@ export default function CommentSection({ id }) {
         const response = await api.get(url);
         setComment_list(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     }
 
@@ -62,7 +62,7 @@ export default function CommentSection({ id }) {
         const response = await api.get(url);
         setComment_list(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     } catch (e) {
       console.log(e);
@@ -93,7 +93,11 @@ export default function CommentSection({ id }) {
           value={comment}
           placeholder="New Comment"
         ></input>
-        <i className="fa fa-paper-plane" onClick={handleComment}></i>
+        <i
+          className="fa fa-paper-plane"
+          data-testid="comment-submit"
+          onClick={handleComment}
+        ></i>
       </div>
     </div>
   );
