@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'emarket.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'swe_local',
+        'NAME': 'swe_prod',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
