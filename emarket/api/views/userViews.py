@@ -15,6 +15,14 @@ from api.utils import get_user_id_from_token
 
 # A protected resource
 class index(APIView):
+
+    """
+    ## Parameters
+    ## Returns:
+    - '200 OK and object of RefreshToken and access_token': If the user is already signedup
+    - '404 NOT FOUND': If the user is signing in for the first time
+    """
+
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
