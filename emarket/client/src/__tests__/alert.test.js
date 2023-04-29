@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import Alert from "./components/commonComponents/Alert";
+import Alert from "../components/commonComponents/Alert";
 
 describe("Alert component", () => {
   const message = "Are you sure you want to delete this item?";

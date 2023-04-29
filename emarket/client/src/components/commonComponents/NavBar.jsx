@@ -23,7 +23,7 @@ function NavBar() {
         const response = await api.get(url);
         setNotification(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     }
     if (location === "/myproducts" || location === "/") {
