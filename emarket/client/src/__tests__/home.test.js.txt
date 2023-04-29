@@ -1,0 +1,106 @@
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Home from "../pages/Home.js";
+
+describe("Home component", () => {
+  test("renders without crashing", () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+  });
+
+  test("renders SearchBar component within Home component", () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const searchBar = screen.getByTestId("searchbar");
+    expect(searchBar).toBeInTheDocument();
+  });
+
+  test("renders DisplayData component within Home component", () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const displayData = screen.getByTestId("displaydata");
+    expect(displayData).toBeInTheDocument();
+  });
+
+  test("renders Pagenation component within Home component", () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const pagenation = screen.getByTestId("pagenation");
+    expect(pagenation).toBeInTheDocument();
+  });
+
+  test("changeUrl function sets new url", () => {
+    const { result } = renderHook(() => Home());
+    act(() => {
+      result.current.changeUrl("new-url");
+    });
+    expect(result.current.url).toBe("new-url");
+  });
+
+  test("setPage function sets new page", () => {
+    const { result } = renderHook(() => Home());
+    act(() => {
+      result.current.setPage(2);
+    });
+    expect(result.current.page).toBe(2);
+  });
+
+  test("url changes when page state changes", () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const url = screen.getByTestId("url");
+    expect(url.textContent).toBe("products/?page=1");
+    fireEvent.click(screen.getByText("2"));
+    expect(url.textContent).toBe("products/?page=2");
+  });
+
+  test("renders ProductList component within DisplayData component", async () => {
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    await waitFor(() => {
+      const productList = screen.getByTestId("productlist");
+      expect(productList).toBeInTheDocument();
+    });
+  });
+
+  test("renders 'No products found' message when no products match search query", async () => {
+    render(
+      <Router initialEntries={["/search?query=invalid"]}>
+        <Home />
+      </Router>
+    );
+    const noProductsMessage = await screen.findByText("No products found");
+    expect(noProductsMessage).toBeInTheDocument();
+  });
+
+  test("renders 'Loading...' message while fetching products", async () => {
+    mockAxios.get.mockResolvedValueOnce({ data: [] });
+    render(
+      <Router>
+        <Home />
+      </Router>
+    );
+    const loadingMessage = await screen.findByText("Loading...");
+    expect(loadingMessage).toBeInTheDocument();
+  });
+});
