@@ -1,12 +1,15 @@
-from rest_framework_simplejwt.tokens import AccessToken
 from api.models import Customer, Product
 from django.conf import settings
 
 def get_user_id_from_token(request):
+    """
+    print('From server:', request.headers)
     auth_header = request.headers.get('Authorization')
     token = auth_header.split(' ')[1]
     decoded = AccessToken(token)
     user_id = decoded['user_id']
+    """
+    user_id = request.user.id
     return user_id
 
 def get_product(pk):
