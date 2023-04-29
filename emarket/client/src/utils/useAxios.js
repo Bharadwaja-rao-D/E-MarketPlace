@@ -29,7 +29,7 @@ export default function useAxiosInstance() {
 
     //Token has expired
 
-    console.log("experied: " + authTokens.refresh);
+    // console.log("experied: " + authTokens.refresh);
     const res = await axios.post(`${api_url}token/refresh/`, {
       refresh: authTokens.refresh,
     });
@@ -49,7 +49,7 @@ export function useAxios(rel_url, options = {}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log("Called api " + rel_url);
+  // console.log("Called api " + rel_url);
   let api = useAxiosInstance();
 
   const fetchData = async () => {

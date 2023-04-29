@@ -16,7 +16,6 @@ function Profile() {
       try {
         const url = "users/contact/";
         const response = await api.get(url);
-        console.log(response.data);
         setContact(response.data.contact);
       } catch (error) {
         console.error(error);

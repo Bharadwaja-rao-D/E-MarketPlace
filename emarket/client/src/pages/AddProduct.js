@@ -26,7 +26,6 @@ function AddProduct() {
     try {
       const response = await api.post(url, formdata);
       // setImageUrls(response.data.image_urls);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +83,7 @@ function AddProduct() {
           onChange={handleImageChange}
         />
         <div className="images_list">
-          {images.length != 0 ? (
+          {images.length !== 0 ? (
             images.map((image, index) => (
               <div className="uploaded_image" key={index}>
                 <img

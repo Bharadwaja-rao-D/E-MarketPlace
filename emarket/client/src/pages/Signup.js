@@ -21,7 +21,6 @@ function SignupBackend({ gtoken, contact }) {
     .then((res) => {
       sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
       sessionStorage.setItem("profile", JSON.stringify(res.data["profile"]));
-      console.log("Added new user");
       navigate("/");
     })
     .catch((_err) => {

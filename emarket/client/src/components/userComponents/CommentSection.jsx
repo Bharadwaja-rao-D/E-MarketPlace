@@ -55,7 +55,6 @@ export default function CommentSection({ id }) {
     try {
       const url = "/comments/" + id;
       const response = await api.post(url, { comment: comment });
-      console.log(response);
       setComment("");
       try {
         const url = "comments/" + id;
@@ -67,8 +66,6 @@ export default function CommentSection({ id }) {
     } catch (e) {
       console.log(e);
     }
-
-    console.log(comment);
   };
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {

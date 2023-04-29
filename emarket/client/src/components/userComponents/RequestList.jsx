@@ -26,7 +26,6 @@ function RequestCard({ buyer }) {
         accept: true,
       };
       const response = await api.post(url, post_data);
-      console.log(response);
       setAccept(true);
     } else {
       const post_data = {
@@ -34,7 +33,6 @@ function RequestCard({ buyer }) {
         accept: false,
       };
       const response = await api.post(url, post_data);
-      console.log(response);
       setAccept(false);
     }
     setAlert(false);

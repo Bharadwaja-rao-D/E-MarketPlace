@@ -22,7 +22,6 @@ const SearchBar = ({url, changeUrl }) => {
   useEffect(
     (changeUrl, searchText, url) => {
       if (filter !== null) {
-        console.log(url);
         const new_url = url + `&prefix=` + searchText + "&sort=" + filter;
         changeUrl(new_url);
         setrelated_items([]);

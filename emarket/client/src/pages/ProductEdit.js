@@ -55,7 +55,6 @@ function Edit() {
     try {
       const response = await api.put(url, formdata);
       // setImageUrls(response.data.image_urls);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +64,6 @@ function Edit() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const new_formdata = new FormData(e.target);
-    console.log(new_formdata);
     new_formdata.delete("uploaded_images");
     images.forEach((image) => {
       new_formdata.append("uploaded_images", image);
@@ -140,7 +138,7 @@ function Edit() {
           onChange={handleImageChange}
         />
         <div className="images_list">
-          {images.length != 0 ? (
+          {images.length !== 0 ? (
             images.map((image, index) => (
               <div className="uploaded_image" key={index}>
                 <img

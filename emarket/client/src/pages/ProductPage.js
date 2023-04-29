@@ -19,7 +19,6 @@ function ProductPage() {
     async function fetchData() {
       try {
         const response = await api.get(url);
-        console.log(response.data);
         setData(response.data);
       } catch (error) {
         console.error(error);

@@ -1,6 +1,6 @@
 import "../styles/signin.css";
-import React, { useState, useEffect } from "react";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import React, { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -21,11 +21,11 @@ function SigninBackend({ gtoken }) {
     .then((res) => {
       sessionStorage.setItem("authTokens", JSON.stringify(res.data["token"]));
       sessionStorage.setItem("profile", JSON.stringify(res.data["profile"]));
-      console.log("go to home ");
+      // console.log("go to home ");
       navigate("/"); //redirect to home page
     })
     .catch((err) => {
-      if (err.response.status == 404) {
+      if (err.response.status === 404) {
         navigate("/signup"); //redirect to signup page
       } else {
         console.log(err.response.status);
@@ -43,7 +43,7 @@ function SigninGoogle() {
     onError: (error) => console.log("Login Failed:", error),
   });
 
-  console.log(gtoken);
+  // console.log(gtoken);
 
   return (
     <div className="my-background">

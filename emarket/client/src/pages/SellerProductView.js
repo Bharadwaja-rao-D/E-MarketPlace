@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/sellerProductView.css";
 import useAxiosInstance, { useAxios } from "../utils/useAxios";
 import ProductInfo from "../components/productComponents/ProductInfo";
 import ImageStack from "../components/productComponents/ImageStack";
 import RequestList from "../components/userComponents/RequestList";
-import Loading from "../components/commonComponents/Loading";
+// import Loading from "../components/commonComponents/Loading";
 import CommentSection from "../components/userComponents/CommentSection";
 import Alert from "../components/commonComponents/Alert";
 // A detailed product display page
@@ -14,7 +14,7 @@ function MyProductPage() {
   const { id } = useParams();
   const api = useAxiosInstance();
   const url = "products/seller/" + id + "/";
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
   const [alert, setAlert] = useState(false);
 
   const navigate = useNavigate();
@@ -29,12 +29,10 @@ function MyProductPage() {
   };
   const handleSold = async () => {
     const response = await api.post("products/sold/" + id + "/");
-    console.log(response);
     navigate("/myproducts");
   };
   const handleDelete = async () => {
     const response = await api.delete("products/seller/" + id + "/");
-    console.log(response);
     navigate("/myproducts");
   };
   if (apidata === null) {
