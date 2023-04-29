@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/navbar.css";
 import Notification from "./Notification";
 import useAxiosInstance from "../../utils/useAxios";
+import logo from "../../website-logo.jpeg";
 
 /**
  *
@@ -42,10 +43,7 @@ function NavBar() {
     <div className="navbar">
       <div className="logo">
         <a href="\">
-          <img
-            src="https://seeklogo.com/images/A/apple-logo-E3DBF3AE34-seeklogo.com.png"
-            alt=""
-          />
+          <img src={logo} alt="" />
           <p className="name">IITH EMP</p>
         </a>
       </div>

@@ -18,12 +18,6 @@ import ImageStack from "./components/productComponents/ImageStack";
 import Authentication from "./components/commonComponents/Authentication";
 
 function App() {
-  const images = [
-    "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
-    "https://static.vecteezy.com/system/resources/previews/004/999/463/original/shopping-cart-icon-illustration-free-vector.jpg",
-  ];
-  // console.log(sessionStorage.getItem("profile"));
-
   return (
     <Router>
       {/* Any global displays */}
@@ -46,7 +40,7 @@ function App() {
         <Route exact path="/myproducts/edit/:id" element={<Edit />}></Route>
         <Route path="product/:id" element={<ProductPage />} />
 
-        <Route path="image-stack" element={<ImageStack images={images} />} />
+        {/* <Route path="image-stack" element={<ImageStack images={images} />} /> */}
       </Routes>
     </Router>
   );
