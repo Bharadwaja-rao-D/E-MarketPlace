@@ -9,8 +9,7 @@ import { useNavigate } from "react-router-dom";
  * @param {changeUrl} param1
  *
  */
-const SearchBar = ({url, changeUrl }) => {
-
+const SearchBar = ({ url, changeUrl }) => {
   const [searchText, setSearchText] = useState("");
   const [isOpen, setisOpen] = useState(false);
   const [related_items, setrelated_items] = useState([]);
@@ -19,16 +18,13 @@ const SearchBar = ({url, changeUrl }) => {
   const navigate = useNavigate();
   const api = useAxiosInstance();
 
-  useEffect(
-    (changeUrl, searchText, url) => {
-      if (filter !== null) {
-        const new_url = url + `&prefix=` + searchText + "&sort=" + filter;
-        changeUrl(new_url);
-        setrelated_items([]);
-      }
-    },
-    [filter]
-  );
+  useEffect(() => {
+    if (filter !== null) {
+      const new_url = url + `&prefix=` + searchText + "&sort=" + filter;
+      changeUrl(new_url);
+      setrelated_items([]);
+    }
+  }, [filter]);
 
   const handleInputChange = async (event) => {
     const new_text = event.target.value;
