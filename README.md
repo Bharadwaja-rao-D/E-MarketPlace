@@ -1,5 +1,7 @@
 # Institute E-marketPlace
 
+Run ``bash run.sh`` file to start the server and client
+
 ## Links for the important docs
 - Link for [srs]()
 - Link for [design](./design.pdf)
